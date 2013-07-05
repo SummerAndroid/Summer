@@ -1,0 +1,64 @@
+User表,,
+id,,id of user
+name,varchar(255),name of user
+password,varchar(255),"password of user,i think it should encrypted by RSA or other encryption algorithm before stored."
+type,,"type of user,0 stands for tour operator and 1 stands for administrator"
+permission,,"permission of user,This is the integer that every bit has a meaning.Default 0 represents no permissions."
+tellphone,varchar(255),tellphone of user.
+address,varchar(255),address of user.
+
+
+tasklet表,,
+id,,id of tasklet
+user_id,,id of the user who carry out this tasklet.
+name,varchar(255),name of tasklet
+
+tasklet_item表,,
+id,,id of item
+tasklet_id,,id of tasklet which this item belong to.
+stuff_id,,id of stuff which this item check for.
+name,varchar(255),name of this tasklet item
+
+task_item_arg表,,
+id,,id of tasklet_item_arg
+tasklet_item_id,,id of tasklet_item which this arg belongs to
+name,varchar(255),name of tasklet_item_arg
+value,varchar(255),
+
+
+stuff表,,
+id,,id of stuff
+stuff_category_id,,id of stuff category which this stuff belong to.
+code,varchar(255),unique readable code of stuff
+price,,price of stuff
+life,,service life of stuff.
+factory,varchar(255),
+zxing,varchar(255),"path of stuff's two-dimension code,empty string if there isn't two-dimension code exist."
+start_time,timestamp,time of stuff start to be used.
+
+stuff_arg表,,
+id,,id of stuff_arg
+stuff_id,,stuff's  id
+
+stuff_category表,,
+id,,id of this stuff category
+template_item_id,,
+name,varchar(255),name of stuff categoy
+
+
+template表,,
+id,,id of template
+name,varchar(255),name of template
+create_time,timestamp,create time of template
+
+template_has_template_item表,,
+template_id,,
+template_item_id,,id of template_item which can be used when create a tasklet item for specific.
+
+template_item表,,
+id,,id of template_item
+name,varchar(255),name of template_item
+
+template_item_arg表,,
+id,,id of this arg
+template_item_id,,id of template_item which this arg belong to

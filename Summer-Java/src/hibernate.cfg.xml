@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="">
+  <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+  <property name="hibernate.connection.password">123456</property>
+  <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/summer</property>
+  <property name="hibernate.connection.username">root</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+  <property name="hibernate.connection.autocommit">true</property>
+  <property name="hibernate.show_sql">true</property>
+  <mapping class="summer.pojo.User" resource="summer/pojo/User.hbm.xml"/>
+  <mapping class="summer.pojo.Tasklet" resource="summer/pojo/Tasklet.hbm.xml"/>
+  <mapping class="summer.pojo.TaskletItem" resource="summer/pojo/TaskletItem.hbm.xml"/>
+  <mapping class="summer.pojo.TaskletItemArg" resource="summer/pojo/TaskletItemArg.hbm.xml"/>
+  <mapping class="summer.pojo.Template" resource="summer/pojo/Template.hbm.xml"/>
+  <mapping class="summer.pojo.TemplateItem" resource="summer/pojo/TemplateItem.hbm.xml"/>
+  <mapping class="summer.pojo.TemplateItemArg" resource="summer/pojo/TemplateItemArg.hbm.xml"/>
+  <mapping class="summer.pojo.TemplateHasTempalateItem" resource="summer/pojo/TemplateHasTemplateItem.hbm.xml"/>
+  <mapping class="summer.pojo.StuffCategory" resource="summer/pojo/StuffCategory.hbm.xml"/>
+  <mapping class="summer.pojo.Stuff" resource="summer/pojo/Stuff.hbm.xml"/>
+  <mapping class="summer.pojo.StuffArg" resource="summer/pojo/StuffArg.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>
