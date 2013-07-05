@@ -33,15 +33,29 @@ public final class I {
 		 * <p>
 		 * 登录请求号。
 		 * <p>
-		 * 请求：questCode = LOGIN; questArgs = {User{id|name,password}}
+		 * 请求：questCode = LOGIN; requestArgs = {User{id|name,password}}
 		 * <p>
 		 * 应答：responseCode = OK|BAD_*;responseArgs =
 		 * {User{id,name,password,...}|String}
 		 * <p>
-		 * 附加： 登录支持id或者用户名登录，如果用户名登录，则需要用{@link Sys#DEFAULT_ID}设置user的id
+		 * 解释： 登录支持id或者用户名登录。如果用户名登录，则需要用{@link Sys#DEFAULT_ID}设置user的id。登入成功，返回
+		 * {@link Res#OK},且链表中包含User对象。登入失败，返回{@link Res}
+		 * 中BAD_*，具体含义参加注释，且链表中的对象或为String或为Throwable
 		 */
 		public final static int LOGIN = 10;
-		public final static int EXIT = 11;
+
+		/**
+		 * <p>
+		 * 退出请求号。
+		 * <p>
+		 * 请求：requestCode = EXIT; requestArgs = {User{id|name}}
+		 * <p>
+		 * 应答：responseCode = OK | BAD_*;responseArgs = {String}
+		 * <p>
+		 * 解释：退出需要用户的id或者name。退出成功返回{@link Res#OK}，退出失败，返回{@link Res}
+		 * 中BAD_*，具体含义参加注释，且链表中的对象String TODO:确定exit的值，使得这些请求号是连续的。
+		 */
+		public final static int EXIT = 50;
 
 	}
 

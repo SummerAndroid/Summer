@@ -12,10 +12,12 @@ import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IoSession;
 
 import summer.SysConfig.NetConfig;
+import summer.inf.I.Req;
 import summer.inf.I.Res;
 import summer.inf.Request;
 import summer.inf.Response;
 import summer.runtime.HandlerRunnable.Message;
+import summer.runtime.handler.ExitHandler;
 import summer.runtime.handler.Handler;
 import summer.runtime.handler.LoginHandler;
 
@@ -56,11 +58,11 @@ public class RequestHandler extends IoHandlerAdapter {
 
 	/**
 	 * data structure for {@link InnerThread}'s message queue.
-	 *
+	 * 
 	 * @author zhenzxie
 	 * @since 1.0
 	 */
-	private class Arg{
+	private class Arg {
 		IoSession session;
 		Object message;
 
@@ -71,7 +73,7 @@ public class RequestHandler extends IoHandlerAdapter {
 	}
 
 	private class InnerThread extends Thread {
-		
+
 		private Log log = LogFactory.getLog(InnerThread.class);
 		private LinkedBlockingQueue<Arg> messageQueue = new LinkedBlockingQueue<Arg>();
 		private ExecutorService executorService = Executors
@@ -103,7 +105,7 @@ public class RequestHandler extends IoHandlerAdapter {
 			assert arg != null;
 			messageQueue.add(arg);
 		}
-		
+
 		/**
 		 * 
 		 * 将请求进行验证，分发
@@ -135,7 +137,8 @@ public class RequestHandler extends IoHandlerAdapter {
 		 * @return
 		 */
 		private boolean verifyRequest(Request request) {
-			return true;
+			int requestCode = request.getRequestCode();
+			return Req.LOGIN <= requestCode && requestCode <= Req.EXIT;
 		}
 
 		/**
@@ -152,7 +155,18 @@ public class RequestHandler extends IoHandlerAdapter {
 		}
 
 		private Handler getHandlerByRequestCode(int code) {
-			return new LoginHandler();
+			Handler handler = null;
+			switch (code) {
+				case Req.LOGIN:
+					handler = new LoginHandler();
+					break;
+				case Req.EXIT:
+					handler = new ExitHandler();
+					break;
+				default:
+					throw new RuntimeException("code不对，请参考Res.java");// TODO:不应该会执行到这里，因为已经verifyCode
+			}
+			return handler;
 		}
 	}
 }
