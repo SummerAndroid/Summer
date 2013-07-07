@@ -82,4 +82,9 @@ public class TaskletItemArg implements java.io.Serializable {
 		this.comment = comment;
 	}
 
+	@Override public String toString() {
+		return "TaskletItemArg [id=" + id + ", taskletItemId=" + taskletItemId
+				+ ", name=" + name + ", value=" + value + ", comment="
+				+ comment + "]";
+	}
 }

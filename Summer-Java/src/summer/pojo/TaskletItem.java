@@ -1,5 +1,7 @@
 package summer.pojo;
 
+import java.util.List;
+
 /**
  * TaskletItem entity. @author MyEclipse Persistence Tools
  */
@@ -16,6 +18,8 @@ public class TaskletItem implements java.io.Serializable {
 	private Long taskletId;
 	private Long stuffId;
 	private String name;
+
+	private List<TaskletItemArg> argList;
 
 	// Constructors
 
@@ -64,4 +68,17 @@ public class TaskletItem implements java.io.Serializable {
 		this.name = name;
 	}
 
+	public List<TaskletItemArg> getArgList() {
+		return argList;
+	}
+
+	public void setArgList(List<TaskletItemArg> argList) {
+		this.argList = argList;
+	}
+
+	@Override public String toString() {
+		return "TaskletItem [id=" + id + ", taskletId=" + taskletId
+				+ ", stuffId=" + stuffId + ", name=" + name + ", argList="
+				+ argList + "]";
+	}
 }

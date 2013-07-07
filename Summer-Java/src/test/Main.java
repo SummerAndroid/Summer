@@ -14,7 +14,7 @@ import org.apache.mina.transport.socket.nio.NioSocketConnector;
 import summer.inf.I.Req;
 import summer.inf.I.Sys;
 import summer.inf.Request;
-import summer.pojo.User;
+import summer.pojo.Tasklet;
 
 /**
  * @author zhenzxie
@@ -33,11 +33,10 @@ public class Main {
 
 			@Override public void sessionOpened(IoSession session)
 					throws Exception {
-				User user = new User();
-				user.setId(Long.valueOf(10001));
-				session.write(Request.createRequest(Req.TASKLET_PULL, user,
-						1000001L, 1000001L, false,
-						Req.TASKLET_LIST_ORDER_CYCLE_DES));
+				Tasklet tasklet = new Tasklet();
+				tasklet.setId(1L);
+				session.write(Request.createRequest(Req.TASKLET_ITEM_PULL,
+						tasklet));
 
 			}
 

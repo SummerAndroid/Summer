@@ -87,7 +87,8 @@ public final class I {
 		 * 请求：requestCode = TASKLET_PULL;requestArgs =
 		 * {User{id},Long,Long,Boolean;String}
 		 * <p>
-		 * 应答：responseCode = OK|BAD_*;responseArgs = {}
+		 * 应答：responseCode = OK|BAD_*;responseArgs =
+		 * {Tasklet,Tasklet,...|String}
 		 * <p>
 		 * 解释：领取任务请求包括历史任务请求和未完成任务请求的领取。requestArgs中第一个long表示开始的时间，
 		 * 第二个long表示结束的时间，boolean表示任务是否完成。String表示对结果的排序方法，参考
@@ -101,7 +102,7 @@ public final class I {
 		 * 并且现在还不想支持多字段排序 :(
 		 * <p>
 		 * 为了节约带宽，只是将Tasklet对象发送给客户端，并没有含有具体的TaskletItem对象。如果需要请使用
-		 * {@link Req#TASkLETITEM_PULL} </strong>
+		 * {@link Req#TASKLET_ITEM_PULL} </strong>
 		 * <p>
 		 * 如：
 		 * 
@@ -119,7 +120,27 @@ public final class I {
 		 */
 		public final static int TASKLET_PULL = 12;
 
-		public final static int TASkLETITEM_PULL = 13;
+		/**
+		 * 领取具体一个任务号
+		 * <p>
+		 * 请求：requestCode = TASKLET_ITEM_PULLL;requestArgs = {Tasklet{id}}
+		 * <p>
+		 * 应答：responseCode = OK | BAD_*;responseArgs =
+		 * {TaskletItem,TaskletItem,...|String}
+		 * <p>
+		 * 解释：通过Tasklet的id来请求一个Tasklet的具体内容。
+		 * 返回的responseArgs链表中包含了Tasklet的所有TaskletItem对象
+		 * 。每个TaskletItem中包含了所有需要检查的内容，其数据结构是一个含有name-value pair的链表
+		 * <p>
+		 * 如：
+		 * 
+		 * <pre class="prettyprint">
+		 * Tasklet tasklet = new TaskLet();
+		 * tasklet.setId(1L);
+		 * session.write(Req.TASKLET_ITEM_PULL, tasklet);
+		 * </pre>
+		 */
+		public final static int TASKLET_ITEM_PULL = 13;
 
 		/**
 		 * 退出请求号。
