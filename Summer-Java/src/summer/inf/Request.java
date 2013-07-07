@@ -61,7 +61,9 @@ public class Request implements Serializable {
 	 * convenient method for create response
 	 * 
 	 * @param code
+	 *            requestCode
 	 * @param object
+	 *            要放到{@code requestArgs}中的对象
 	 * @return
 	 */
 	public static Request createRequest(int code, Object object) {
@@ -77,7 +79,9 @@ public class Request implements Serializable {
 	 * convenient method for create response
 	 * 
 	 * @param code
+	 *            requestCode
 	 * @param objects
+	 *            要放到{@code requestArgs}中的对象数组
 	 * @return
 	 */
 	public static Request createRequest(int code, Object... objects) {

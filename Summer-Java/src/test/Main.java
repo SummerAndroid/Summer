@@ -34,9 +34,9 @@ public class Main {
 			@Override public void sessionOpened(IoSession session)
 					throws Exception {
 				User user = new User();
-				user.setId(Long.valueOf(10000));
-				user.setPassword("123456");
-				session.write(Request.createRequest(Req.LOGIN, user));
+				// user.setId(Long.valueOf(10000));
+				// user.setPassword("123456");
+				session.write(Request.createRequest(Req.EXIT, user));
 			}
 
 			@Override public void messageReceived(IoSession session,

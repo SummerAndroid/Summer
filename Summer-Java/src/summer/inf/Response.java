@@ -61,7 +61,9 @@ public class Response implements Serializable {
 	 * convenient method for create response
 	 * 
 	 * @param code
+	 *            responseCode
 	 * @param object
+	 *            要放到{@code responseArgs}中的对象
 	 * @return
 	 */
 	public static Response createResponse(int code, Object object) {
@@ -77,7 +79,9 @@ public class Response implements Serializable {
 	 * convenient method for create response
 	 * 
 	 * @param code
+	 *            responseCode
 	 * @param objects
+	 *            要放到{@code responseArgs}中的对象数组
 	 * @return
 	 */
 	public static Response createResponse(int code, Object... objects) {

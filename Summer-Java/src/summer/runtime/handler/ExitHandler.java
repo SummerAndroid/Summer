@@ -3,17 +3,49 @@ package summer.runtime.handler;
 import summer.inf.I.Res;
 import summer.inf.Request;
 import summer.inf.Response;
+import summer.pojo.User;
 
 /**
- *
+ * 
+ * 退出处理
+ * 
  * @author zhenzxie
  * @since 1.0
  */
 public class ExitHandler extends Handler {
 
 	@Override public Response handle(Request request) {
-		// TODO:now do nothing...
-		return Response.createResponse(Res.OK, "退出成功！");
+		Response response = super.handle(request);
+		if (response != null)
+			return response;
+		log.info(((User) request.getRequestArgs().get(0)).toString() + " exit.");
+		return Response.createResponse(Res.OK, Res.valueOf(Res.OK));
 	}
 
+	@Override protected boolean verify(Request request) {
+		if (super.verify(request)) {
+			if (request.getRequestArgs().size() == 1) {
+				Object o = request.getRequestArgs().get(0);
+				if (o instanceof User) {
+					User user = (User) o;
+					if (user.getId() != null || user.getName() != null) {
+						return true;
+					} else {
+						verifyError = new VerifyError(Res.BAD_REQUESTARG_ARG,
+								Res.valueOf(Res.BAD_REQUESTARG_ARG)
+										+ request.getRequestArgs());
+					}
+				} else {
+					verifyError = new VerifyError(Res.BAD_REQUESTARG_TYPE,
+							Res.valueOf(Res.BAD_REQUESTARG_TYPE)
+									+ request.getRequestArgs());
+				}
+			} else {
+				verifyError = new VerifyError(Res.BAD_REQUESTARG_MORE,
+						Res.valueOf(Res.BAD_REQUESTARG_MORE)
+								+ request.getRequestArgs());
+			}
+		}
+		return false;
+	}
 }
