@@ -1,5 +1,6 @@
 package summer.inf;
 
+import summer.pojo.Tasklet;
 
 
 
@@ -41,11 +42,13 @@ public final class I {
 		 * 
 		 * <p>
 		 * 如：
+		 * 
 		 * <pre class="prettyprint">
 		 * User user = new User();
 		 * user.setId(Long.valueOf(10000));
 		 * user.setPassword(&quot;123456&quot;);
 		 * session.write(Request.createRequest(Req.LOGIN, user));
+		 * </pre>
 		 */
 		public final static int LOGIN = 10;
 
@@ -61,11 +64,11 @@ public final class I {
 		 * 其他实例域可以设置为新值。如果不设置新值，则让实例域保持旧值。
 		 * <p>
 		 * <strong>不支持修改用户id</strong>
-		 * 
 		 * <p>
 		 * 如：
+		 * 
 		 * <pre class="prettyprint">
-		 * User user = new User();
+		 * User user = new User()//or use full constructor
 		 * user.setId(Long.valueOf(10000));// modified by id
 		 * user.setName(&quot;sduxzz&quot;);// old value
 		 * user.setPassword(&quot;654321&quot;);// new value
@@ -74,8 +77,49 @@ public final class I {
 		 * user.setTellphone(&quot;18769783279&quot;);// old value
 		 * user.setAddress(&quot;天国&quot;);// old value
 		 * session.write(Request.createRequest(Req.USER_MODIFIED, user));
+		 * </pre>
 		 */
 		public final static int USER_MODIFIED = 11;
+
+		/**
+		 * 领取任务请求号
+		 * <p>
+		 * 请求：requestCode = TASKLET_PULL;requestArgs =
+		 * {User{id},Long,Long,Boolean;String}
+		 * <p>
+		 * 应答：responseCode = OK|BAD_*;responseArgs = {}
+		 * <p>
+		 * 解释：领取任务请求包括历史任务请求和未完成任务请求的领取。requestArgs中第一个long表示开始的时间，
+		 * 第二个long表示结束的时间，boolean表示任务是否完成。String表示对结果的排序方法，参考
+		 * {@code TASKLET_LIST_ORDER_*}。 返回的responseArgs是包含了{@link Tasklet}
+		 * 的结果链表。<strong>如果要获取所有未完成任务，两个long值都设置为{@link #TASKLET_ALL}
+		 * ，boolean设置为false；如果要获取所有完成任务， 两个long值设置为{@link #TASKLET_ALL}，
+		 * boolean设置为true；
+		 * <p>
+		 * 并且现在还不想支持用用户名来获取任务:(
+		 * <p>
+		 * 并且现在还不想支持多字段排序 :(
+		 * <p>
+		 * 为了节约带宽，只是将Tasklet对象发送给客户端，并没有含有具体的TaskletItem对象。如果需要请使用
+		 * {@link Req#TASkLETITEM_PULL} </strong>
+		 * <p>
+		 * 如：
+		 * 
+		 * <pre class="prettyprint">
+		 * User user = new User();
+		 * user.setId(10000);
+		 * session.write(Req.TASKLET_PULL, user, Long.valueOf(start), Long.valueOf(end),
+		 * 		false);
+		 * 
+		 * User user = new User();
+		 * user.setId(10000);
+		 * session.write(Req.TASKLET_PULL, user, Long.valueOf(TASKLET_ALL),
+		 * 		Long.valueOf(TASKLET_ALL), false);
+		 * </pre>
+		 */
+		public final static int TASKLET_PULL = 12;
+
+		public final static int TASkLETITEM_PULL = 13;
 
 		/**
 		 * 退出请求号。
@@ -88,14 +132,29 @@ public final class I {
 		 * 中BAD_*，具体含义参加注释，且链表中的对象String TODO:确定exit的值，使得这些请求号是连续的。
 		 * <p>
 		 * 如：
+		 * 
 		 * <pre class="prettyprint">
 		 * User user = new User();
 		 * user.setId(Long.valueOf(10000));
 		 * session.write(Request.createRequest(Req.EXIT, user));
-		 * 
+		 * </pre>
 		 */
 		public final static int EXIT = 50;
 
+		// --------一些默认的特殊值，从-1开始--------
+		/**
+		 * 用于获取所以任务的默认特殊值
+		 */
+		public final static long TASKLET_ALL = -1;
+
+		// --------TASKLET的排序--------
+		public final static String TASKLET_LIST_ORDER_TIME_DES = " last_time desc ";
+
+		public final static String TASKLET_LIST_ORDER_TIME_ASC = " last_time asc ";
+
+		public final static String TASKLET_LIST_ORDER_CYCLE_DES = " cycle desc ";
+
+		public final static String TASKLET_LIST_ORDER_CYCYLE_ASC = " cycle asc ";
 	}
 
 	/**

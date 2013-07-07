@@ -90,8 +90,8 @@ public abstract class Handler {
 	/**
 	 * 根据具体协议（参考{@link I.Req}）
 	 * 来验证客户端传递来的<strong>Request对象（requestCode无需验证）</strong>是否符合协议。 <li>
-	 * 符合协议，返回true，不用设置 {@link #verifyError} <li>不符合协议，返回false，将错误信息设置在
-	 * {@link #verifyError} 对象中，以供{@link #handle(Request)}方法使用
+	 * 符合协议，返回true，不用设置 {@link #verifyError} <li>不符合协议，返回false，<strong>将错误信息设置在
+	 * {@link #verifyError} 对象中</strong>，以供{@link #handle(Request)}方法使用
 	 * 
 	 * 在Handler类的实现中验证了，requestArg是否为null，长度是否为0。若为null或长度为0，则返回false，且置
 	 * {@link #verifyError}。如果不为null且长度不为0则返回true。子类可以调用这个方法，除去一些重复逻辑

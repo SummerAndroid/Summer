@@ -4,10 +4,13 @@ import java.util.List;
 
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import summer.inf.I.Req;
 import summer.pojo.Tasklet;
 
 /**
@@ -27,6 +30,27 @@ public class TaskletDAO extends BaseHibernateDAO {
 	public static final String USER_ID = "userId";
 	public static final String NAME = "name";
 	public static final String CYCLE = "cycle";
+	public static final String LAST_TIME = "last_time";
+
+	public List<Tasklet> findBy(long userId, long start, long end,
+			boolean isFinish, String order) {
+		log.debug("find Tasklet instance");
+		String sql = createSql(start, end, isFinish);
+		Session session = getSession();
+		SQLQuery query = session.createSQLQuery(sql);
+		query.setLong(0, userId);
+		if (start == end && start == Req.TASKLET_ALL) {// 我是很不想重复这个判断的...
+			query.setString(1, order);
+		} else {
+			query.setLong(1, start);
+			query.setLong(2, end);
+			query.setString(3, order);
+		}
+		query.addEntity(Tasklet.class);
+		log.info(query.toString());
+		@SuppressWarnings("unchecked") List<Tasklet> tasklets = query.list();
+		return tasklets;
+	}
 
 	public void save(Tasklet transientInstance) {
 		log.debug("saving Tasklet instance");
@@ -65,8 +89,7 @@ public class TaskletDAO extends BaseHibernateDAO {
 	public List findByExample(Tasklet instance) {
 		log.debug("finding Tasklet instance by example");
 		try {
-			List results = getSession()
-.createCriteria("summer.pojo.Tasklet")
+			List results = getSession().createCriteria("summer.pojo.Tasklet")
 					.add(Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
@@ -148,5 +171,32 @@ public class TaskletDAO extends BaseHibernateDAO {
 			log.error("attach failed", re);
 			throw re;
 		}
+	}
+	
+	/**
+	 * @param isFinish
+	 */
+	private String createSql(long start, long end, boolean isFinish) {
+		// select id,name,cycle,last_time from tasklet where user_id = ? and last_time >= ? and last_time <= ? and cycle=|<>0 group by ?;
+		// select id,name,cycle,last_time from tasklet where user_id = ? and cycle=|<>0 group by ?;
+		StringBuilder builder = new StringBuilder();
+		builder.append("select id,user_id,");
+		builder.append(NAME);
+		builder.append(",");
+		builder.append(CYCLE);
+		builder.append(",");
+		builder.append(LAST_TIME);
+		builder.append(" from tasklet where user_id = ? and ");
+		// 用&&比较好理解，如果start == end && start == Req.TASKLET_ALL,则说明要获取所有的任务
+		if (start == end && start == Req.TASKLET_ALL) {} else {
+			builder.append(LAST_TIME);
+			builder.append(" >= ? and ");
+			builder.append(LAST_TIME);
+			builder.append(" <= ? and ");
+		}
+		builder.append(CYCLE);
+		builder.append(isFinish ? " = 0 " : " <> 0 ");// isFinish = true,则需要查询完成的任务， isFinish = false，则需要查询未完成任务
+		builder.append("order by ? ;");
+		return builder.toString();
 	}
 }

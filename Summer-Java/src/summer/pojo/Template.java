@@ -1,6 +1,5 @@
 package summer.pojo;
 
-import java.sql.Timestamp;
 
 /**
  * Template entity. @author MyEclipse Persistence Tools
@@ -16,7 +15,7 @@ public class Template implements java.io.Serializable {
 	private static final long serialVersionUID = 7394050824657215742L;
 	private Long id;
 	private String name;
-	private Timestamp createTime;
+	private Long createTime;
 
 	// Constructors
 
@@ -25,7 +24,7 @@ public class Template implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Template(String name, Timestamp createTime) {
+	public Template(String name, Long createTime) {
 		this.name = name;
 		this.createTime = createTime;
 	}
@@ -48,11 +47,11 @@ public class Template implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Timestamp getCreateTime() {
+	public Long getCreateTime() {
 		return this.createTime;
 	}
 
-	public void setCreateTime(Timestamp createTime) {
+	public void setCreateTime(Long createTime) {
 		this.createTime = createTime;
 	}
 

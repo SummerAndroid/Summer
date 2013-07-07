@@ -25,7 +25,8 @@ public class LoginHandler extends Handler {
 		UserDAO dao = new UserDAO();
 		User target = null;
 		if (user.getId() == null) {// login by name
-			List<User> list = dao.findByName(user.getName());
+			@SuppressWarnings("unchecked") List<User> list = dao
+					.findByName(user.getName());
 			if (list == null || list.isEmpty()) {
 				return Response.createResponse(Res.BAD_LOGIN_NAME,
 						Res.valueOf(Res.BAD_LOGIN_NAME) + user.getName());

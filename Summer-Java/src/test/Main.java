@@ -34,15 +34,16 @@ public class Main {
 			@Override public void sessionOpened(IoSession session)
 					throws Exception {
 				User user = new User();
-				user.setId(Long.valueOf(10000));// modified by id
-				user.setName("sduxzz");// old value
-				user.setPassword("654321");// new value
-				user.setPermission(7);// new value
-				user.setType(1);// old value
-				user.setTellphone("18769783279");// old value
-				user.setAddress("Ìì¹ú");// old value
-				session.write(Request.createRequest(Req.USER_MODIFIED, user));
+				user.setId(Long.valueOf(10001));
+				session.write(Request.createRequest(Req.TASKLET_PULL, user,
+						1000001L, 1000001L, false,
+						Req.TASKLET_LIST_ORDER_CYCLE_DES));
 
+			}
+
+			@Override public void messageSent(IoSession session, Object message)
+					throws Exception {
+				System.out.println(message.toString());
 			}
 
 			@Override public void messageReceived(IoSession session,
