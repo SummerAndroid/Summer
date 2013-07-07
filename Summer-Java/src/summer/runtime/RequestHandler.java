@@ -21,6 +21,7 @@ import summer.runtime.HandlerRunnable.Message;
 import summer.runtime.handler.ExitHandler;
 import summer.runtime.handler.Handler;
 import summer.runtime.handler.LoginHandler;
+import summer.runtime.handler.UserModifiedHandler;
 
 /**
  * 
@@ -180,6 +181,9 @@ public class RequestHandler extends IoHandlerAdapter {
 					break;
 				case Req.EXIT:
 					handler = new ExitHandler();
+					break;
+				case Req.USER_MODIFIED:
+					handler = new UserModifiedHandler();
 					break;
 				default:
 					throw new RuntimeException("code不对，请参考Res.java");// TODO:不应该会执行到这里，因为已经verifyCode

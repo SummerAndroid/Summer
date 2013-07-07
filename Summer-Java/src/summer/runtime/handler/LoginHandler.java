@@ -47,7 +47,7 @@ public class LoginHandler extends Handler {
 
 	@Override protected boolean verify(Request request) {
 		if (super.verify(request)) {
-			if (request.getRequestArgs().size() == 1) {
+			if (verifyArgsLength(request, 1)) {
 				Object o = request.getRequestArgs().get(0);
 				if (o instanceof User) {
 					User user = (User) o;
@@ -64,10 +64,6 @@ public class LoginHandler extends Handler {
 							Res.valueOf(Res.BAD_REQUESTARG_TYPE)
 									+ request.getRequestArgs());
 				}
-			} else {
-				verifyError = new VerifyError(Res.BAD_REQUESTARG_MORE,
-						Res.valueOf(Res.BAD_REQUESTARG_MORE)
-								+ request.getRequestArgs());
 			}
 		}
 		return false;

@@ -1,6 +1,8 @@
 package summer.inf;
 
 
+
+
 /**
  * @author zhenzxie
  */
@@ -36,6 +38,14 @@ public final class I {
 		 * <p>
 		 * 解释： 登录支持id或者用户名登录。登入成功，返回 {@link Res#OK}，且链表中包含User对象。登入失败，返回
 		 * {@link Res} 中BAD_*，具体含义参见注释，且链表中的对象或为String或为Throwable
+		 * 
+		 * <p>
+		 * 如：
+		 * <pre class="prettyprint">
+		 * User user = new User();
+		 * user.setId(Long.valueOf(10000));
+		 * user.setPassword(&quot;123456&quot;);
+		 * session.write(Request.createRequest(Req.LOGIN, user));
 		 */
 		public final static int LOGIN = 10;
 
@@ -47,8 +57,23 @@ public final class I {
 		 * 应答：responseCode = OK|BAD_*;responseArgs = {User{id,name,...}|String}
 		 * <p>
 		 * 解释：修改用户支持使用id或者用户名修改。使用id修改用户信息时，{@code User}
-		 * 其他的实例域可设置为新值。使用name修改用户信息时，{@code User}其他实例域可以设置为新值，而id可以不设置。
-		 * <strong>不可修改id</strong>
+		 * 其他的实例域可设置为新值。使用name修改用户信息时，{@code User}
+		 * 其他实例域可以设置为新值。如果不设置新值，则让实例域保持旧值。
+		 * <p>
+		 * <strong>不支持修改用户id</strong>
+		 * 
+		 * <p>
+		 * 如：
+		 * <pre class="prettyprint">
+		 * User user = new User();
+		 * user.setId(Long.valueOf(10000));// modified by id
+		 * user.setName(&quot;sduxzz&quot;);// old value
+		 * user.setPassword(&quot;654321&quot;);// new value
+		 * user.setPermission(7);// new value
+		 * user.setType(1);// old value
+		 * user.setTellphone(&quot;18769783279&quot;);// old value
+		 * user.setAddress(&quot;天国&quot;);// old value
+		 * session.write(Request.createRequest(Req.USER_MODIFIED, user));
 		 */
 		public final static int USER_MODIFIED = 11;
 
@@ -61,6 +86,13 @@ public final class I {
 		 * <p>
 		 * 解释：退出需要用户的id或者name。退出成功返回{@link Res#OK}，退出失败，返回{@link Res}
 		 * 中BAD_*，具体含义参加注释，且链表中的对象String TODO:确定exit的值，使得这些请求号是连续的。
+		 * <p>
+		 * 如：
+		 * <pre class="prettyprint">
+		 * User user = new User();
+		 * user.setId(Long.valueOf(10000));
+		 * session.write(Request.createRequest(Req.EXIT, user));
+		 * 
 		 */
 		public final static int EXIT = 50;
 
@@ -157,6 +189,8 @@ public final class I {
 					return "用户名不存在!name = ";
 				case BAD_LOGIN_PASSWORD:
 					return "密码错误!";
+				case BAD_SYS:
+					return "系统内部错误!message = ";
 				default:
 					return "";
 			}

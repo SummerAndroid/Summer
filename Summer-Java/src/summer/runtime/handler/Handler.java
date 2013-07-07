@@ -131,4 +131,29 @@ public abstract class Handler {
 		}
 		return true;
 	}
+
+	/**
+	 * 验证args的长度是否的期望长度，如果不等于期望长度，则设置{@code verifyError}
+	 * 
+	 * @param request
+	 *            请求
+	 * @param expected
+	 *            期望的长度
+	 * @return true，如果等于期望的长度；false，如果不等于期望长度
+	 */
+	protected final boolean verifyArgsLength(Request request, int expected) {
+		List<Object> list = request.getRequestArgs();
+		if (list.size() == expected) {
+			return true;
+		} else if (list.size() > expected) {
+			verifyError = new VerifyError(Res.BAD_REQUESTARG_MORE,
+					Res.valueOf(Res.BAD_REQUESTARG_MORE)
+							+ request.getRequestArgs());
+		} else {
+			verifyError = new VerifyError(Res.BAD_REQUESTARG_LESS,
+					Res.valueOf(Res.BAD_REQUESTARG_LESS)
+							+ request.getRequestArgs());
+		}
+		return false;
+	}
 }

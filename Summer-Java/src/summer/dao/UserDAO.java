@@ -133,6 +133,7 @@ public class UserDAO extends BaseHibernateDAO {
 		log.debug("merging User instance");
 		try {
 			User result = (User) getSession().merge(detachedInstance);
+			getSession().flush();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
