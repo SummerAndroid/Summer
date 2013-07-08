@@ -2,10 +2,12 @@ package summer.runtime.handler;
 
 import java.util.List;
 
+import summer.dao.TaskletDAO;
 import summer.dao.TaskletItemArgDAO;
 import summer.inf.I.Res;
 import summer.inf.Request;
 import summer.inf.Response;
+import summer.pojo.Tasklet;
 import summer.pojo.TaskletItem;
 import summer.pojo.TaskletItemArg;
 
@@ -22,6 +24,7 @@ public class TaskletItemPushHandler extends Handler {
 		Response response = super.handle(request);
 		if (response != null)
 			return response;
+		TaskletDAO taskletDAO = new TaskletDAO();
 		TaskletItemArgDAO argDAO = new TaskletItemArgDAO();
 		List<Object> list = request.getRequestArgs();
 		for (Object object : list) {
@@ -32,6 +35,12 @@ public class TaskletItemPushHandler extends Handler {
 				argDAO.merge(taskletItemArg);
 			}
 		}
+		// 修改Tasklet里的记录
+		TaskletItem item = (TaskletItem) list.get(0);
+		Tasklet tasklet = taskletDAO.findById(item.getTaskletId());
+		tasklet.setAccount(tasklet.getAccount() - 1);
+		tasklet.setLast_time(System.currentTimeMillis());
+		taskletDAO.attachDirty(tasklet);
 		return Response.createResponse(Res.OK, Res.valueOf(Res.OK));
 	}
 
