@@ -1,10 +1,11 @@
 package summer.inf;
 
+import summer.dao.UserDAO;
 import summer.pojo.Tasklet;
 
 /**
  * 
- * 客服端与服务器交互的协议和使用的常量
+ * 客服端与服务器交互的协议和使用的常量。
  * 
  * @author zhenzxie
  */
@@ -26,6 +27,11 @@ public final class I {
 
 	/**
 	 * 客户端和服务器交互协议中使用到的请求号，从10开始
+	 * <p>
+	 * TODO:USER_MODIFIED 和
+	 * TASKLET_ITEM_PUSH两个请求有隐含的bug。触发条件是，要修改的数据在数据库中不存在，即提供的id不存在
+	 * 。结果是，将在数据库中插入一条新的记录，而不是更新某条记录。原因：{@link UserDAO#merge(summer.pojo.User)}
+	 * 并且没有做id是否存在的验证。解决：客户端提交数据的时候，确保id所表示的数据是存在的。
 	 * 
 	 * @author zhenzxie
 	 */

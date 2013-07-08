@@ -43,11 +43,11 @@ public class Main {
 				taskletItem.setStuffId(1L);// 这个Item是检查id为1L的设备，这个id号可以使用下载任务内容中获得的那个设备id
 				List<TaskletItemArg> list = new ArrayList<TaskletItemArg>();
 				TaskletItemArg arg = new TaskletItemArg();
-				arg.setId(1L);
-				arg.setName("直径");
-				arg.setValue("0.8");
+				arg.setId(50L);
+				arg.setName("长度");
+				arg.setValue("10");
 				arg.setTaskletItemId(1L);
-				arg.setComment("直径怎么会变长了呢？");
+				arg.setComment("长度怎么会变短了呢？");
 				list.add(arg);
 				taskletItem.setArgList(list);// list中设置为检查后属性和结果对。参考TaskletItemArg类
 				session.write(Request.createRequest(Req.TASKLET_ITEM_PUSH,
