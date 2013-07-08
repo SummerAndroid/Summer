@@ -1,11 +1,12 @@
 package summer.pojo;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Stuff entity. @author MyEclipse Persistence Tools
+ * 
+ * @author zhenzxie
  */
-
 public class Stuff implements java.io.Serializable {
 
 	// Fields
@@ -22,7 +23,11 @@ public class Stuff implements java.io.Serializable {
 	private String address;
 	private String factory;
 	private String zxing;
-	private Timestamp startTime;
+	private Long startTime;
+
+	// zhenzxie add some field at here...
+	private String categoryName;
+	private List<StuffArg> argList;
 
 	// Constructors
 
@@ -32,7 +37,7 @@ public class Stuff implements java.io.Serializable {
 
 	/** full constructor */
 	public Stuff(Long stuffCategoryId, String code, Double price, Integer life,
-			String address, String factory, String zxing, Timestamp startTime) {
+			String address, String factory, String zxing, Long startTime) {
 		this.stuffCategoryId = stuffCategoryId;
 		this.code = code;
 		this.price = price;
@@ -109,12 +114,35 @@ public class Stuff implements java.io.Serializable {
 		this.zxing = zxing;
 	}
 
-	public Timestamp getStartTime() {
+	public Long getStartTime() {
 		return this.startTime;
 	}
 
-	public void setStartTime(Timestamp startTime) {
+	public void setStartTime(Long startTime) {
 		this.startTime = startTime;
 	}
 
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public List<StuffArg> getArgList() {
+		return argList;
+	}
+
+	public void setArgList(List<StuffArg> argList) {
+		this.argList = argList;
+	}
+
+	@Override public String toString() {
+		return "Stuff [id=" + id + ", stuffCategoryId=" + stuffCategoryId
+				+ ", code=" + code + ", price=" + price + ", life=" + life
+				+ ", address=" + address + ", factory=" + factory + ", zxing="
+				+ zxing + ", startTime=" + startTime + ", categoryName="
+				+ categoryName + ", argList=" + argList + "]";
+	}
 }

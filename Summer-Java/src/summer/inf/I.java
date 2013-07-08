@@ -1,6 +1,7 @@
 package summer.inf;
 
 import summer.dao.UserDAO;
+import summer.pojo.Stuff;
 import summer.pojo.Tasklet;
 
 /**
@@ -151,7 +152,7 @@ public final class I {
 		 * <pre class="prettyprint">
 		 * Tasklet tasklet = new TaskLet();
 		 * tasklet.setId(1L);
-		 * session.write(Req.TASKLET_ITEM_PULL, tasklet);
+		 * session.write(Request.createRequest(Req.TASKLET_ITEM_PULL, tasklet));
 		 * </pre>
 		 */
 		public final static int TASKLET_ITEM_PULL = 13;
@@ -188,6 +189,26 @@ public final class I {
 		 * </pre>
 		 */
 		public final static int TASKLET_ITEM_PUSH = 14;
+
+		/**
+		 * 获取设备信息请求号
+		 * <p>
+		 * 请求：requestCode = STUFF_INFO_PULL;requestArgs = {Stuff{id}}
+		 * <p>
+		 * 应答：responseCode = OK|BAD_*;responseArgs = {Stuff{id,code,...}|String}
+		 * <p>
+		 * 解释：使用stuff对象中含有的id来请求特定id的stuff的具体信息。具体信息，包括：id，code，类别，address，等等。参考
+		 * {@link Stuff}
+		 * <p>
+		 * 如：
+		 * 
+		 * <pre class="prettyprint">
+		 * Stuff stuff = new Stuff();
+		 * stuff.setId(1L);
+		 * session.write(Request.createRequest(Req.STUFF_INFO_PULL, stuff));
+		 * </pre>
+		 */
+		public final static int STUFF_INFO_PULL = 15;
 
 		/**
 		 * 退出请求号。
