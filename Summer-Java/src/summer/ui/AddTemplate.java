@@ -134,6 +134,15 @@ public class AddTemplate extends JFrame {
 		table.getColumnModel().getColumn(2).setPreferredWidth(126);
 		scrollPane.setViewportView(table);
 		
+		JButton btnNewButton_1 = new JButton("\u6DFB\u52A0");
+		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.gridwidth = 2;
+		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton_1.gridx = 4;
+		gbc_btnNewButton_1.gridy = 3;
+		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+		btnNewButton_1.setFont(new Font("ËÎÌו", Font.PLAIN, 12));
+		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
 		gbc_scrollPane_1.gridheight = 4;
@@ -144,27 +153,13 @@ public class AddTemplate extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		contentPane.add(scrollPane_1, gbc_scrollPane_1);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(Color.WHITE);
-		panel_1.setLayout(null);
-		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.gridheight = 2;
-		gbc_panel_1.gridwidth = 2;
-		gbc_panel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
-		gbc_panel_1.gridx = 4;
-		gbc_panel_1.gridy = 4;
-		contentPane.add(panel_1, gbc_panel_1);
-		
-		JButton btnNewButton_1 = new JButton("\u6DFB\u52A0");
-		btnNewButton_1.setFont(new Font("ËÎÌו", Font.PLAIN, 12));
-		btnNewButton_1.setBounds(0, 22, 67, 23);
-		panel_1.add(btnNewButton_1);
-		
 		JButton button_1 = new JButton("\u5220\u9664");
+		GridBagConstraints gbc_button_1 = new GridBagConstraints();
+		gbc_button_1.insets = new Insets(0, 0, 5, 5);
+		gbc_button_1.gridx = 5;
+		gbc_button_1.gridy = 6;
+		contentPane.add(button_1, gbc_button_1);
 		button_1.setFont(new Font("ËÎÌו", Font.PLAIN, 12));
-		button_1.setBounds(20, 151, 67, 23);
-		panel_1.add(button_1);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
