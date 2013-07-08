@@ -15,7 +15,8 @@ public class Tasklet implements java.io.Serializable {
 	private Long id;
 	private Long userId;
 	private String name;
-	private Integer cycle;
+	private Long cycle;
+	private Integer account;
 	private Long last_time;
 
 	// Constructors
@@ -25,7 +26,7 @@ public class Tasklet implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Tasklet(Long userId, String name, Integer cycle) {
+	public Tasklet(Long userId, String name, Long cycle) {
 		this.userId = userId;
 		this.name = name;
 		this.cycle = cycle;
@@ -57,11 +58,11 @@ public class Tasklet implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Integer getCycle() {
+	public Long getCycle() {
 		return this.cycle;
 	}
 
-	public void setCycle(Integer cycle) {
+	public void setCycle(Long cycle) {
 		this.cycle = cycle;
 	}
 
@@ -73,11 +74,20 @@ public class Tasklet implements java.io.Serializable {
 		this.last_time = last_time;
 	}
 
+	public Integer getAccount() {
+		return account;
+	}
+
+	public void setAccount(Integer account) {
+		this.account = account;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override public String toString() {
 		return "Tasklet [id=" + id + ", userId=" + userId + ", name=" + name
-				+ ", cycle=" + cycle + ", last_time=" + last_time + "]";
+				+ ", cycle=" + cycle + ", account=" + account + ", last_time="
+				+ last_time + "]";
 	}
 }

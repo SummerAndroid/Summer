@@ -21,9 +21,14 @@
 			</column>
 		</property>
 		<property generated="never" lazy="false" name="cycle"
-			type="java.lang.Integer">
-			<column name="cycle" not-null="true">
+			type="java.lang.Long">
+			<column name="cycle" not-null="true" default="0">
 				<comment>cycle of this tasklet</comment>
+			</column>
+		</property>
+		<property generated="never" lazy="false" name="account"
+			type="java.lang.Integer">
+			<column name="account" not-null="true" default="1">
 			</column>
 		</property>
 		<property generated="never" lazy="false" name="last_time"

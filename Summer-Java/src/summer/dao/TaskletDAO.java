@@ -30,10 +30,12 @@ public class TaskletDAO extends BaseHibernateDAO {
 	public static final String USER_ID = "userId";
 	public static final String NAME = "name";
 	public static final String CYCLE = "cycle";
+	public static final String ACCOUNT = "account";
 	public static final String LAST_TIME = "last_time";
 
 	public List<Tasklet> findBy(long userId, long start, long end,
 			boolean isFinish, String order) {
+		// TODO:对cycle的使用错了。记得改
 		log.debug("find Tasklet instance");
 		String sql = createSql(start, end, isFinish);
 		Session session = getSession();
@@ -177,13 +179,15 @@ public class TaskletDAO extends BaseHibernateDAO {
 	 * @param isFinish
 	 */
 	private String createSql(long start, long end, boolean isFinish) {
-		// select id,name,cycle,last_time from tasklet where user_id = ? and last_time >= ? and last_time <= ? and cycle=|<>0 group by ?;
-		// select id,name,cycle,last_time from tasklet where user_id = ? and cycle=|<>0 group by ?;
+		// select id,name,cycle,account,last_time from tasklet where user_id = ? and last_time >= ? and last_time <= ? and account=|<>0 group by ?;
+		// select id,name,cycle,account,last_time from tasklet where user_id = ? and account=|<>0 group by ?;
 		StringBuilder builder = new StringBuilder();
 		builder.append("select id,user_id,");
 		builder.append(NAME);
 		builder.append(",");
 		builder.append(CYCLE);
+		builder.append(",");
+		builder.append(ACCOUNT);
 		builder.append(",");
 		builder.append(LAST_TIME);
 		builder.append(" from tasklet where user_id = ? and ");
@@ -194,7 +198,7 @@ public class TaskletDAO extends BaseHibernateDAO {
 			builder.append(LAST_TIME);
 			builder.append(" <= ? and ");
 		}
-		builder.append(CYCLE);
+		builder.append(ACCOUNT);
 		builder.append(isFinish ? " = 0 " : " <> 0 ");// isFinish = true,则需要查询完成的任务， isFinish = false，则需要查询未完成任务
 		builder.append("order by ? ;");
 		return builder.toString();
