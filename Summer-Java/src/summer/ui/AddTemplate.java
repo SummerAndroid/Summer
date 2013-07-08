@@ -18,6 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AddTemplate extends JFrame {
 
@@ -49,16 +51,16 @@ public class AddTemplate extends JFrame {
 		setBackground(Color.WHITE);
 		setTitle("\u6A21\u677F\u4FE1\u606F");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 548, 574);
+		setBounds(100, 100, 612, 513);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{28, 54, 60, 46, 37, 52, 54, 52, 85, 27, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 28, 20, 77, 68, 98, 113, 28, 44, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[]{28, 54, 60, 46, 56, 52, 54, 52, 85, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 28, 20, 100, 109, 80, 28, 76, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel lblNewLabel_1 = new JLabel(" ");
@@ -108,7 +110,7 @@ public class AddTemplate extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridheight = 4;
+		gbc_scrollPane.gridheight = 3;
 		gbc_scrollPane.gridwidth = 3;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
@@ -134,18 +136,9 @@ public class AddTemplate extends JFrame {
 		table.getColumnModel().getColumn(2).setPreferredWidth(126);
 		scrollPane.setViewportView(table);
 		
-		JButton btnNewButton_1 = new JButton("\u6DFB\u52A0");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.gridwidth = 2;
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_btnNewButton_1.gridx = 4;
-		gbc_btnNewButton_1.gridy = 3;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
-		btnNewButton_1.setFont(new Font("宋体", Font.PLAIN, 12));
-		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
-		gbc_scrollPane_1.gridheight = 4;
+		gbc_scrollPane_1.gridheight = 3;
 		gbc_scrollPane_1.gridwidth = 3;
 		gbc_scrollPane_1.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
@@ -153,33 +146,44 @@ public class AddTemplate extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		contentPane.add(scrollPane_1, gbc_scrollPane_1);
 		
+		JButton btnNewButton_1 = new JButton("\u6DFB\u52A0");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
+		gbc_btnNewButton_1.insets = new Insets(0, 0, 5, 5);
+		gbc_btnNewButton_1.gridx = 4;
+		gbc_btnNewButton_1.gridy = 4;
+		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+		btnNewButton_1.setFont(new Font("宋体", Font.PLAIN, 12));
+		
 		JButton button_1 = new JButton("\u5220\u9664");
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
 		gbc_button_1.insets = new Insets(0, 0, 5, 5);
 		gbc_button_1.gridx = 5;
-		gbc_button_1.gridy = 6;
+		gbc_button_1.gridy = 5;
 		contentPane.add(button_1, gbc_button_1);
 		button_1.setFont(new Font("宋体", Font.PLAIN, 12));
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setLayout(null);
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.insets = new Insets(0, 0, 0, 5);
-		gbc_panel.gridwidth = 8;
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 8;
-		contentPane.add(panel, gbc_panel);
-		
 		JButton btnNewButton = new JButton("\u7F16 \u8F91");
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton.gridx = 2;
+		gbc_btnNewButton.gridy = 7;
+		contentPane.add(btnNewButton, gbc_btnNewButton);
 		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 14));
-		btnNewButton.setBounds(25, 0, 77, 34);
-		panel.add(btnNewButton);
 		
 		JButton button = new JButton("\u63D0 \u4EA4");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_button = new GridBagConstraints();
+		gbc_button.insets = new Insets(0, 0, 0, 5);
+		gbc_button.gridx = 7;
+		gbc_button.gridy = 7;
+		contentPane.add(button, gbc_button);
 		button.setFont(new Font("宋体", Font.PLAIN, 14));
-		button.setBounds(353, 0, 77, 34);
-		panel.add(button);
 	}
 }

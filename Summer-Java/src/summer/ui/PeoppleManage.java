@@ -94,8 +94,8 @@ public class PeoppleManage extends JFrame {
 		leftscrollPane.setViewportView(scantree);
 		
 //		people1 = new  PeopleM1();
-//		people2 = new  PeopleM2();
-		 template=new TemplateDefault();
+		people2 = new  PeopleM2();
+//		 template=new TemplateDefault();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridheight = 2;
 		gbc_panel.insets = new Insets(0, 0, 5, 0);
@@ -103,7 +103,7 @@ public class PeoppleManage extends JFrame {
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
 //		contentPane.add(people1, gbc_panel);
-//		contentPane.add(people2, gbc_panel);
-		contentPane.add(template, gbc_panel);
+		contentPane.add(people2, gbc_panel);
+//		contentPane.add(template, gbc_panel);
 	}
 }
