@@ -127,6 +127,7 @@ public class TaskletItemArgDAO extends BaseHibernateDAO {
 		try {
 			TaskletItemArg result = (TaskletItemArg) getSession().merge(
 					detachedInstance);
+			getSession().flush();
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {

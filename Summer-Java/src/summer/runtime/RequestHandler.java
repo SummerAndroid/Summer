@@ -196,6 +196,7 @@ public class RequestHandler extends IoHandlerAdapter {
 					break;
 				case Req.TASKLET_ITEM_PUSH:
 					handler = new TaskletItemPushHandler();
+					break;
 				default:
 					throw new RuntimeException("code不对，请参考Res.java");// TODO:不应该会执行到这里，因为已经verifyCode
 			}

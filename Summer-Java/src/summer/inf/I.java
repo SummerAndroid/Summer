@@ -149,15 +149,37 @@ public final class I {
 		 * </pre>
 		 */
 		public final static int TASKLET_ITEM_PULL = 13;
-		
+
 		/**
 		 * 上传完成的任务的内容请求号
 		 * <p>
-		 * 请求：requestCode = TASKLET_ITEM_PUSH;requestArgs
+		 * 请求：requestCode = TASKLET_ITEM_PUSH;requestArgs =
+		 * {TaskletItem{id,tasklet_id,stuff_id,name,List,...},...}
 		 * <p>
+		 * 应答：responseCode = OK|BAD_*;responseArgs = {String}
 		 * <p>
+		 * 解释：上传任务的功能每次只能上传一个任务的所有Item，放在requestArgs链表中，必须包括id，tasklet_id,
+		 * stuff_id,List<TemplateItemArgs>,name。返回一个字符串消息，为解释responseCode
 		 * <p>
+		 * 如：
 		 * 
+		 * <pre class="prettyprint">
+		 * TaskletItem taskletItem = new TaskletItem();
+		 * taskletItem.setId(1L);
+		 * taskletItem.setName(&quot;检查电线杆1&quot;);
+		 * taskletItem.setTaskletId(1L);// 这个item是属于id为1L的任务，这个id号可以使用下载任务内容中获得的那个任务id
+		 * taskletItem.setStuffId(1L);// 这个Item是检查id为1L的设备，这个id号可以使用下载任务内容中获得的那个设备id
+		 * List&lt;TaskletItemArg&gt; list = new ArrayList&lt;TaskletItemArg&gt;();
+		 * TaskletItemArg arg = new TaskletItemArg();
+		 * arg.setId(1L);
+		 * arg.setName(&quot;直径&quot;);
+		 * arg.setValue(&quot;0.8&quot;);
+		 * arg.setTaskletItemId(1L);
+		 * arg.setComment(&quot;直径怎么会变长了呢？&quot;);
+		 * list.add(arg);
+		 * taskletItem.setArgList(list);// list中设置为检查后属性和结果对。参考TaskletItemArg类
+		 * session.write(Request.createRequest(Req.TASKLET_ITEM_PUSH, taskletItem));// 任务只包含一个Item
+		 * </pre>
 		 */
 		public final static int TASKLET_ITEM_PUSH = 14;
 
@@ -271,17 +293,17 @@ public final class I {
 				case BAD_REQUESTCODE:
 					return "requestCode错误!requestCode = ";
 				case BAD_REQUESTARGS_NULL:
-					return "requestArg为null!";
+					return "requestArgs为null!";
 				case BAD_REQUESTARGS_EMPTY:
-					return "requestArg为Empty!";
+					return "requestArgs为Empty!";
 				case BAD_REQUESTARGS_LESS:
-					return "requestArg中的参数太少了!requestArgs = ";
+					return "requestArgs中的参数太少了!requestArgs = ";
 				case BAD_REQUESTARGS_MORE:
-					return "requestArg中的参数太多了!requestArgs = ";
+					return "requestArgs中的参数太多了!requestArgs = ";
 				case BAD_REQUESTARGS_TYPE:
-					return "requestArg中的参数类型不正确!requestArgs = ";
+					return "requestArgs中的参数类型不正确!requestArgs = ";
 				case BAD_REQUESTARGS_ARG:
-					return "requestAra中的参数不符合协议！requestArgs = ";
+					return "requestArgs中的参数不符合协议！requestArgs = ";
 				case BAD_LOGIN_ID:
 					return "用户ID不存在!ID = ";
 				case BAD_LOGIN_NAME:
