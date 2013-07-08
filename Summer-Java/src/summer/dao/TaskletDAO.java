@@ -35,23 +35,85 @@ public class TaskletDAO extends BaseHibernateDAO {
 
 	public List<Tasklet> findBy(long userId, long start, long end,
 			boolean isFinish, String order) {
-		// TODO:对cycle的使用错了。记得改
 		log.debug("find Tasklet instance");
 		String sql = createSql(start, end, isFinish);
 		Session session = getSession();
 		SQLQuery query = session.createSQLQuery(sql);
 		query.setLong(0, userId);
 		if (start == end && start == Req.TASKLET_ALL) {// 我是很不想重复这个判断的...
-			query.setString(1, order);
+			long currentTime = System.currentTimeMillis();
+			query.setLong(1, currentTime);
+			query.setString(2, order);
 		} else {
 			query.setLong(1, start);
 			query.setLong(2, end);
-			query.setString(3, order);
+			long currentTime = System.currentTimeMillis();
+			query.setLong(3, currentTime);
+			query.setString(4, order);
 		}
 		query.addEntity(Tasklet.class);
 		log.info(query.toString());
 		@SuppressWarnings("unchecked") List<Tasklet> tasklets = query.list();
 		return tasklets;
+	}
+
+	/**
+	 * 
+	 * @param start
+	 * @param end
+	 * @param isFinish
+	 */
+	private String createSql(long start, long end, boolean isFinish) {
+
+		// WTF
+		// 获取一段时间内的历史任务：select id,name,cycle,account,last_time from tasklet
+		// where user_id = ? and last_time >= ? and last_time <= ? and
+		// (last_time + cycle > ? or account = 0)group by ?;
+		// 获取一段时间内的未完成任务：select id,name,cycle,account,last_time from tasklet
+		// where user_id = ? and last_time >= ? and last_time <= ? and
+		// account<>0 and last_time + cycle <= ? group by ?;
+		// 获取全部历史任务：select id,name,cycle,account,last_time from tasklet where
+		// user_id = ? and (last_time + cycle > ? or account = 0)group
+		// by ?;
+		// 获取全部为完成任务：select id,name,cycle,account,last_time from tasklet where
+		// user_id = ? and account<>0 and last_time + cycle <= ? group
+		// by ?;
+
+		StringBuilder builder = new StringBuilder();
+		builder.append("select id,user_id,");
+		builder.append(NAME);
+		builder.append(",");
+		builder.append(CYCLE);
+		builder.append(",");
+		builder.append(ACCOUNT);
+		builder.append(",");
+		builder.append(LAST_TIME);
+		builder.append(" from tasklet where user_id = ? and ");
+		// 用&&比较好理解，如果start == end && start == Req.TASKLET_ALL,则说明要获取所有的任务
+		if (start == end && start == Req.TASKLET_ALL) {} else {
+			builder.append(LAST_TIME);
+			builder.append(" >= ? and ");
+			builder.append(LAST_TIME);
+			builder.append(" <= ? and ");
+		}
+		if (isFinish) {// 历史任务
+			builder.append("( ");
+			builder.append(LAST_TIME);
+			builder.append(" + ");
+			builder.append(CYCLE);
+			builder.append(" > ? or ");
+			builder.append(ACCOUNT);
+			builder.append(" = 0 ) ");
+		} else {// 未完成任务
+			builder.append(ACCOUNT);
+			builder.append(" <> 0 and ");
+			builder.append(LAST_TIME);
+			builder.append(" + ");
+			builder.append(CYCLE);
+			builder.append(" <= ? ");
+		}
+		builder.append("order by ? ;");
+		return builder.toString();
 	}
 
 	public void save(Tasklet transientInstance) {
@@ -173,41 +235,5 @@ public class TaskletDAO extends BaseHibernateDAO {
 			log.error("attach failed", re);
 			throw re;
 		}
-	}
-	
-	/**
-	 * 
-	 * @param start
-	 * @param end
-	 * @param isFinish
-	 */
-	private String createSql(long start, long end, boolean isFinish) {
-		// select id,name,cycle,account,last_time from tasklet where user_id = ? and last_time >= ? and last_time <= ? and (account = 0 or currentTime < last_time+cycle )group by ?;
-		// select id,name,cycle,account,last_time from tasklet where user_id = ? and last_time >= ? and last_time <= ? and account=|<>0 group by ?;
-		// select id,name,cycle,account,last_time from tasklet where user_id = ? and account=|<>0 group by ?;
-
-		long currentTime = System.currentTimeMillis();
-
-		StringBuilder builder = new StringBuilder();
-		builder.append("select id,user_id,");
-		builder.append(NAME);
-		builder.append(",");
-		builder.append(CYCLE);
-		builder.append(",");
-		builder.append(ACCOUNT);
-		builder.append(",");
-		builder.append(LAST_TIME);
-		builder.append(" from tasklet where user_id = ? and ");
-		// 用&&比较好理解，如果start == end && start == Req.TASKLET_ALL,则说明要获取所有的任务
-		if (start == end && start == Req.TASKLET_ALL) {} else {
-			builder.append(LAST_TIME);
-			builder.append(" >= ? and ");
-			builder.append(LAST_TIME);
-			builder.append(" <= ? and ");
-		}
-		builder.append(ACCOUNT);
-		builder.append(isFinish ? " = 0 " : " <> 0 ");// isFinish = true,则需要查询完成的任务， isFinish = false，则需要查询未完成任务
-		builder.append("order by ? ;");
-		return builder.toString();
 	}
 }
