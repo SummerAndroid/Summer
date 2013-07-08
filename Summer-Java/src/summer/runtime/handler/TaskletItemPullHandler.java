@@ -53,13 +53,13 @@ public class TaskletItemPullHandler extends Handler {
 					if (tasklet.getId() != null) {
 						return true;
 					} else {
-						verifyError = new VerifyError(Res.BAD_REQUESTARG_ARG,
-								Res.valueOf(Res.BAD_REQUESTARG_ARG)
+						verifyError = new VerifyError(Res.BAD_REQUESTARGS_ARG,
+								Res.valueOf(Res.BAD_REQUESTARGS_ARG)
 										+ request.getRequestArgs());
 					}
 				} else {
-					verifyError = new VerifyError(Res.BAD_REQUESTARG_TYPE,
-							Res.valueOf(Res.BAD_REQUESTARG_TYPE)
+					verifyError = new VerifyError(Res.BAD_REQUESTARGS_TYPE,
+							Res.valueOf(Res.BAD_REQUESTARGS_TYPE)
 									+ request.getRequestArgs());
 				}
 			}

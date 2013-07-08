@@ -22,6 +22,7 @@ import summer.runtime.handler.ExitHandler;
 import summer.runtime.handler.Handler;
 import summer.runtime.handler.LoginHandler;
 import summer.runtime.handler.TaskletItemPullHandler;
+import summer.runtime.handler.TaskletItemPushHandler;
 import summer.runtime.handler.TaskletPullHandler;
 import summer.runtime.handler.UserModifiedHandler;
 
@@ -193,6 +194,8 @@ public class RequestHandler extends IoHandlerAdapter {
 				case Req.TASKLET_ITEM_PULL:
 					handler = new TaskletItemPullHandler();
 					break;
+				case Req.TASKLET_ITEM_PUSH:
+					handler = new TaskletItemPushHandler();
 				default:
 					throw new RuntimeException("code不对，请参考Res.java");// TODO:不应该会执行到这里，因为已经verifyCode
 			}

@@ -120,13 +120,13 @@ public abstract class Handler {
 	protected boolean verify(Request request) {
 		List<Object> list = request.getRequestArgs();
 		if (list == null) {
-			verifyError = new VerifyError(Res.BAD_REQUESTARG_NULL,
-					Res.valueOf(Res.BAD_REQUESTARG_NULL));
+			verifyError = new VerifyError(Res.BAD_REQUESTARGS_NULL,
+					Res.valueOf(Res.BAD_REQUESTARGS_NULL));
 			return false;
 		}
 		if (list.isEmpty()) {
-			verifyError = new VerifyError(Res.BAD_REQUESTARG_EMPTY,
-					Res.valueOf(Res.BAD_REQUESTARG_EMPTY));
+			verifyError = new VerifyError(Res.BAD_REQUESTARGS_EMPTY,
+					Res.valueOf(Res.BAD_REQUESTARGS_EMPTY));
 			return false;
 		}
 		return true;
@@ -146,12 +146,12 @@ public abstract class Handler {
 		if (list.size() == expected) {
 			return true;
 		} else if (list.size() > expected) {
-			verifyError = new VerifyError(Res.BAD_REQUESTARG_MORE,
-					Res.valueOf(Res.BAD_REQUESTARG_MORE)
+			verifyError = new VerifyError(Res.BAD_REQUESTARGS_MORE,
+					Res.valueOf(Res.BAD_REQUESTARGS_MORE)
 							+ request.getRequestArgs());
 		} else {
-			verifyError = new VerifyError(Res.BAD_REQUESTARG_LESS,
-					Res.valueOf(Res.BAD_REQUESTARG_LESS)
+			verifyError = new VerifyError(Res.BAD_REQUESTARGS_LESS,
+					Res.valueOf(Res.BAD_REQUESTARGS_LESS)
 							+ request.getRequestArgs());
 		}
 		return false;

@@ -62,8 +62,8 @@ public class TaskletPullHandler extends Handler {
 				&& (o4 instanceof String)) {
 			return true;
 		} else {// TODO:暂时不具体到哪个参数类型错误，也没太必要。
-			verifyError = new VerifyError(Res.BAD_REQUESTARG_TYPE,
-					Res.valueOf(Res.BAD_REQUESTARG_TYPE)
+			verifyError = new VerifyError(Res.BAD_REQUESTARGS_TYPE,
+					Res.valueOf(Res.BAD_REQUESTARGS_TYPE)
 							+ request.getRequestArgs());
 			return false;
 		}
@@ -98,8 +98,8 @@ public class TaskletPullHandler extends Handler {
 				}
 			}
 		}
-		verifyError = new VerifyError(Res.BAD_REQUESTARG_ARG,
-				Res.valueOf(Res.BAD_REQUESTARG_ARG) + request.getRequestArgs());
+		verifyError = new VerifyError(Res.BAD_REQUESTARGS_ARG,
+				Res.valueOf(Res.BAD_REQUESTARGS_ARG) + request.getRequestArgs());
 		return false;
 	}
 }

@@ -149,6 +149,17 @@ public final class I {
 		 * </pre>
 		 */
 		public final static int TASKLET_ITEM_PULL = 13;
+		
+		/**
+		 * 上传完成的任务的内容请求号
+		 * <p>
+		 * 请求：requestCode = TASKLET_ITEM_PUSH;requestArgs
+		 * <p>
+		 * <p>
+		 * <p>
+		 * 
+		 */
+		public final static int TASKLET_ITEM_PUSH = 14;
 
 		/**
 		 * 退出请求号。
@@ -204,29 +215,29 @@ public final class I {
 		 */
 		public final static int BAD_REQUESTCODE = 102;
 		/**
-		 * requestArg为null错误
+		 * requestArgs为null错误
 		 */
-		public final static int BAD_REQUESTARG_NULL = 103;
+		public final static int BAD_REQUESTARGS_NULL = 103;
 		/**
-		 * requestArg为empty错误
+		 * requestArgs为empty错误
 		 */
-		public final static int BAD_REQUESTARG_EMPTY = 104;
+		public final static int BAD_REQUESTARGS_EMPTY = 104;
 		/**
-		 * requestArg中参数太少错误
+		 * requestArgs中参数太少错误
 		 */
-		public final static int BAD_REQUESTARG_LESS = 105;
+		public final static int BAD_REQUESTARGS_LESS = 105;
 		/**
-		 * requestArg中参数太多错误
+		 * requestArgs中参数太多错误
 		 */
-		public final static int BAD_REQUESTARG_MORE = 106;
+		public final static int BAD_REQUESTARGS_MORE = 106;
 		/**
-		 * requestArg中参数类型不正确错误
+		 * requestArgs中参数类型不正确错误
 		 */
-		public final static int BAD_REQUESTARG_TYPE = 107;
+		public final static int BAD_REQUESTARGS_TYPE = 107;
 		/**
-		 * requestArg中的参数不符合协议错误
+		 * requestArgs中的参数不符合协议错误
 		 */
-		public final static int BAD_REQUESTARG_ARG = 108;
+		public final static int BAD_REQUESTARGS_ARG = 108;
 
 		// --------客户端登录失败111开始--------
 		/**
@@ -259,17 +270,17 @@ public final class I {
 					return "传递的消息不是Requst类型的对象!message = ";
 				case BAD_REQUESTCODE:
 					return "requestCode错误!requestCode = ";
-				case BAD_REQUESTARG_NULL:
+				case BAD_REQUESTARGS_NULL:
 					return "requestArg为null!";
-				case BAD_REQUESTARG_EMPTY:
+				case BAD_REQUESTARGS_EMPTY:
 					return "requestArg为Empty!";
-				case BAD_REQUESTARG_LESS:
+				case BAD_REQUESTARGS_LESS:
 					return "requestArg中的参数太少了!requestArgs = ";
-				case BAD_REQUESTARG_MORE:
+				case BAD_REQUESTARGS_MORE:
 					return "requestArg中的参数太多了!requestArgs = ";
-				case BAD_REQUESTARG_TYPE:
+				case BAD_REQUESTARGS_TYPE:
 					return "requestArg中的参数类型不正确!requestArgs = ";
-				case BAD_REQUESTARG_ARG:
+				case BAD_REQUESTARGS_ARG:
 					return "requestAra中的参数不符合协议！requestArgs = ";
 				case BAD_LOGIN_ID:
 					return "用户ID不存在!ID = ";
