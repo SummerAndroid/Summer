@@ -176,11 +176,18 @@ public class TaskletDAO extends BaseHibernateDAO {
 	}
 	
 	/**
+	 * 
+	 * @param start
+	 * @param end
 	 * @param isFinish
 	 */
 	private String createSql(long start, long end, boolean isFinish) {
+		// select id,name,cycle,account,last_time from tasklet where user_id = ? and last_time >= ? and last_time <= ? and (account = 0 or currentTime < last_time+cycle )group by ?;
 		// select id,name,cycle,account,last_time from tasklet where user_id = ? and last_time >= ? and last_time <= ? and account=|<>0 group by ?;
 		// select id,name,cycle,account,last_time from tasklet where user_id = ? and account=|<>0 group by ?;
+
+		long currentTime = System.currentTimeMillis();
+
 		StringBuilder builder = new StringBuilder();
 		builder.append("select id,user_id,");
 		builder.append(NAME);

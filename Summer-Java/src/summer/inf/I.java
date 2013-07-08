@@ -107,10 +107,10 @@ public final class I {
 		 * 为了节约带宽，只是将Tasklet对象发送给客户端，并没有含有具体的TaskletItem对象。如果需要请使用
 		 * {@link Req#TASKLET_ITEM_PULL}
 		 * <p>
-		 * 对于有时间周期，且需要多次执行的任务:在获取历史任务的时候，如果currentTime < last_time + cycle &&
-		 * isFinish = true,则算是一个历史任务。因为这个任务上一次已经执行了。如果是其他情况不则算是历史任务。
-		 * 在获取未完成任务的时候currentTime >= last_time + cycle && isFinish =
-		 * false,则算一个未完成任务，其他情况不算。 </strong>
+		 * 对于有时间周期，且需要多次执行的任务:在获取历史任务的时候，如果currentTime < last_time +
+		 * cycle,则算是一个历史任务。因为这个任务上一次已经执行了。如果是其他情况不则算是历史任务。
+		 * 在获取未完成任务的时候currentTime >= last_time + cycle && account !=
+		 * 0,则算一个未完成任务，其他情况不算。 </strong>
 		 * <p>
 		 * 如：
 		 * 
