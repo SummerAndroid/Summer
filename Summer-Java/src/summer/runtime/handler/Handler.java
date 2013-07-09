@@ -83,7 +83,8 @@ public abstract class Handler {
 		if (verify(request))
 			return null;
 		assert verifyError != null;
-		return Response.createResponse(verifyError.errorCode,
+		return Response.createResponse(request.getWhat(),
+				verifyError.errorCode,
 				verifyError.errorMessage);
 	}
 

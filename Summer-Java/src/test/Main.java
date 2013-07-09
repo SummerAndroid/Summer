@@ -35,7 +35,8 @@ public class Main {
 					throws Exception {
 				Stuff stuff = new Stuff();
 				stuff.setId(1L);
-				session.write(Request.createRequest(Req.STUFF_INFO_PULL, stuff));
+				session.write(Request.createRequest(0, Req.STUFF_INFO_PULL,
+						stuff));
 			}
 
 			@Override public void messageSent(IoSession session, Object message)

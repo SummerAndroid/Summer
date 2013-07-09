@@ -40,14 +40,16 @@ public class StuffInfoPullHandler extends Handler {
 				StuffArgDAO stuffArgDAO = new StuffArgDAO();
 				List list = stuffArgDAO.findByStuffId(stuff.getId());
 				target.setArgList(list);
-				return Response.createResponse(Res.OK, target);
+				return Response.createResponse(request.getWhat(), Res.OK,
+						target);
 			}
 			System.out.println("------------------------");
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("StuffInfoPullHandler", e);
 		}
-		return Response.createResponse(Res.BAD_SYS, Res.valueOf(Res.BAD_SYS)
+		return Response.createResponse(request.getWhat(), Res.BAD_SYS,
+				Res.valueOf(Res.BAD_SYS)
 				+ "查询设备信息时出错，请重试！");
 	}
 

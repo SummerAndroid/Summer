@@ -35,11 +35,11 @@ public class TaskletItemPullHandler extends Handler {
 				argList = argDAO.findByTaskletItemId(taskletItem.getId());
 				taskletItem.setArgList(argList);
 			}
-			return Response.createResponse(Res.OK, itemList);
+			return Response.createResponse(request.getWhat(), Res.OK, itemList);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.info("TaskLetItemPullHandler", e);
-			return Response.createResponse(Res.BAD_SYS,
+			return Response.createResponse(request.getWhat(), Res.BAD_SYS,
 					Res.valueOf(Res.BAD_SYS) + "查询任务时出错了，请重试！");
 		}
 	}

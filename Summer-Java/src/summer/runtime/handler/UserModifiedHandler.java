@@ -23,12 +23,14 @@ public class UserModifiedHandler extends Handler {
 		try {
 			User target = dao.merge(user);
 			if (target != null)
-				return Response.createResponse(Res.OK, target);
+				return Response.createResponse(request.getWhat(), Res.OK,
+						target);
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.error("UserModifiedHandler", e);
 		}
-		return Response.createResponse(Res.BAD_SYS, Res.valueOf(Res.BAD_SYS)
+		return Response.createResponse(request.getWhat(), Res.BAD_SYS,
+				Res.valueOf(Res.BAD_SYS)
 				+ "更新User时出错，请重试！");
 	}
 

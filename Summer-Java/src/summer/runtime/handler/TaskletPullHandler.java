@@ -31,7 +31,7 @@ public class TaskletPullHandler extends Handler {
 		TaskletDAO dao = new TaskletDAO();
 		List<Tasklet> targetList = dao
 				.findBy(id, startTime, endTime, isfinish, order);
-		return Response.createResponse(Res.OK, targetList);
+		return Response.createResponse(request.getWhat(), Res.OK, targetList);
 	}
 
 	@Override protected boolean verify(Request request) {

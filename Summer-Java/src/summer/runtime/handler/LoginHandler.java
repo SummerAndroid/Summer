@@ -28,21 +28,24 @@ public class LoginHandler extends Handler {
 			@SuppressWarnings("unchecked") List<User> list = dao
 					.findByName(user.getName());
 			if (list == null || list.isEmpty()) {
-				return Response.createResponse(Res.BAD_LOGIN_NAME,
+				return Response.createResponse(request.getWhat(),
+						Res.BAD_LOGIN_NAME,
 						Res.valueOf(Res.BAD_LOGIN_NAME) + user.getName());
 			}
 			target = list.get(0);
 		} else {// login by id
 			target = dao.findById(user.getId());
 			if (target == null) {
-				return Response.createResponse(Res.BAD_LOGIN_ID,
+				return Response.createResponse(request.getWhat(),
+						Res.BAD_LOGIN_ID,
 						Res.valueOf(Res.BAD_LOGIN_ID) + user.getId());
 			}
 		}
 		if (target.getPassword().equals(user.getPassword())) {
-			return Response.createResponse(Res.OK, target);
+			return Response.createResponse(request.getWhat(), Res.OK, target);
 		}
-		return Response.createResponse(Res.BAD_LOGIN_PASSWORD,
+		return Response.createResponse(request.getWhat(),
+				Res.BAD_LOGIN_PASSWORD,
 				Res.valueOf(Res.BAD_LOGIN_PASSWORD));
 	}
 

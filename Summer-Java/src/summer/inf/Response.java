@@ -10,6 +10,12 @@ import java.util.List;
 public class Response implements Serializable {
 	
 	private static final long serialVersionUID = -1972870269086864563L;
+
+	/**
+	 * 标识请求的号
+	 */
+	private int what;
+
 	/**
 	 * 返回号，请参考I.java中的{@link I.Res}
 	 */
@@ -18,6 +24,21 @@ public class Response implements Serializable {
 	 * 返回结果列表，请参考每个具体协议
 	 */
 	private List<Object> responseArgs;
+
+	/**
+	 * @return the what
+	 */
+	public int getWhat() {
+		return what;
+	}
+
+	/**
+	 * @param what
+	 *            the what to set
+	 */
+	public void setWhat(int what) {
+		this.what = what;
+	}
 
 	/**
 	 * @return the responseCode
@@ -53,8 +74,8 @@ public class Response implements Serializable {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override public String toString() {
-		return "Response [responseCode=" + responseCode + ", responseArgs="
-				+ responseArgs + "]";
+		return "Response [what=" + what + ", responseCode=" + responseCode
+				+ ", responseArgs=" + responseArgs + "]";
 	}
 
 	/**
@@ -66,8 +87,9 @@ public class Response implements Serializable {
 	 *            要放到{@code responseArgs}中的对象
 	 * @return
 	 */
-	public static Response createResponse(int code, Object object) {
+	public static Response createResponse(int what, int code, Object object) {
 		Response response = new Response();
+		response.what = what;
 		response.responseCode = code;
 		ArrayList<Object> list = new ArrayList<Object>(0);
 		list.add(object);
@@ -84,8 +106,9 @@ public class Response implements Serializable {
 	 *            要放到{@code responseArgs}中的对象数组
 	 * @return
 	 */
-	public static Response createResponse(int code, Object... objects) {
+	public static Response createResponse(int what, int code, Object... objects) {
 		Response response = new Response();
+		response.what = what;
 		response.responseCode = code;
 		ArrayList<Object> list = new ArrayList<Object>(objects.length);
 		for (Object object : objects) {

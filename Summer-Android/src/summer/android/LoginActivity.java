@@ -206,7 +206,7 @@ public class LoginActivity extends Activity {
 					User user = new User();
 					user.setId(Long.valueOf(10000));
 					user.setPassword("123456");
-					session.write(Request.createRequest(Req.LOGIN, user));
+					session.write(Request.createRequest(0, Req.LOGIN, user));
 				}
 
 				@Override public void messageReceived(IoSession session,

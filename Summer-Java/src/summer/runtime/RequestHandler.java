@@ -137,19 +137,13 @@ public class RequestHandler extends IoHandlerAdapter {
 		 */
 		private void handle(IoSession session, HandlerRunnable runnable,
 				Object message) {
-			if (message instanceof Request) {
-				Request request = (Request) message;
-				if (verifyRequest(request)) {
-					runnable.postMessage(createMessage(request));
-				} else {
-					session.write(Response.createResponse(
-							Res.BAD_REQUESTCODE,
-							Res.valueOf(Res.BAD_REQUESTCODE)
-									+ request.getRequestCode()));
-				}
+			Request request = (Request) message;
+			if (verifyRequest(request)) {
+				runnable.postMessage(createMessage(request));
 			} else {
-				session.write(Response.createResponse(Res.BAD_REQUEST,
-						Res.valueOf(Res.BAD_REQUEST) + message));
+				session.write(Response.createResponse(request.getWhat(),
+						Res.BAD_REQUESTCODE, Res.valueOf(Res.BAD_REQUESTCODE)
+								+ request.getRequestCode()));
 			}
 		}
 

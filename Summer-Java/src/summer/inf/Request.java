@@ -12,6 +12,11 @@ public class Request implements Serializable {
 	private static final long serialVersionUID = -5392965478362669553L;
 
 	/**
+	 * 标识请求
+	 */
+	private int what;
+
+	/**
 	 * 请求号，请参考I.java中的{@link I.Req}
 	 */
 	private int requestCode;
@@ -21,6 +26,20 @@ public class Request implements Serializable {
 	 */
 	private List<Object> requestArgs;
 
+	/**
+	 * @return the what
+	 */
+	public int getWhat() {
+		return what;
+	}
+
+	/**
+	 * @param what
+	 *            the what to set
+	 */
+	public void setWhat(int what) {
+		this.what = what;
+	}
 
 	/**
 	 * @return the requestCode
@@ -52,9 +71,12 @@ public class Request implements Serializable {
 		this.requestArgs = requestArgs;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	@Override public String toString() {
-		return "Request [requestCode=" + requestCode + ", requestArgs="
-				+ requestArgs + "]";
+		return "Request [what=" + what + ", requestCode=" + requestCode
+				+ ", requestArgs=" + requestArgs + "]";
 	}
 
 	/**
@@ -66,8 +88,9 @@ public class Request implements Serializable {
 	 *            要放到{@code requestArgs}中的对象
 	 * @return
 	 */
-	public static Request createRequest(int code, Object object) {
+	public static Request createRequest(int what, int code, Object object) {
 		Request request = new Request();
+		request.what = what;
 		request.requestCode = code;
 		ArrayList<Object> list = new ArrayList<Object>(0);
 		list.add(object);
@@ -84,8 +107,9 @@ public class Request implements Serializable {
 	 *            要放到{@code requestArgs}中的对象数组
 	 * @return
 	 */
-	public static Request createRequest(int code, Object... objects) {
+	public static Request createRequest(int what, int code, Object... objects) {
 		Request request = new Request();
+		request.what = what;
 		request.requestCode = code;
 		ArrayList<Object> list = new ArrayList<Object>(objects.length);
 		for (Object object : objects) {

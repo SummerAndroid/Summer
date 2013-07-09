@@ -19,7 +19,8 @@ public class ExitHandler extends Handler {
 		if (response != null)
 			return response;
 		log.info(((User) request.getRequestArgs().get(0)).toString() + " exit.");
-		return Response.createResponse(Res.OK, Res.valueOf(Res.OK));
+		return Response.createResponse(request.getWhat(), Res.OK,
+				Res.valueOf(Res.OK));
 	}
 
 	@Override protected boolean verify(Request request) {
