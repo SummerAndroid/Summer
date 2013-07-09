@@ -14,7 +14,7 @@ public interface NetCallback {
 
 	void response(int what, Response response);
 
-	void error(int what, Throwable throwable);
-
 	void error(Throwable throwable);
+
+	void error(int what, Throwable throwable);
 }
