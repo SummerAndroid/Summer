@@ -4,6 +4,7 @@ import summer.android.net.module.HandlerDecorator;
 import summer.android.net.module.NetUtil;
 import summer.android.net.module.WhatUtil;
 import summer.inf.I.Req;
+import summer.inf.I.Res;
 import summer.inf.Request;
 import summer.inf.Response;
 import summer.pojo.User;
@@ -81,8 +82,12 @@ public class LoginUtil {
 
 		@Override public void response(int what, Response response) {
 			super.response(what, response);
-			User user = (User) response.getResponseArgs().get(0);
-			post(what, HANDLER_RESPONSE, user);
+			if (response.getResponseCode() != Res.OK) {
+				post(what, HANDLER_ERROR, response.getResponseArgs().get(0));
+			} else {
+				User user = (User) response.getResponseArgs().get(0);
+				post(what, HANDLER_RESPONSE, user);
+			}
 		}
 	}
 }
