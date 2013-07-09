@@ -55,7 +55,7 @@ public final class I {
 		 * User user = new User();
 		 * user.setId(Long.valueOf(10000));
 		 * user.setPassword(&quot;123456&quot;);
-		 * session.write(Request.createRequest(Req.LOGIN, user));
+		 * session.write(Request.createRequest(what, Req.LOGIN, user));
 		 * </pre>
 		 */
 		public final static int LOGIN = 10;
@@ -84,7 +84,7 @@ public final class I {
 		 * user.setType(1);// old value
 		 * user.setTellphone(&quot;18769783279&quot;);// old value
 		 * user.setAddress(&quot;天国&quot;);// old value
-		 * session.write(Request.createRequest(Req.USER_MODIFIED, user));
+		 * session.write(Request.createRequest(what,Req.USER_MODIFIED, user));
 		 * </pre>
 		 */
 		public final static int USER_MODIFIED = 11;
@@ -96,7 +96,7 @@ public final class I {
 		 * {User{id},Long,Long,Boolean;String}
 		 * <p>
 		 * 应答：responseCode = OK|BAD_*;responseArgs =
-		 * {Tasklet,Tasklet,...|String}
+		 * {List<Tasklet>{Tasklet,Tasklet,...}|String}
 		 * <p>
 		 * 解释：领取任务请求包括历史任务请求和未完成任务请求的领取。requestArgs中第一个long表示开始的时间，
 		 * 第二个long表示结束的时间，boolean表示任务是否完成。String表示对结果的排序方法，参考
@@ -124,13 +124,13 @@ public final class I {
 		 * <pre class="prettyprint">
 		 * User user = new User();
 		 * user.setId(10000);
-		 * session.write(Req.TASKLET_PULL, user, Long.valueOf(start), Long.valueOf(end),
-		 * 		false);
+		 * session.write(what, Req.TASKLET_PULL, user, Long.valueOf(start),
+		 * 		Long.valueOf(end), false, TASKLET_LIST_ORDER_TIME_DES);
 		 * 
 		 * User user = new User();
 		 * user.setId(10000);
-		 * session.write(Req.TASKLET_PULL, user, Long.valueOf(TASKLET_ALL),
-		 * 		Long.valueOf(TASKLET_ALL), false);
+		 * session.write(what, Req.TASKLET_PULL, user, Long.valueOf(TASKLET_ALL),
+		 * 		Long.valueOf(TASKLET_ALL), false, TASKLET_LIST_ORDER_TIME_DES);
 		 * </pre>
 		 */
 		public final static int TASKLET_PULL = 12;
@@ -141,7 +141,7 @@ public final class I {
 		 * 请求：requestCode = TASKLET_ITEM_PULLL;requestArgs = {Tasklet{id}}
 		 * <p>
 		 * 应答：responseCode = OK | BAD_*;responseArgs =
-		 * {TaskletItem,TaskletItem,...|String}
+		 * {List<TaskletItem>{TaskletItem,TaskletItem,...}|String}
 		 * <p>
 		 * 解释：通过Tasklet的id来请求一个Tasklet的具体内容。
 		 * 返回的responseArgs链表中包含了Tasklet的所有TaskletItem对象
@@ -152,7 +152,7 @@ public final class I {
 		 * <pre class="prettyprint">
 		 * Tasklet tasklet = new TaskLet();
 		 * tasklet.setId(1L);
-		 * session.write(Request.createRequest(Req.TASKLET_ITEM_PULL, tasklet));
+		 * session.write(Request.createRequest(what, Req.TASKLET_ITEM_PULL, tasklet));
 		 * </pre>
 		 */
 		public final static int TASKLET_ITEM_PULL = 13;
@@ -161,7 +161,8 @@ public final class I {
 		 * 上传完成的任务的内容请求号
 		 * <p>
 		 * 请求：requestCode = TASKLET_ITEM_PUSH;requestArgs =
-		 * {TaskletItem{id,tasklet_id,stuff_id,name,List,...},...}
+		 * {List<TaskletItem>{TaskletItem
+		 * {id,tasklet_id,stuff_id,name,List,...},...｝}
 		 * <p>
 		 * 应答：responseCode = OK|BAD_*;responseArgs = {String}
 		 * <p>
@@ -185,7 +186,7 @@ public final class I {
 		 * arg.setComment(&quot;直径怎么会变长了呢？&quot;);
 		 * list.add(arg);
 		 * taskletItem.setArgList(list);// list中设置为检查后属性和结果对。参考TaskletItemArg类
-		 * session.write(Request.createRequest(Req.TASKLET_ITEM_PUSH, taskletItem));// 任务只包含一个Item
+		 * session.write(Request.createRequest(what, Req.TASKLET_ITEM_PUSH, taskletItem));// 任务只包含一个Item
 		 * </pre>
 		 */
 		public final static int TASKLET_ITEM_PUSH = 14;
@@ -205,7 +206,7 @@ public final class I {
 		 * <pre class="prettyprint">
 		 * Stuff stuff = new Stuff();
 		 * stuff.setId(1L);
-		 * session.write(Request.createRequest(Req.STUFF_INFO_PULL, stuff));
+		 * session.write(Request.createRequest(what, Req.STUFF_INFO_PULL, stuff));
 		 * </pre>
 		 */
 		public final static int STUFF_INFO_PULL = 15;
@@ -225,7 +226,7 @@ public final class I {
 		 * <pre class="prettyprint">
 		 * User user = new User();
 		 * user.setId(Long.valueOf(10000));
-		 * session.write(Request.createRequest(Req.EXIT, user));
+		 * session.write(Request.createRequest(what, Req.EXIT, user));
 		 * </pre>
 		 */
 		public final static int EXIT = 50;

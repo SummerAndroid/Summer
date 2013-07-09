@@ -7,17 +7,17 @@ import summer.inf.I.Req;
 import summer.inf.I.Res;
 import summer.inf.Request;
 import summer.inf.Response;
-import summer.pojo.User;
+import summer.pojo.Stuff;
 import android.os.Handler;
 
 /**
  * 
- * 修改用户信息。调用方法{@link #modified(User)} 。
+ * 获取设备的具体信息。
  * 
  * @author zhenzxie
  * @since 1.0
  */
-public class UserModifiedUtil {
+public class StuffInfoPullUtil {
 	private NetUtil netUtil;
 	private Handler handler;
 
@@ -25,21 +25,21 @@ public class UserModifiedUtil {
 	 * 
 	 * @param handler
 	 */
-	public UserModifiedUtil(Handler handler) {
+	public StuffInfoPullUtil(Handler handler) {
 		netUtil = new NetUtil();
 		this.handler = handler;
 	}
 
 	/**
-	 * 修改操作的结果通过handleMessage的Message参数的obj返回，成功则obj是User对象，失败，则obj是失败信息的字符串。
+	 * 获取的结果通过handleMessage的Message参数的obj返回，成功则obj是Stuff对象，失败，则obj是失败信息的字符串。
 	 * 
-	 * @param user
-	 *            要修改信息的用户。User参数每个实例域都要设置，比如，要修改password，则将password设置为新的值。
-	 *            而其他不修改的则保持原来的值。
+	 * @param stuff
+	 *            要获取信息的设备。只是需要设置id
 	 */
-	public void modified(User user) {
+	public void infoPull(Stuff stuff) {
 		int what = WhatUtil.what();
-		Request request = Request.createRequest(what, Req.USER_MODIFIED, user);
+		Request request = Request.createRequest(what, Req.STUFF_INFO_PULL,
+				stuff);
 		netUtil.request(what, request, new InnerNetCallback(handler));
 	}
 
@@ -54,8 +54,8 @@ public class UserModifiedUtil {
 			if (response.getResponseCode() != Res.OK) {
 				post(what, HANDLER_ERROR, response.getResponseArgs().get(0));
 			} else {
-				User user = (User) response.getResponseArgs().get(0);
-				post(what, HANDLER_RESPONSE, user);
+				Stuff stuff = (Stuff) response.getResponseArgs().get(0);
+				post(what, HANDLER_RESPONSE, stuff);
 			}
 		}
 	}

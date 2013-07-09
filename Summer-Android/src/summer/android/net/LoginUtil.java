@@ -12,8 +12,7 @@ import android.os.Handler;
 
 /**
  * 
- * 登录工具。登录调用{@link #login(long, String)}或者{@link #login(String, String)}
- * 方法。登录后的结果通过Handler的Obj返回。
+ * 登录工具。登录调用{@link #login(long, String)}或者{@link #login(String, String)} 方法。
  * 
  * <pre class="prettyprint">
  * Handler handler = new Handler() {
@@ -43,6 +42,7 @@ public class LoginUtil {
 	}
 
 	/**
+	 * 登录后的结果通过handleMessage的Message参数的obj返回，成功则obj是User对象，失败，则obj是失败信息的字符串。
 	 * 
 	 * @param id
 	 *            登录的用户id
@@ -59,6 +59,7 @@ public class LoginUtil {
 	}
 
 	/**
+	 * 登录后的结果通过handleMessage的Message参数的obj返回，成功则obj是User对象，失败，则obj是失败信息的字符串。
 	 * 
 	 * @param name
 	 *            登录用户的用户名
