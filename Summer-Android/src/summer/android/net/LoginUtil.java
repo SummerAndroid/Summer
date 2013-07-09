@@ -15,13 +15,13 @@ import android.os.Handler;
  * 方法。登录后的结果通过Handler的Obj返回。
  * 
  * <pre class="prettyprint">
- * LoginUtil loginUtil = new LoginUtil(handler);
- * loginUtil.login(10001L, &quot;123456&quot;);
  * Handler handler = new Handler() {
  * 	&#064;Override public void handleMessage(Message msg) {
  * 		System.out.println(msg.obj);
  * 	}
  * };
+ * LoginUtil loginUtil = new LoginUtil(handler);
+ * loginUtil.login(10001L, &quot;123456&quot;);
  * </pre>
  * 
  * @author zhenzxie
