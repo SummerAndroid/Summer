@@ -11,10 +11,6 @@ import summer.inf.Request;
  */
 public final class NetUtil {
 
-	public static final int HANDLER_SENT = 0;
-	public static final int HANDLER_RESPONSE = 1;
-	public static final int HANDLER_ERROR = 2;
-
 	public NetUtil() {
 	}
 

@@ -1,17 +1,6 @@
 package summer.android;
 
-import java.net.InetSocketAddress;
-
-import org.apache.mina.core.service.IoHandlerAdapter;
-import org.apache.mina.core.session.IoSession;
-import org.apache.mina.filter.codec.ProtocolCodecFilter;
-import org.apache.mina.filter.codec.serialization.ObjectSerializationCodecFactory;
-import org.apache.mina.transport.socket.nio.NioSocketConnector;
-
-import summer.inf.I.Req;
-import summer.inf.I.Sys;
-import summer.inf.Request;
-import summer.pojo.User;
+import summer.android.net.LoginUtil;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -19,6 +8,8 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -187,6 +178,12 @@ public class LoginActivity extends Activity {
 		}
 	}
 
+	Handler handler = new Handler() {
+		@Override public void handleMessage(Message msg) {
+			System.out.println(msg.obj);
+		}
+	};
+
 	/**
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
@@ -194,28 +191,8 @@ public class LoginActivity extends Activity {
 	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 		@Override protected Boolean doInBackground(Void... params) {
 
-			NioSocketConnector connector = new NioSocketConnector();
-			connector.getFilterChain().addLast(
-					"codec",
-					new ProtocolCodecFilter(
-							new ObjectSerializationCodecFactory()));
-			connector.setHandler(new IoHandlerAdapter() {
-
-				@Override public void sessionOpened(IoSession session)
-						throws Exception {
-					User user = new User();
-					user.setId(Long.valueOf(10000));
-					user.setPassword("123456");
-					session.write(Request.createRequest(0, Req.LOGIN, user));
-				}
-
-				@Override public void messageReceived(IoSession session,
-						Object message) throws Exception {
-					System.out.println(message.toString());
-				}
-			});
-			connector.connect(new InetSocketAddress("211.87.230.8", Sys.PORT));
-
+			LoginUtil loginUtil = new LoginUtil(handler);
+			loginUtil.login(10001L, "123456");
 			return true;
 		}
 

@@ -15,7 +15,11 @@ import android.os.Message;
  */
 public class HandlerDecorator implements NetCallback{
 
-	private Log log = LogFactory.getLog(HandlerDecorator.class);
+	public static final int HANDLER_SENT = 0;
+	public static final int HANDLER_RESPONSE = 1;
+	public static final int HANDLER_ERROR = 2;
+
+	protected Log log = LogFactory.getLog(HandlerDecorator.class);
 	private Handler mHandler;
 
 	public HandlerDecorator(Handler handler) {
@@ -24,6 +28,7 @@ public class HandlerDecorator implements NetCallback{
 
 	@Override public void sent(int what, String message) {
 		log.info("sent: "+what+"     "+message);
+		post(what, HANDLER_SENT, message);
 	}
 	
 	@Override public void response(int what, Response response) {
@@ -32,10 +37,12 @@ public class HandlerDecorator implements NetCallback{
 
 	@Override public void error(Throwable throwable) {
 		log.error("error£º "+throwable);
+		post(HANDLER_ERROR, throwable);
 	}
 
 	@Override public void error(int what, Throwable throwable) {
 		log.error("error£º¡¡"+what +"   "+throwable);
+		post(what, HANDLER_ERROR, throwable);
 	}
 
 	public void post(int sign, Object object) {
