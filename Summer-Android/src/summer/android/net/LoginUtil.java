@@ -1,5 +1,7 @@
 package summer.android.net;
 
+import summer.android.net.module.NetCallback;
+import summer.android.net.module.NetUtil;
 import summer.inf.Response;
 import android.os.Handler;
 
@@ -13,9 +15,11 @@ import android.os.Handler;
 public class LoginUtil {
 
 	private NetUtil netUtil;
+	private Handler handler;
 
 	public LoginUtil(Handler handler) {
-		netUtil = new NetUtil(new InnerNetCallback());
+		netUtil = new NetUtil();
+		this.handler = handler;
 	}
 
 	public void login(long id, String password) {

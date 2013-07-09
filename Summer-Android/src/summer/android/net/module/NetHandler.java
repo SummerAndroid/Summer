@@ -1,4 +1,4 @@
-package summer.android.net;
+package summer.android.net.module;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
