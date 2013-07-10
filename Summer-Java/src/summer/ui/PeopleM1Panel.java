@@ -83,7 +83,7 @@ public class PeopleM1Panel extends JPanel {
 							}
 						});
 					}
-				}, null);
+				}, null, DB.TYPE_ADMINISTRATOR);
 				p.setVisible(true);
 			}
 		});
@@ -146,7 +146,7 @@ public class PeopleM1Panel extends JPanel {
 							}
 						});
 					}
-				}, user);
+				}, user, DB.TYPE_ADMINISTRATOR);
 				p.setVisible(true);
 			}
 		});

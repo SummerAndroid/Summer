@@ -35,6 +35,8 @@ public class AddUpdateP extends JFrame {
 
 	private Done done;
 	private User user;
+	private int type;
+
 	/**
 	 * Launch the application.
 	 */
@@ -46,7 +48,7 @@ public class AddUpdateP extends JFrame {
 
 						@Override public void done() {
 						}
-					}, null);
+					}, null, DB.TYPE_ADMINISTRATOR);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -58,10 +60,11 @@ public class AddUpdateP extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddUpdateP(Done d, User u) {
+	public AddUpdateP(Done d, User u, int t) {
 
 		done = d;
 		user = u;
+		type = t;
 
 		setTitle("\u4EBA\u5458\u4FE1\u606F");
 		setBackground(Color.WHITE);
@@ -122,8 +125,9 @@ public class AddUpdateP extends JFrame {
 				user.setAddress(address);
 				
 				if (AddUpdateP.this.user == null) {
-					user.setPermission(DB.PERMISSION_MAX);
-					user.setType(DB.TYPE_ADMINISTRATOR);
+					user.setPermission(type == DB.TYPE_ADMINISTRATOR ? DB.PERMISSION_MAX
+							: DB.PERMISSION_MIN);
+					user.setType(type);
 				}
 
 				UserDAO userDAO = new UserDAO();
