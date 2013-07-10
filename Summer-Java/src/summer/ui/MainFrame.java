@@ -112,7 +112,7 @@ public class MainFrame extends JFrame {
 
 		people1 = new PeopleM1Panel();
 		people2 = new PeopleM2Panel();
-		template = new TemplatePanel();
+		template = new TemplatePanel(this);
 		task1 = new TaskPanel();
 		equipment1 = new EquipmentTypePanel(this);
 		equipment2 = new EquipmentDetailPanel();
@@ -166,15 +166,7 @@ public class MainFrame extends JFrame {
 								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("添加模板")) {
-						if (addTemplate == null) {
-							addTemplate = new AddTemplate();
-							addTemplate.setVisible(true);
-							// TODO:other operator
-						} else if (addTemplate.isVisible()) {
-							addTemplate.requestFocus();
-						} else {
-							addTemplate.setVisible(true);
-						}
+						showTemplate();
 					} else if (nodeInfo.equals("浏览任务")) {
 						changeVisiable(false, false, false, false, false, true,
 								false);
@@ -223,5 +215,17 @@ public class MainFrame extends JFrame {
 		template.setVisible(arg5);
 		task1.setVisible(arg6);
 		fault.setVisible(arg7);
+	}
+
+	public void showTemplate() {
+		if (addTemplate == null) {
+			addTemplate = new AddTemplate();
+			addTemplate.setVisible(true);
+			// TODO:other operator
+		} else if (addTemplate.isVisible()) {
+			addTemplate.requestFocus();
+		} else {
+			addTemplate.setVisible(true);
+		}
 	}
 }
