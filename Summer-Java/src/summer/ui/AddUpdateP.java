@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import summer.SysConfig.DB;
 import summer.dao.UserDAO;
 import summer.pojo.User;
 
@@ -28,6 +29,12 @@ public class AddUpdateP extends JFrame {
 	private JTextField textField_3;
 	private JTextField textField_1;
 
+	public interface Done {
+		void done();
+	}
+
+	private Done done;
+	private User user;
 	/**
 	 * Launch the application.
 	 */
@@ -35,7 +42,11 @@ public class AddUpdateP extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddUpdateP frame = new AddUpdateP();
+					AddUpdateP frame = new AddUpdateP(new Done() {
+
+						@Override public void done() {
+						}
+					}, null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,10 +58,13 @@ public class AddUpdateP extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddUpdateP() {
+	public AddUpdateP(Done d, User u) {
+
+		done = d;
+		user = u;
+
 		setTitle("\u4EBA\u5458\u4FE1\u606F");
 		setBackground(Color.WHITE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 415, 298);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
@@ -96,16 +110,30 @@ public class AddUpdateP extends JFrame {
 				setVisible(false);
 				
 				String name = textField.getText();
+				String password = textField_1.getText();
 				String tellphone = textField_2.getText();
 				String address = textField_3.getText();
 
-				User user = new User();
+				User user = AddUpdateP.this.user != null ? AddUpdateP.this.user
+						: new User();
 				user.setName(name);
+				user.setPassword(password);
 				user.setTellphone(tellphone);
 				user.setAddress(address);
+				
+				if (AddUpdateP.this.user == null) {
+					user.setPermission(DB.PERMISSION_MAX);
+					user.setType(DB.TYPE_ADMINISTRATOR);
+				}
 
 				UserDAO userDAO = new UserDAO();
-				userDAO.save(user);
+
+				if (AddUpdateP.this.user == null)
+					userDAO.save(user);
+				else
+					userDAO.merge(user);
+
+				done.done();
 			}
 		});
 		
@@ -173,6 +201,12 @@ public class AddUpdateP extends JFrame {
 		gbc_button.gridx = 3;
 		gbc_button.gridy = 6;
 		contentPane.add(button, gbc_button);
-	}
 
+		if (user != null) {
+			textField.setText(user.getName());
+			textField_1.setText(user.getPassword());
+			textField_2.setText(user.getTellphone());
+			textField_3.setText(user.getAddress());
+		}
+	}
 }

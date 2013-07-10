@@ -117,7 +117,7 @@ public class PeopleM2Panel extends JPanel {
 			objs[i][2] = user.getName();
 			objs[i][3] = user.getPassword();
 			objs[i][4] = user.getTellphone();
-			objs[i][5] = user.getAddress();
+			objs[i++][5] = user.getAddress();
 		}
 		return objs;
 	}
