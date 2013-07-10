@@ -11,18 +11,24 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 
 //主框架
-public class PeoppleManage extends JFrame {
+public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTree scantree;
-	private PeopleM1 people1;
-	private PeopleM2 people2;
-	private TemplateDefault template;
+	private PeopleM1Panel people1;
+	private PeopleM2Panel people2;
+	private TemplatePanel template;
+	private TaskPanel task1;
+	private ScanFaultPanel  fault;
+	private EquipmentTypePanel equipment1;
+	private EquipmentDetailPanel equipment2;
 	/**
 	 * Launch the application.
 	 */
@@ -30,7 +36,7 @@ public class PeoppleManage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PeoppleManage frame = new PeoppleManage();
+					MainFrame frame = new MainFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +48,7 @@ public class PeoppleManage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public PeoppleManage() {
+	public MainFrame() {
 		setTitle("电力管理系统");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 699, 472);
@@ -94,16 +100,48 @@ public class PeoppleManage extends JFrame {
 		leftscrollPane.setViewportView(scantree);
 		
 //		people1 = new  PeopleM1();
-		people2 = new  PeopleM2();
+//		people2 = new  PeopleM2();
 //		 template=new TemplateDefault();
-		GridBagConstraints gbc_panel = new GridBagConstraints();
+//		task1=new TaskM();
+//		equipment1 = new  EquipmentTypePanel();
+		equipment2 = new  EquipmentDetailPanel();
+		 fault=new ScanFaultPanel  ();
+		final GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridheight = 2;
 		gbc_panel.insets = new Insets(0, 0, 5, 0);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
 //		contentPane.add(people1, gbc_panel);
-		contentPane.add(people2, gbc_panel);
+//		contentPane.add(people2, gbc_panel);
 //		contentPane.add(template, gbc_panel);
+//		contentPane.add(task1, gbc_panel);
+//		contentPane.add(equipment1, gbc_panel);
+		contentPane.add(equipment2, gbc_panel);
+		contentPane.add(fault, gbc_panel);
+
+		scantree.addTreeSelectionListener(new TreeSelectionListener() {
+
+			@Override public void valueChanged(TreeSelectionEvent e) {
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) scantree
+						.getLastSelectedPathComponent();
+				if (node == null)// Nothing is selected
+					return;
+				Object nodeInfo = node.getUserObject();
+				if (nodeInfo instanceof String) {
+					if (nodeInfo.equals("管理员管理")) {
+						contentPane.remove(people2);// 移除
+						contentPane.add(people1, gbc_panel);
+						contentPane.repaint();
+					} else if (nodeInfo.equals("巡视员管理")) {
+						contentPane.remove(people1);
+						contentPane.add(people2, gbc_panel);
+						contentPane.repaint();
+					} else if (nodeInfo.equals("")) {
+
+					}
+				}
+			}
+		});
 	}
 }

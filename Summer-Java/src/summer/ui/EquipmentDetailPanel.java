@@ -1,24 +1,26 @@
 package summer.ui;
 
-import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.GridBagLayout;
-import javax.swing.JScrollPane;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
-public class PeopleM2 extends JPanel {
+
+public class EquipmentDetailPanel extends JPanel {
+	private static final long serialVersionUID = 4747794806684877973L;
 	private JTable table;
-
 	/**
 	 * Create the panel.
 	 */
-	public PeopleM2() {
+	public EquipmentDetailPanel() {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{159, 176, 210, 0};
@@ -36,28 +38,25 @@ public class PeopleM2 extends JPanel {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
-		
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
-				{null, null, null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
+				{null, null, null, null},
 			},
 			new String[] {
-				" ", "巡视员编号", "姓名", "密码", "联系方式", "住址"
+				" ", "设备编号", "设备名称", "设备使用地"
 			}
 		));
 		table.getColumnModel().getColumn(1).setPreferredWidth(86);
 		table.getColumnModel().getColumn(3).setPreferredWidth(91);
-		table.getColumnModel().getColumn(4).setPreferredWidth(113);
-		table.getColumnModel().getColumn(5).setPreferredWidth(189);
 		scrollPane.setViewportView(table);
 		
-		JButton button = new JButton("添加巡视员");
+		JButton button = new JButton("添加设备");
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.insets = new Insets(0, 0, 5, 5);
 		gbc_button.gridx = 0;
@@ -65,7 +64,7 @@ public class PeopleM2 extends JPanel {
 		add(button, gbc_button);
 		button.setFont(new Font("宋体", Font.PLAIN, 12));
 		
-		JButton button_1 = new JButton("删除巡视员");
+		JButton button_1 = new JButton("删除设备");
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
 		gbc_button_1.insets = new Insets(0, 0, 5, 5);
 		gbc_button_1.gridx = 1;
@@ -73,7 +72,7 @@ public class PeopleM2 extends JPanel {
 		add(button_1, gbc_button_1);
 		button_1.setFont(new Font("宋体", Font.PLAIN, 12));
 		
-		JButton button_2 = new JButton("修改信息");
+		JButton button_2 = new JButton("浏览设备具体信息");
 		GridBagConstraints gbc_button_2 = new GridBagConstraints();
 		gbc_button_2.insets = new Insets(0, 0, 5, 0);
 		gbc_button_2.gridx = 2;
@@ -81,5 +80,7 @@ public class PeopleM2 extends JPanel {
 		add(button_2, gbc_button_2);
 		button_2.setFont(new Font("宋体", Font.PLAIN, 12));
 
+		
 	}
+
 }

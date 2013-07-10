@@ -1,19 +1,19 @@
 package summer.ui;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import javax.swing.JButton;
-import java.awt.Insets;
 
 
 public class DeleteAttribute extends JFrame {
 
+	private static final long serialVersionUID = -9026509166821036257L;
 	private JPanel contentPane;
 
 	/**
