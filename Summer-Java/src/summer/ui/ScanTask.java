@@ -137,8 +137,8 @@ public class ScanTask extends JFrame {
 		gbc_lblNewLabel_2.gridy = 2;
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {
 				"\u8BBE\u59071", "\u8BBE\u59072" }));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
@@ -155,8 +155,8 @@ public class ScanTask extends JFrame {
 		gbc_lblNewLabel_3.gridy = 2;
 		contentPane.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
-		JComboBox<String> comboBox_1 = new JComboBox<String>();
-		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {
 				"\u5DF2\u4E0B\u53D1", "\u5DF2\u56DE\u4F20",
 				"\u672A\u4E0B\u53D1" }));
 		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
