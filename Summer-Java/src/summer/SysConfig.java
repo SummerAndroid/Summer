@@ -10,4 +10,9 @@ public final class SysConfig {
 		public final static int CLIENT_COUNT_PREDICT = 20;
 		public final static int MESSAGE_QUEUE_LENGTH = 30;
 	}
+
+	public final static class DB {
+		public final static int TYPE_ADMINISTRATOR = 1;
+		public final static int TYPE_USER = 0;
+	}
 }
