@@ -25,8 +25,8 @@ public class Login extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		 System.setProperty("java.net.preferIPv6Addresses", "false"); 
-		
+		System.setProperty("java.net.preferIPv6Addresses", "false");
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.login);
 		login = (Button) findViewById(R.id.login);
@@ -44,31 +44,31 @@ public class Login extends Activity {
 			// TODO Auto-generated method stub
 
 			// 连接数据库进行登录
-			String userID = loginname.getText().toString();
-			String passwd = password.getText().toString();
-			Long ID = Long.parseLong(userID);
-			Handler handler = new Handler() {
-				@Override
-				public void handleMessage(Message msg) {
-					if (msg.arg1 == HandlerDecorator.HANDLER_SENT) {
-						String message = (String) msg.obj;
-						Log.i("!!!!!!!!!!!", message);
-					} else if (msg.arg1 == HandlerDecorator.HANDLER_RESPONSE) {
-						User user = (User) msg.obj;
-						// do other operator
-						Log.i("!!!!!!!!!!!", user.toString());
-					} else {
-						String message = (String) msg.obj;
-						Log.i("!!!!!!!!!!!", message);
-					}
-				}
-			};
-			LoginUtil loginUtil = new LoginUtil(handler);
-			loginUtil.login(ID, passwd);
-
-//			Intent intent0 = new Intent();
-//			intent0.setClass(Login.this, Main.class);
-//			startActivity(intent0);
+//			String userID = loginname.getText().toString();
+//			String passwd = password.getText().toString();
+//			Long ID = Long.parseLong(userID);
+//			Handler handler = new Handler() {
+//				@Override
+//				public void handleMessage(Message msg) {
+//					if (msg.arg1 == HandlerDecorator.HANDLER_SENT) {
+//						String message = (String) msg.obj;
+//						Log.i("!!!!!!!!!!!", message);
+//					} else if (msg.arg1 == HandlerDecorator.HANDLER_RESPONSE) {
+//						User user = (User) msg.obj;
+//						// do other operator
+//						Log.i("!!!!!!!!!!!", user.toString());
+//					} else {
+//						String message = (String) msg.obj;
+//						Log.i("!!!!!!!!!!!", message);
+//					}
+//				}
+//			};
+//			LoginUtil loginUtil = new LoginUtil(handler);
+//			loginUtil.login(ID, passwd);
+//
+			 Intent intent0 = new Intent();
+			 intent0.setClass(Login.this, Main.class);
+			 startActivity(intent0);
 
 		}
 	}
