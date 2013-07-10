@@ -43,7 +43,7 @@ public final class NetController {
 		private IoSession ioSession;
 		@Override public void run() {
 
-			if (!startServer())
+			if (!startNetThread())
 				return;// 如果发生错误，这个线程就结束了。
 
 			while (flag) {
@@ -66,7 +66,7 @@ public final class NetController {
 			isStart = false;
 		}
 
-		private boolean startServer() {
+		private boolean startNetThread() {
 			NioSocketConnector connector = new NioSocketConnector();
 			connector.getFilterChain().addLast(
 					"codec",
