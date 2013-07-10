@@ -32,6 +32,7 @@ public class StuffCategoryDAO extends BaseHibernateDAO {
 		log.debug("saving StuffCategory instance");
 		try {
 			getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -43,6 +44,7 @@ public class StuffCategoryDAO extends BaseHibernateDAO {
 		log.debug("deleting StuffCategory instance");
 		try {
 			getSession().delete(persistentInstance);
+			getSession().flush();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);

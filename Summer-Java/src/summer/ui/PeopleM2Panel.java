@@ -99,7 +99,7 @@ public class PeopleM2Panel extends JPanel {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UserDAO userDAO = new UserDAO();
-				User user = userDAO.findById(10005L);// create a simulation user
+				User user = userDAO.findById(10001L);// create a simulation user
 				userDAO.delete(user);
 				// 对于这段代码我只能呵呵了。
 				table.setModel(new DefaultTableModel(createObjectsFromDB(),
@@ -125,13 +125,13 @@ public class PeopleM2Panel extends JPanel {
 
 				// create a simulation user
 				User user = new User();
-				user.setId(10000L);
-				user.setName("sduxzz");
+				user.setId(10001L);
+				user.setName("zhenzxie");
 				user.setPassword(String.valueOf(System.currentTimeMillis()));
-				user.setPermission(DB.PERMISSION_MAX);
-				user.setType(DB.TYPE_ADMINISTRATOR);
+				user.setPermission(DB.PERMISSION_MIN);
+				user.setType(DB.TYPE_USER);
 				user.setTellphone("18769783279");
-				user.setAddress("天国");
+				user.setAddress("地狱");
 
 				AddUpdateP p = new AddUpdateP(new Done() {
 

@@ -114,7 +114,7 @@ public class MainFrame extends JFrame {
 		people2 = new PeopleM2Panel();
 		template = new TemplatePanel();
 		task1 = new TaskPanel();
-		equipment1 = new EquipmentTypePanel();
+		equipment1 = new EquipmentTypePanel(this);
 		equipment2 = new EquipmentDetailPanel();
 		fault = new ScanFaultPanel();
 
@@ -140,6 +140,9 @@ public class MainFrame extends JFrame {
 			@Override public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) scantree
 						.getLastSelectedPathComponent();
+				// ////////////////////////////////////////////////
+				// //////////////////////呵呵///////////////////////
+				// ///////////////////////////////////////////////
 				if (node == null)// Nothing is selected
 					return;
 				Object nodeInfo = node.getUserObject();
@@ -157,13 +160,7 @@ public class MainFrame extends JFrame {
 								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("添加类型")) {
-						if (addType == null) {
-							addType = new AddType();
-							addType.setVisible(true);
-							// TODO:other operator
-						} else {
-							addType.requestFocus();
-						}
+						showAddType();
 					} else if (nodeInfo.equals("浏览模板")) {
 						changeVisiable(false, false, false, false, true, false,
 								false);
@@ -173,8 +170,10 @@ public class MainFrame extends JFrame {
 							addTemplate = new AddTemplate();
 							addTemplate.setVisible(true);
 							// TODO:other operator
-						} else {
+						} else if (addTemplate.isVisible()) {
 							addTemplate.requestFocus();
+						} else {
+							addTemplate.setVisible(true);
 						}
 					} else if (nodeInfo.equals("浏览任务")) {
 						changeVisiable(false, false, false, false, false, true,
@@ -184,8 +183,10 @@ public class MainFrame extends JFrame {
 						if (addTask == null) {
 							addTask = new AddTask();
 							addTask.setVisible(true);
-						} else {
+						} else if (addTask.isVisible()) {
 							addTask.requestFocus();
+						} else {
+							addTask.setVisible(true);
 						}
 					} else if (nodeInfo.equals("缺陷管理")) {
 						changeVisiable(false, false, false, false, false,
@@ -195,6 +196,22 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
+	}
+
+	public void showAddType() {
+		if (addType == null) {
+			addType = new AddType();
+			addType.setVisible(true);
+			// TODO:other operator
+		} else if (addType.isVisible()) {
+			addType.requestFocus();
+		} else {
+			addType.setVisible(true);
+		}
+	}
+
+	public void showEquipmentDetail() {
+		changeVisiable(false, false, false, true, false, false, false);
 	}
 
 	private void changeVisiable(boolean arg1, boolean arg2, boolean arg3,
