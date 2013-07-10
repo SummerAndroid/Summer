@@ -88,8 +88,8 @@ public class ScanEquipment extends JFrame {
 		gbc_btnNewButton_1.gridy = 1; 
 		Cursor cs=new Cursor(Cursor.HAND_CURSOR);
 		  
-		icon=new ImageIcon("/EquipmentManege/icon.jpg");
-	    btnNewButton_1=new JButton(new ImageIcon(ScanEquipment.class.getResource("/EquipmentManege/icon.jpg")));
+		//icon=new ImageIcon("/EquipmentManege/icon.jpg");
+	    //btnNewButton_1=new JButton(new ImageIcon(ScanEquipment.class.getResource("/EquipmentManege/icon.jpg")));
 		btnNewButton_1.setBounds(20, 10, 80, 60);
 		//btnNewButton_1.addActionListener(this);
 		btnNewButton_1.setCursor(cs);

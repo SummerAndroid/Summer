@@ -95,7 +95,7 @@ public class EquipmentMa extends JFrame {
 		leftscrollPane.setViewportView(scantree);
 		
 
-		//equipment1 = new  EquipmentTPanel();
+//		equipment1 = new  EquipmentTPanel();
 		equipment2 = new  Equipmentmpanel();
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridheight = 2;
@@ -103,7 +103,7 @@ public class EquipmentMa extends JFrame {
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
-		//contentPane.add(equipment1, gbc_panel);
+//		contentPane.add(equipment1, gbc_panel);
 		contentPane.add(equipment2, gbc_panel);
 	}
 }
