@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bkground"
+    android:padding="10dp" >
+
+    <Button
+        android:id="@+id/change_pass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:text="@string/change_pass" />
+
+    <Button
+        android:id="@+id/edit_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/change_pass"
+        android:layout_toLeftOf="@+id/change_pass"
+        android:text="@string/edit_save" />
+
+    <TextView
+        android:id="@+id/ID"
+        android:layout_width="100px"
+        android:layout_height="40px"
+        android:layout_below="@+id/edit_info"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        android:text="ID"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/showID"
+        android:layout_width="400px"
+        android:layout_height="40px"
+        android:layout_alignBottom="@+id/ID"
+        android:layout_toRightOf="@+id/ID"
+        android:text="2010003012"
+        android:gravity="left|center"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="100px"
+        android:layout_height="40px"
+        android:layout_below="@+id/ID"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:text="姓名"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/name"
+        android:layout_toRightOf="@+id/name"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:id="@+id/address"
+        android:layout_width="100px"
+        android:layout_height="40px"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/name"
+        android:gravity="center"
+        android:text="地址"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editAdress"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/address"
+        android:layout_toRightOf="@+id/address"
+        android:background="@android:drawable/editbox_background" />
+
+    <TextView
+        android:id="@+id/telephone"
+        android:layout_width="100px"
+        android:layout_height="40px"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/address"
+        android:layout_marginTop="40dp"
+        android:text="电话" />
+
+    <EditText
+        android:id="@+id/editTele"
+        android:layout_width="300px"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/telephone"
+        android:layout_toRightOf="@+id/telephone"
+        android:background="@android:drawable/editbox_background" />
+
+</RelativeLayout>

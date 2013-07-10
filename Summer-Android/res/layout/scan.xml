@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bkground"
+     >
+   <LinearLayout 
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:orientation="vertical"
+       android:gravity="center_horizontal"
+       >
+ <ImageButton 
+    android:id="@+id/finished"
+    android:layout_marginTop="150px"
+    android:layout_width="200px"
+    android:layout_height="80px"
+    android:background="@drawable/finished"
+    />
+<ImageButton 
+    android:id="@+id/unfinished"
+    android:layout_width="200px"
+    android:layout_height="80px"
+    android:layout_marginTop="200px"
+    android:background="@drawable/unfinished"
+    />
+</LinearLayout>
+    
+
+</LinearLayout>

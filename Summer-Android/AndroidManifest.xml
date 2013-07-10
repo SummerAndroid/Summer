@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="summer.android"
+    package="summmer.android"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -15,10 +14,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="summer.android.WelcomeActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/FullscreenTheme" >
+            android:name="summer.android.Login"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,9 +23,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="summer.android.LoginActivity"
-            android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:name="summer.android.Scan"
+            android:label="@string/title_activity_scan" >
+        </activity>
+        <activity
+            android:name="summer.android.Main"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name="summer.android.HistoryTask"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="summer.android.EditInfo"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="summer.android.Tasklist"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="summer.android.Device"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingLeft="40px"
+    android:background="@drawable/login"
+     >
+     <TextView
+        android:id="@+id/name"
+        android:layout_width="100px"
+        android:layout_height="40px"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="@string/name"
+        android:textSize="18sp"
+        android:textStyle="bold" >
+    </TextView>
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="200px"
+        android:background="@android:drawable/editbox_background"
+        android:layout_height="40px"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/name"
+        android:singleLine="true"
+        android:text=""
+        android:textSize="18sp" >
+    </EditText>
+
+    <TextView
+        android:id="@+id/psw"
+        android:layout_width="100px"
+        android:layout_height="40px"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/name"
+        android:text="@string/psw"
+        android:layout_marginTop="30px"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold" >
+    </TextView>
+    <EditText
+        android:id="@+id/userpsw"
+        android:layout_width="200px"
+        android:background="@android:drawable/editbox_background"
+        android:layout_height="40px"
+        android:layout_toRightOf="@+id/psw"
+        android:layout_alignBottom="@id/psw"
+        android:layout_marginTop="30px"
+        android:layout_below="@+id/username"
+        android:password="true"
+        android:singleLine="true"
+        android:text=""
+        android:textSize="18sp" >
+    </EditText>
+    <CheckBox
+        android:id="@+id/rempsw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/userpsw"
+        android:layout_below="@+id/userpsw"
+        android:layout_marginTop="10px"
+        android:text="@string/rempsw"
+        >
+    </CheckBox>
+
+    <Button
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/psw"
+        android:layout_below="@+id/rempsw"
+        android:layout_marginTop="40px"
+        android:text="@string/login"
+        >
+    </Button>
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/userpsw"
+        android:layout_below="@+id/rempsw"
+        android:layout_marginTop="40px"
+        android:text="@string/exit"
+        >
+    </Button>
+</RelativeLayout>
