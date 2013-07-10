@@ -18,6 +18,7 @@ import javax.swing.tree.DefaultTreeModel;
 //主框架
 public class PeoppleManage extends JFrame {
 
+	private static final long serialVersionUID = 4780419787472420973L;
 	private JPanel contentPane;
 	private JTree scantree;
 	private PeopleM1 people1;
@@ -69,6 +70,8 @@ public class PeoppleManage extends JFrame {
 		scantree = new JTree();
 		scantree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("电力管理系统") {
+			private static final long serialVersionUID = -8742899218517267391L;
+
 				{
 					DefaultMutableTreeNode node_1;
 					node_1 = new DefaultMutableTreeNode("人员管理");
@@ -105,5 +108,21 @@ public class PeoppleManage extends JFrame {
 //		contentPane.add(people1, gbc_panel);
 		contentPane.add(people2, gbc_panel);
 //		contentPane.add(template, gbc_panel);
+	}
+
+	public PeopleM1 getPeople1() {
+		return people1;
+	}
+
+	public void setPeople1(PeopleM1 people1) {
+		this.people1 = people1;
+	}
+
+	public TemplateDefault getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(TemplateDefault template) {
+		this.template = template;
 	}
 }

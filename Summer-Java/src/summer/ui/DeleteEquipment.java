@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 public class DeleteEquipment extends JFrame {
 
+	private static final long serialVersionUID = -1696798538763369719L;
 	private JPanel contentPane;
 
 	/**

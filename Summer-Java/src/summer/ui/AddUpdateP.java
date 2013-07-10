@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 public class AddUpdateP extends JFrame {
 
+	private static final long serialVersionUID = -6284804786755339517L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_2;

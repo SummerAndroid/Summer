@@ -1,16 +1,18 @@
 package summer.ui;
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import javax.swing.JScrollPane;
-import java.awt.GridBagConstraints;
-import javax.swing.JTable;
-import java.awt.Insets;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 public class TaskM extends JPanel {
+	private static final long serialVersionUID = 3744649399083236993L;
 	private JTable table;
 
 	/**

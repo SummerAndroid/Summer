@@ -1,13 +1,15 @@
 package summer.ui;
-import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import javax.swing.JTable;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
 public class ScanFault extends JPanel {
+	private static final long serialVersionUID = -1125971309732137834L;
 	private JTable table;
 
 	/**
