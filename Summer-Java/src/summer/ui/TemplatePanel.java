@@ -24,9 +24,10 @@ public class TemplatePanel extends JPanel {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{159, 176, 210, 0};
-		gridBagLayout.rowHeights = new int[]{184, 168, 47, 42, 0};
+		gridBagLayout.rowHeights = new int[] { 184, 117, 47, 42, 0 };
 		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0,
+				Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 		
 		JScrollPane scrollPane = new JScrollPane();
