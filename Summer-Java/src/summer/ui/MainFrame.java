@@ -33,6 +33,11 @@ public class MainFrame extends JFrame {
 	private EquipmentTypePanel equipment1;
 	private EquipmentDetailPanel equipment2;
 
+	// zhenzxie add some code here
+	private AddType addType;
+	private AddTemplate addTemplate;
+	private AddTask addTask;
+
 	/**
 	 * Launch the application.
 	 */
@@ -112,12 +117,14 @@ public class MainFrame extends JFrame {
 		equipment1 = new EquipmentTypePanel();
 		equipment2 = new EquipmentDetailPanel();
 		fault = new ScanFaultPanel();
+
 		final GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridheight = 2;
 		gbc_panel.insets = new Insets(0, 0, 5, 0);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
+
 		contentPane.add(people1, gbc_panel);
 		contentPane.add(people2, gbc_panel);
 		contentPane.add(template, gbc_panel);
@@ -125,6 +132,8 @@ public class MainFrame extends JFrame {
 		contentPane.add(equipment1, gbc_panel);
 		contentPane.add(equipment2, gbc_panel);
 		contentPane.add(fault, gbc_panel);
+
+		changeVisiable(true, false, false, false, false, false, false);
 
 		scantree.addTreeSelectionListener(new TreeSelectionListener() {
 
@@ -136,49 +145,66 @@ public class MainFrame extends JFrame {
 				Object nodeInfo = node.getUserObject();
 				if (nodeInfo instanceof String) {
 					if (nodeInfo.equals("管理员管理")) {
-						contentPane.remove(people2);// 移除
-						contentPane.remove(template);
-						contentPane.remove(task1);
-						contentPane.remove(equipment1);
-						contentPane.remove(equipment2);
-						contentPane.remove(fault);
-						contentPane.add(people1, gbc_panel);
+						changeVisiable(true, false, false, false, false, false,
+								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("巡视员管理")) {
-						contentPane.remove(people1);
-						contentPane.remove(template);
-						contentPane.remove(task1);
-						contentPane.remove(equipment1);
-						contentPane.remove(equipment2);
-						contentPane.remove(fault);
-						contentPane.add(people2, gbc_panel);
+						changeVisiable(false, true, false, false, false, false,
+								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("浏览类型")) {
-						contentPane.remove(people1);
-						contentPane.remove(people2);
-						contentPane.remove(template);
-						contentPane.remove(task1);
-						contentPane.remove(equipment2);
-						contentPane.remove(fault);
-						contentPane.add(equipment1, gbc_panel);
+						changeVisiable(false, false, true, false, false, false,
+								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("添加类型")) {
-						AddType addType = new AddType();
-						addType.setVisible(true);
-						// TODO:other operator
+						if (addType == null) {
+							addType = new AddType();
+							addType.setVisible(true);
+							// TODO:other operator
+						} else {
+							addType.requestFocus();
+						}
 					} else if (nodeInfo.equals("浏览模板")) {
-
+						changeVisiable(false, false, false, false, true, false,
+								false);
+						contentPane.repaint();
 					} else if (nodeInfo.equals("添加模板")) {
-
+						if (addTemplate == null) {
+							addTemplate = new AddTemplate();
+							addTemplate.setVisible(true);
+							// TODO:other operator
+						} else {
+							addTemplate.requestFocus();
+						}
 					} else if (nodeInfo.equals("浏览任务")) {
-
+						changeVisiable(false, false, false, false, false, true,
+								false);
+						contentPane.repaint();
 					} else if (nodeInfo.equals("添加任务")) {
-
+						if (addTask == null) {
+							addTask = new AddTask();
+							addTask.setVisible(true);
+						} else {
+							addTask.requestFocus();
+						}
 					} else if (nodeInfo.equals("缺陷管理")) {
-
+						changeVisiable(false, false, false, false, false,
+								false, true);
+						contentPane.repaint();
 					}
 				}
 			}
 		});
+	}
+
+	private void changeVisiable(boolean arg1, boolean arg2, boolean arg3,
+			boolean arg4, boolean arg5, boolean arg6, boolean arg7) {
+		people1.setVisible(arg1);
+		people2.setVisible(arg2);
+		equipment1.setVisible(arg3);
+		equipment2.setVisible(arg4);
+		template.setVisible(arg5);
+		task1.setVisible(arg6);
+		fault.setVisible(arg7);
 	}
 }

@@ -50,7 +50,6 @@ public class AddTemplate extends JFrame {
 	public AddTemplate() {
 		setBackground(Color.WHITE);
 		setTitle("\u6A21\u677F\u4FE1\u606F");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 612, 513);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
