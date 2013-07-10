@@ -16,7 +16,6 @@ public final class NetUtil {
 
 	public void request(int what, Request request, NetCallback callback) {
 		NetController controller = NetController.getInstance();
-		controller.open();
 		NetController.Message message = new NetController.Message();
 		message.what = what;
 		message.request = request;
