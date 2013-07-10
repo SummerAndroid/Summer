@@ -20,14 +20,13 @@ import summer.SysConfig.DB;
 import summer.dao.UserDAO;
 import summer.pojo.User;
 
-public class PeopleM2 extends JPanel {
-	private static final long serialVersionUID = 4731269115314131107L;
+public class PeopleM1Panel extends JPanel {
+	private static final long serialVersionUID = 7236850909210491604L;
 	private JTable table;
-
 	/**
 	 * Create the panel.
 	 */
-	public PeopleM2() {
+	public PeopleM1Panel() {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 159, 176, 210, 0 };
@@ -53,7 +52,7 @@ public class PeopleM2 extends JPanel {
 		table.setCellSelectionEnabled(true);
 		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(createObjectsFromDB(),
-				new String[] { " ", "巡视员编号", "姓名", "密码", "联系方式", "住址" }) {
+				new String[] { " ", "管理员编号", "姓名", "密码", "联系方式", "住址" }) {
 			private static final long serialVersionUID = -497771659651433794L;
 			@Override public boolean isCellEditable(int row, int column) {
 				return false;
@@ -65,9 +64,11 @@ public class PeopleM2 extends JPanel {
 		table.getColumnModel().getColumn(5).setPreferredWidth(189);
 		scrollPane.setViewportView(table);
 
-		JButton button = new JButton("添加巡视员");
+		JButton button = new JButton("添加管理员");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				AddUpdateP p = new AddUpdateP();
+				p.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_button = new GridBagConstraints();
@@ -77,7 +78,7 @@ public class PeopleM2 extends JPanel {
 		add(button, gbc_button);
 		button.setFont(new Font("宋体", Font.PLAIN, 12));
 
-		JButton button_1 = new JButton("删除巡视员");
+		JButton button_1 = new JButton("删除管理员");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -104,7 +105,6 @@ public class PeopleM2 extends JPanel {
 	}
 
 	private Object[][] createObjectsFromDB() {
-
 		List<User> list = findAdministrators();
 		if (list == null || list.isEmpty()) {
 			return new Object[0][0];
@@ -123,8 +123,7 @@ public class PeopleM2 extends JPanel {
 	}
 
 	@SuppressWarnings("unchecked") private List<User> findAdministrators() {
-
 		UserDAO userDAO = new UserDAO();
-		return userDAO.findByType(DB.TYPE_USER);
+		return userDAO.findByType(DB.TYPE_ADMINISTRATOR);
 	}
 }

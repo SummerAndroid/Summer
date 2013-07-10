@@ -13,14 +13,14 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-public class TemplateDefault extends JPanel {
+public class TemplatePanel extends JPanel {
 	private static final long serialVersionUID = -6823580641869668795L;
 	private JTable table;
 
 	/**
 	 * Create the panel.
 	 */
-	public TemplateDefault() {
+	public TemplatePanel() {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{159, 176, 210, 0};

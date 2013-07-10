@@ -8,14 +8,14 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
-public class ScanFault extends JPanel {
+public class ScanFaultPanel extends JPanel {
 	private static final long serialVersionUID = -1125971309732137834L;
 	private JTable table;
 
 	/**
 	 * Create the panel.
 	 */
-	public ScanFault() {
+	public ScanFaultPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{0, 474, 0};
 		gridBagLayout.rowHeights = new int[]{0, 0};

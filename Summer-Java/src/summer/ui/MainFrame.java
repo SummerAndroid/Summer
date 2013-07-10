@@ -22,13 +22,13 @@ public class MainFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTree scantree;
-	private PeopleM1 people1;
-	private PeopleM2 people2;
-	private TemplateDefault template;
-	private TaskM task1;
-	private ScanFault  fault;
-	private EquipmentTPanel equipment1;
-	private Equipmentmpanel equipment2;
+	private PeopleM1Panel people1;
+	private PeopleM2Panel people2;
+	private TemplatePanel template;
+	private TaskPanel task1;
+	private ScanFaultPanel  fault;
+	private EquipmentTypePanel equipment1;
+	private EquipmentDetailPanel equipment2;
 	/**
 	 * Launch the application.
 	 */
@@ -103,9 +103,9 @@ public class MainFrame extends JFrame {
 //		people2 = new  PeopleM2();
 //		 template=new TemplateDefault();
 //		task1=new TaskM();
-//		equipment1 = new  EquipmentTPanel();
-		equipment2 = new  Equipmentmpanel();
-		 fault=new ScanFault  ();
+//		equipment1 = new  EquipmentTypePanel();
+		equipment2 = new  EquipmentDetailPanel();
+		 fault=new ScanFaultPanel  ();
 		final GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridheight = 2;
 		gbc_panel.insets = new Insets(0, 0, 5, 0);

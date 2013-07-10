@@ -11,14 +11,14 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 
-public class TaskM extends JPanel {
+public class TaskPanel extends JPanel {
 	private static final long serialVersionUID = 3744649399083236993L;
 	private JTable table;
 
 	/**
 	 * Create the panel.
 	 */
-	public TaskM() {
+	public TaskPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{110, 113, 113, 0, 0};
 		gridBagLayout.rowHeights = new int[]{0, 194, 58, 0};

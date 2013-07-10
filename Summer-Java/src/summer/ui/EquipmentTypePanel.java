@@ -1,5 +1,4 @@
 package summer.ui;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -14,13 +13,13 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 
-public class Equipmentmpanel extends JPanel {
-	private static final long serialVersionUID = 4747794806684877973L;
+public class EquipmentTypePanel extends JPanel {
+	private static final long serialVersionUID = -1660331840875855549L;
 	private JTable table;
 	/**
 	 * Create the panel.
 	 */
-	public Equipmentmpanel() {
+	public EquipmentTypePanel() {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{159, 176, 210, 0};
@@ -49,14 +48,14 @@ public class Equipmentmpanel extends JPanel {
 				{null, null, null, null},
 			},
 			new String[] {
-				" ", "设备编号", "设备名称", "设备使用地"
+				" ", "\u8BBE\u5907\u7C7B\u578B\u7F16\u53F7", "\u8BBE\u5907\u540D\u79F0", "\u6A21\u677F\u9879\u7F16\u53F7"
 			}
 		));
 		table.getColumnModel().getColumn(1).setPreferredWidth(86);
 		table.getColumnModel().getColumn(3).setPreferredWidth(91);
 		scrollPane.setViewportView(table);
 		
-		JButton button = new JButton("添加设备");
+		JButton button = new JButton("添加类型");
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.insets = new Insets(0, 0, 5, 5);
 		gbc_button.gridx = 0;
@@ -64,7 +63,7 @@ public class Equipmentmpanel extends JPanel {
 		add(button, gbc_button);
 		button.setFont(new Font("宋体", Font.PLAIN, 12));
 		
-		JButton button_1 = new JButton("删除设备");
+		JButton button_1 = new JButton("删除类型");
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
 		gbc_button_1.insets = new Insets(0, 0, 5, 5);
 		gbc_button_1.gridx = 1;
@@ -72,7 +71,7 @@ public class Equipmentmpanel extends JPanel {
 		add(button_1, gbc_button_1);
 		button_1.setFont(new Font("宋体", Font.PLAIN, 12));
 		
-		JButton button_2 = new JButton("浏览设备具体信息");
+		JButton button_2 = new JButton("浏览设备");
 		GridBagConstraints gbc_button_2 = new GridBagConstraints();
 		gbc_button_2.insets = new Insets(0, 0, 5, 0);
 		gbc_button_2.gridx = 2;
