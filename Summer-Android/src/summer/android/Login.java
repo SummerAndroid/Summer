@@ -5,6 +5,9 @@ import summer.android.net.module.HandlerDecorator;
 import summer.pojo.User;
 import summmer.android.R;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -33,7 +36,7 @@ public class Login extends Activity {
 		login.setOnClickListener(new LoginListener());
 		exit.setOnClickListener(new ExitListener());
 	}
-
+	
 	class LoginListener implements OnClickListener {
 
 		@Override
@@ -55,21 +58,34 @@ public class Login extends Activity {
 						User user = (User) msg.obj;
 						// do other operator
 						Log.i("!!!!!!!!!!!", user.toString());
+						Intent intent0 = new Intent();
+						intent0.setClass(Login.this, Main.class);
+						startActivity(intent0);
+
 					} else {
 						String message = (String) msg.obj;
 						Log.i("!!!!!!!!!!!", message);
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								Login.this);
+						builder.setMessage(message).setTitle(
+								R.string.dialog_title);
+						builder.setPositiveButton("È·  ¶¨",
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										dialog.cancel();
+									}
+
+								});
+						AlertDialog dialog = builder.create();
+						dialog.show();
 					}
+
 				}
 			};
 			LoginUtil loginUtil = new LoginUtil(handler);
 			loginUtil.login(ID, passwd);
-
-//			 Intent intent0 = new Intent();
-//			 intent0.setClass(Login.this, Main.class);
-//			 startActivity(intent0);
-
-			
-
 		}
 	}
 
