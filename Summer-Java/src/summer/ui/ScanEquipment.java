@@ -1,32 +1,30 @@
 package summer.ui;
-import java.awt.BorderLayout;
+
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Cursor;
-import java.awt.GridBagConstraints;
-import java.awt.Font;
-import java.awt.Insets;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
-
 
 public class ScanEquipment extends JFrame {
 
+	private static final long serialVersionUID = 2588180552388878820L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -87,7 +85,7 @@ public class ScanEquipment extends JFrame {
 		gbc_btnNewButton_1.gridx = 1;
 		gbc_btnNewButton_1.gridy = 1; 
 		Cursor cs=new Cursor(Cursor.HAND_CURSOR);
-		  
+
 		//icon=new ImageIcon("/EquipmentManege/icon.jpg");
 	    //btnNewButton_1=new JButton(new ImageIcon(ScanEquipment.class.getResource("/EquipmentManege/icon.jpg")));
 		btnNewButton_1.setBounds(20, 10, 80, 60);
@@ -298,6 +296,14 @@ public class ScanEquipment extends JFrame {
 		gbc_button_1.gridy = 7;
 		contentPane.add(button_1, gbc_button_1);
 
+	}
+
+	public Icon getIcon() {
+		return icon;
+	}
+
+	public void setIcon(Icon icon) {
+		this.icon = icon;
 	}
 
 }

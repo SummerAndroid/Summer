@@ -1,20 +1,20 @@
 package summer.ui;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
-import java.awt.GridBagConstraints;
-import java.awt.Font;
-import javax.swing.JButton;
-import java.awt.Insets;
 
 
 public class DeleteTask extends JFrame {
 
+	private static final long serialVersionUID = -5202199938483404227L;
 	private JPanel contentPane;
 
 	/**

@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 public class DeleteType extends JFrame {
 
+	private static final long serialVersionUID = 929315660240810629L;
 	private JPanel contentPane;
 
 	/**

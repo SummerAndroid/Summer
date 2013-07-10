@@ -1,26 +1,26 @@
 package summer.ui;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
+
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import java.awt.Font;
 
 
 public class ScanTask extends JFrame {
 
+	private static final long serialVersionUID = -3683373675864693091L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -137,8 +137,9 @@ public class ScanTask extends JFrame {
 		gbc_lblNewLabel_2.gridy = 2;
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"\u8BBE\u59071", "\u8BBE\u59072"}));
+		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {
+				"\u8BBE\u59071", "\u8BBE\u59072" }));
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
@@ -154,8 +155,10 @@ public class ScanTask extends JFrame {
 		gbc_lblNewLabel_3.gridy = 2;
 		contentPane.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"\u5DF2\u4E0B\u53D1", "\u5DF2\u56DE\u4F20", "\u672A\u4E0B\u53D1"}));
+		JComboBox<String> comboBox_1 = new JComboBox<String>();
+		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {
+				"\u5DF2\u4E0B\u53D1", "\u5DF2\u56DE\u4F20",
+				"\u672A\u4E0B\u53D1" }));
 		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
 		gbc_comboBox_1.insets = new Insets(0, 0, 5, 0);
 		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;

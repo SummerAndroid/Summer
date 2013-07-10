@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,8 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import summer.dao.UserDAO;
+import summer.pojo.User;
+
 public class AddUpdateP extends JFrame {
 
+	private static final long serialVersionUID = -6284804786755339517L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_2;
@@ -122,6 +128,23 @@ public class AddUpdateP extends JFrame {
 		contentPane.add(textField_3, gbc_textField_3);
 		
 		JButton button = new JButton("\u63D0  \u4EA4");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				
+				String name = textField.getText();
+				String tellphone = textField_2.getText();
+				String address = textField_3.getText();
+
+				User user = new User();
+				user.setName(name);
+				user.setTellphone(tellphone);
+				user.setAddress(address);
+
+				UserDAO userDAO = new UserDAO();
+				userDAO.save(user);
+			}
+		});
 		button.setFont(new Font("ËÎÌו", Font.PLAIN, 12));
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.gridheight = 2;

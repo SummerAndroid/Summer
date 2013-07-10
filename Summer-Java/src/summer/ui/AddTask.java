@@ -1,29 +1,28 @@
 package summer.ui;
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.GridBagLayout;
-import javax.swing.JLabel;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JTree;
-import javax.swing.JList;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.DefaultMutableTreeNode;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.JTree;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JButton;
-import java.awt.Font;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 
 public class AddTask extends JFrame {
 
+	private static final long serialVersionUID = 2718565150394812091L;
 	private JPanel contentPane;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -161,6 +160,8 @@ public class AddTask extends JFrame {
 		tree = new JTree();
 		tree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("\u6A21\u677F") {
+			private static final long serialVersionUID = -2259605400402271563L;
+
 				{
 					DefaultMutableTreeNode node_1;
 					node_1 = new DefaultMutableTreeNode("\u6A21\u677F1");

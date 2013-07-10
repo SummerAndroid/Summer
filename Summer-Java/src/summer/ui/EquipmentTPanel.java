@@ -1,20 +1,20 @@
 package summer.ui;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-
-import java.awt.GridBagLayout;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class EquipmentTPanel extends JPanel {
+	private static final long serialVersionUID = -1660331840875855549L;
 	private JTable table;
 	/**
 	 * Create the panel.

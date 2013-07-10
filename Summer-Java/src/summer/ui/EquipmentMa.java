@@ -19,7 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 //主框架
 public class EquipmentMa extends JFrame {
-
+	private static final long serialVersionUID = 3314415035379350120L;
 	private JPanel contentPane;
 	private JTree scantree;
 	private EquipmentTPanel equipment1;
@@ -70,6 +70,8 @@ public class EquipmentMa extends JFrame {
 		scantree = new JTree();
 		scantree.setModel(new DefaultTreeModel(
 			new DefaultMutableTreeNode("电力管理系统") {
+			private static final long serialVersionUID = -3870446010094719520L;
+
 				{
 					DefaultMutableTreeNode node_1;
 					node_1 = new DefaultMutableTreeNode("人员管理");
@@ -105,6 +107,14 @@ public class EquipmentMa extends JFrame {
 		gbc_panel.gridy = 0;
 //		contentPane.add(equipment1, gbc_panel);
 		contentPane.add(equipment2, gbc_panel);
+	}
+
+	public EquipmentTPanel getEquipment1() {
+		return equipment1;
+	}
+
+	public void setEquipment1(EquipmentTPanel equipment1) {
+		this.equipment1 = equipment1;
 	}
 }
 
