@@ -119,7 +119,7 @@ public class LoginFrame extends JFrame {
 					}
 					setVisible(false);
 					System.out.println(target);
-					PeoppleManage manage = new PeoppleManage();
+					MainFrame manage = new MainFrame();
 					manage.setVisible(true);
 					return;
 				} catch (NumberFormatException e) {
