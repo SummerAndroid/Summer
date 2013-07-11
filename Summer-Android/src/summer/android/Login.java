@@ -58,9 +58,11 @@ public class Login extends Activity {
 						User user = (User) msg.obj;
 						// do other operator
 						Log.i("!!!!!!!!!!!", user.toString());
-						Intent intent0 = new Intent();
-						intent0.setClass(Login.this, Main.class);
-						startActivity(intent0);
+						//把user对象传递
+						Intent intent = new Intent();
+						intent.putExtra("user",user);
+						intent.setClass(Login.this, Main.class);
+						startActivity(intent);
 
 					} else {
 						String message = (String) msg.obj;

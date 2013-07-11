@@ -2,6 +2,7 @@ package summer.android;
 
 import summmer.android.R;
 import android.os.Bundle;
+import summer.pojo.User;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
@@ -15,6 +16,7 @@ public class Main extends Activity {
 	private ImageButton liulan;
 	private ImageButton dangqian;
 	private ImageButton xinxi;
+	User user;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,6 +28,8 @@ public class Main extends Activity {
 		liulan.setOnClickListener(new LiulanListener());
 		xinxi.setOnClickListener(new XinxiListener());
 		dangqian.setOnClickListener(new DangqianListener());
+		Intent intent=getIntent();
+		user=(User) intent.getSerializableExtra("user");
 
 	}
     class LinquListener implements OnClickListener{
@@ -33,7 +37,10 @@ public class Main extends Activity {
 		@Override
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			
+			Intent intent = new Intent();
+			intent.putExtra("user",user);
+			intent.setClass(Main.this, TaskletPull.class);
+			startActivity(intent);
 		}
     	
     }
