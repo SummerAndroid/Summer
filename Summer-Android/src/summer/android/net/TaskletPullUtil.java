@@ -50,7 +50,7 @@ public class TaskletPullUtil {
 	public void taskletPull(User user, long start, long end, boolean isFinish,
 			String order) {
 		int what = WhatUtil.what();
-		Request request = Request.createRequest(what, Req.TASKLET_PULL,
+		Request request = Request.createRequest(what, Req.TASKLET_PULL, user,
 				Long.valueOf(start), Long.valueOf(end), isFinish, order);
 		netUtil.request(what, request, new InnerNetCallback(handler));
 	}

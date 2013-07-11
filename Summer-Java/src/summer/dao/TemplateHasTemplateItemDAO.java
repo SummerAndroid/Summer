@@ -26,6 +26,9 @@ public class TemplateHasTemplateItemDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory
 			.getLogger(TemplateHasTemplateItemDAO.class);
 
+	public static final String TEMPLATE_ID = "template_id";
+	public static final String TEMPLATE_ITEM_ID = "template_item_id";
+
 	// property constants
 
 	public void save(TemplateHasTemplateItem transientInstance) {

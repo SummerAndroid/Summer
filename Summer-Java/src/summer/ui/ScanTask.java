@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import summer.pojo.Tasklet;
 
 public class ScanTask extends JFrame {
 
@@ -49,7 +50,6 @@ public class ScanTask extends JFrame {
 	 */
 	public ScanTask() {
 		setTitle("\u6D4F\u89C8\u4EFB\u52A1");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 469, 462);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -205,6 +205,10 @@ public class ScanTask extends JFrame {
 		gbc_btnNewButton.gridx = 2;
 		gbc_btnNewButton.gridy = 4;
 		contentPane.add(btnNewButton, gbc_btnNewButton);
+	}
+
+	public void resetTasklet(Tasklet tasklet) {
+
 	}
 
 }

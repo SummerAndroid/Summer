@@ -8,12 +8,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,9 +24,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import summer.SysConfig.DB;
-import summer.dao.UserDAO;
+import summer.dao.TemplateHasTemplateItemDAO;
+import summer.dao.TemplateItemDAO;
 import summer.pojo.Template;
+import summer.pojo.TemplateHasTemplateItem;
 import summer.pojo.TemplateItem;
 
 public class AddTemplate extends JFrame {
@@ -138,7 +141,7 @@ public class AddTemplate extends JFrame {
 			private static final long serialVersionUID = 916087786536142554L;
 
 			@Override public boolean isCellEditable(int row, int column) {
-				return editableFlag;
+				return false;
 			}
 		});
 		table.getColumnModel().getColumn(0).setPreferredWidth(67);
@@ -156,9 +159,33 @@ public class AddTemplate extends JFrame {
 		gbc_scrollPane_1.gridy = 3;
 		contentPane.add(scrollPane_1, gbc_scrollPane_1);
 
+		table_1 = new JTable();
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setColumnSelectionAllowed(true);
+		table.setCellSelectionEnabled(true);
+		table.setModel(new DefaultTableModel(new Object[0][0], new String[] {
+				" ", "\u6A21\u677F\u9879\u7F16\u53F7",
+				"\u8BBE\u5907\u540D\u79F0" }) {
+
+			private static final long serialVersionUID = 7731707539082316533L;
+
+			@Override public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		});
+		table.getColumnModel().getColumn(0).setPreferredWidth(67);
+		table.getColumnModel().getColumn(1).setPreferredWidth(104);
+		table.getColumnModel().getColumn(2).setPreferredWidth(126);
+		scrollPane_1.setViewportView(table_1);
+
 		JButton btnNewButton_1 = new JButton("\u6DFB\u52A0");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (editableFlag) {
+					// TODO:add item
+				} else {
+					JOptionPane.showConfirmDialog(AddTemplate.this, "先点击编辑按钮");
+				}
 			}
 		});
 		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
@@ -169,6 +196,15 @@ public class AddTemplate extends JFrame {
 		btnNewButton_1.setFont(new Font("宋体", Font.PLAIN, 12));
 
 		JButton button_1 = new JButton("\u5220\u9664");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (editableFlag) {
+					// TODO: delete item
+				} else {
+					JOptionPane.showConfirmDialog(AddTemplate.this, "先点击编辑按钮");
+				}
+			}
+		});
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
 		gbc_button_1.insets = new Insets(0, 0, 5, 5);
 		gbc_button_1.gridx = 5;
@@ -177,6 +213,15 @@ public class AddTemplate extends JFrame {
 		button_1.setFont(new Font("宋体", Font.PLAIN, 12));
 
 		JButton btnNewButton = new JButton("\u7F16 \u8F91");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				textField.setEditable(true);
+				textField_1.setEditable(true);
+				editableFlag = true;
+
+			}
+		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 2;
@@ -187,6 +232,9 @@ public class AddTemplate extends JFrame {
 		JButton button = new JButton("\u63D0 \u4EA4");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				// TODO: add template to db
+
 			}
 		});
 		GridBagConstraints gbc_button = new GridBagConstraints();
@@ -198,6 +246,7 @@ public class AddTemplate extends JFrame {
 	}
 
 	private boolean editableFlag = false;
+	private JTable table_1;
 
 	public void resetTemplate(Template t) {
 
@@ -205,43 +254,51 @@ public class AddTemplate extends JFrame {
 			textField.setText(t.getName());
 			textField_1.setText(new Date(t.getCreateTime()).toString());
 			// 对于这段代码我只能呵呵了。
-			table.setModel(new DefaultTableModel(
-					createObjectsFromDB(), new String[] { " ", "\u6A21\u677F\u9879\u7F16\u53F7",
+			table.setModel(new DefaultTableModel(createObjectsFromDB(t),
+					new String[] { " ", "\u6A21\u677F\u9879\u7F16\u53F7",
 							"\u8BBE\u5907\u540D\u79F0" }) {
 
 				private static final long serialVersionUID = 7729558323854981802L;
 
-				@Override public boolean isCellEditable(int row,
-						int column) {
+				@Override public boolean isCellEditable(int row, int column) {
 					return false;
 				}
 			});
-			
+
 			textField.setEditable(false);
 			textField_1.setEditable(false);
 			editableFlag = false;
 		}
 	}
 
-	private Object[][] createObjectsFromDB() {
+	private Object[][] createObjectsFromDB(Template template) {
 
-		List<TemplateItem> list = findTemplateItems();
+		List<TemplateItem> list = findTemplateItems(template);
 		if (list == null || list.isEmpty()) {
 			return new Object[0][0];
 		}
-		Object[][] objs = new Object[list.size()][6];// 界面上显示User的六个属性
+		Object[][] objs = new Object[list.size()][3];
 		int i = 0;
-		for (TemplateItem user : list) {
+		for (TemplateItem item : list) {
 			objs[i][0] = null;
-			objs[i][1] = user.getId();
-			objs[i][2] = user.getName();
+			objs[i][1] = item.getId();
+			objs[i++][2] = item.getName();
 		}
 		return objs;
 	}
 
-	@SuppressWarnings("unchecked") private List<TemplateItem> findTemplateItems() {
+	@SuppressWarnings("unchecked") private List<TemplateItem> findTemplateItems(
+			Template template) {
 
-		UserDAO userDAO = new UserDAO();
-		return userDAO.findByType(DB.TYPE_USER);
+		TemplateHasTemplateItemDAO dao = new TemplateHasTemplateItemDAO();
+		List<TemplateHasTemplateItem> hasTemplateItems = dao.findByProperty(
+				TemplateHasTemplateItemDAO.TEMPLATE_ID, template.getId());
+		List<TemplateItem> items = new ArrayList<TemplateItem>(
+				hasTemplateItems.size());
+		TemplateItemDAO itemDAO = new TemplateItemDAO();
+		for (TemplateHasTemplateItem obj : hasTemplateItems) {
+			items.add(itemDAO.findById(obj.getId().getTemplateItemId()));
+		}
+		return items;
 	}
 }
