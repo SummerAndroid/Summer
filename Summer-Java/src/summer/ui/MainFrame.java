@@ -16,6 +16,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import summer.pojo.Template;
+
 //主框架
 public class MainFrame extends JFrame {
 
@@ -166,7 +168,7 @@ public class MainFrame extends JFrame {
 								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("添加模板")) {
-						showTemplate();
+						showTemplate(null);
 					} else if (nodeInfo.equals("浏览任务")) {
 						changeVisiable(false, false, false, false, false, true,
 								false);
@@ -217,14 +219,17 @@ public class MainFrame extends JFrame {
 		fault.setVisible(arg7);
 	}
 
-	public void showTemplate() {
+	public void showTemplate(Template template) {
 		if (addTemplate == null) {
 			addTemplate = new AddTemplate();
+			addTemplate.resetTemplate(template);
 			addTemplate.setVisible(true);
 			// TODO:other operator
 		} else if (addTemplate.isVisible()) {
+			addTemplate.resetTemplate(template);
 			addTemplate.requestFocus();
 		} else {
+			addTemplate.resetTemplate(template);
 			addTemplate.setVisible(true);
 		}
 	}

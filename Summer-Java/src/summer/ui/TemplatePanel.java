@@ -87,7 +87,7 @@ public class TemplatePanel extends JPanel {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				mainFrame.showTemplate();
+				mainFrame.showTemplate(null);
 
 			}
 		});
@@ -111,7 +111,9 @@ public class TemplatePanel extends JPanel {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				mainFrame.showTemplate();
+				TemplateDAO dao = new TemplateDAO();
+				Template template = dao.findById(1L);
+				mainFrame.showTemplate(template);
 
 			}
 		});

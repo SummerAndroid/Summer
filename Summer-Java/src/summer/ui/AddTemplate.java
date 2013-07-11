@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,6 +21,11 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import summer.SysConfig.DB;
+import summer.dao.UserDAO;
+import summer.pojo.Template;
+import summer.pojo.TemplateItem;
 
 public class AddTemplate extends JFrame {
 
@@ -56,19 +63,23 @@ public class AddTemplate extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{28, 54, 60, 46, 56, 52, 54, 52, 85, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 28, 20, 100, 109, 80, 28, 76, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWidths = new int[] { 28, 54, 60, 46, 56, 52, 54,
+				52, 85, 0, 0 };
+		gbl_contentPane.rowHeights = new int[] { 0, 28, 20, 100, 109, 80, 28,
+				76, 0 };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0,
+				1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
-		
+
 		JLabel lblNewLabel_1 = new JLabel(" ");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 0;
 		contentPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
-		
+
 		JLabel lblNewLabel = new JLabel("\u6A21\u677F\u540D\u79F0\uFF1A");
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 14));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -76,7 +87,7 @@ public class AddTemplate extends JFrame {
 		gbc_lblNewLabel.gridx = 1;
 		gbc_lblNewLabel.gridy = 1;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
-		
+
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 2;
@@ -86,7 +97,7 @@ public class AddTemplate extends JFrame {
 		gbc_textField.gridy = 1;
 		contentPane.add(textField, gbc_textField);
 		textField.setColumns(10);
-		
+
 		JLabel label = new JLabel("\u521B\u5EFA\u65F6\u95F4\uFF1A");
 		label.setFont(new Font("宋体", Font.PLAIN, 14));
 		GridBagConstraints gbc_label = new GridBagConstraints();
@@ -96,7 +107,7 @@ public class AddTemplate extends JFrame {
 		gbc_label.gridx = 5;
 		gbc_label.gridy = 1;
 		contentPane.add(label, gbc_label);
-		
+
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
@@ -106,7 +117,7 @@ public class AddTemplate extends JFrame {
 		gbc_textField_1.gridx = 7;
 		gbc_textField_1.gridy = 1;
 		contentPane.add(textField_1, gbc_textField_1);
-		
+
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 3;
@@ -116,25 +127,25 @@ public class AddTemplate extends JFrame {
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 3;
 		contentPane.add(scrollPane, gbc_scrollPane);
-		
+
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.setColumnSelectionAllowed(true);
 		table.setCellSelectionEnabled(true);
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-				{null, null, null},
-			},
-			new String[] {
-				" ", "\u6A21\u677F\u9879\u7F16\u53F7", "\u8BBE\u5907\u540D\u79F0"
+		table.setModel(new DefaultTableModel(new Object[0][0], new String[] {
+				" ", "\u6A21\u677F\u9879\u7F16\u53F7",
+				"\u8BBE\u5907\u540D\u79F0" }) {
+			private static final long serialVersionUID = 916087786536142554L;
+
+			@Override public boolean isCellEditable(int row, int column) {
+				return editableFlag;
 			}
-		));
+		});
 		table.getColumnModel().getColumn(0).setPreferredWidth(67);
 		table.getColumnModel().getColumn(1).setPreferredWidth(104);
 		table.getColumnModel().getColumn(2).setPreferredWidth(126);
 		scrollPane.setViewportView(table);
-		
+
 		JScrollPane scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
 		gbc_scrollPane_1.gridheight = 3;
@@ -144,7 +155,7 @@ public class AddTemplate extends JFrame {
 		gbc_scrollPane_1.gridx = 6;
 		gbc_scrollPane_1.gridy = 3;
 		contentPane.add(scrollPane_1, gbc_scrollPane_1);
-		
+
 		JButton btnNewButton_1 = new JButton("\u6DFB\u52A0");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -156,7 +167,7 @@ public class AddTemplate extends JFrame {
 		gbc_btnNewButton_1.gridy = 4;
 		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
 		btnNewButton_1.setFont(new Font("宋体", Font.PLAIN, 12));
-		
+
 		JButton button_1 = new JButton("\u5220\u9664");
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
 		gbc_button_1.insets = new Insets(0, 0, 5, 5);
@@ -164,7 +175,7 @@ public class AddTemplate extends JFrame {
 		gbc_button_1.gridy = 5;
 		contentPane.add(button_1, gbc_button_1);
 		button_1.setFont(new Font("宋体", Font.PLAIN, 12));
-		
+
 		JButton btnNewButton = new JButton("\u7F16 \u8F91");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
@@ -172,7 +183,7 @@ public class AddTemplate extends JFrame {
 		gbc_btnNewButton.gridy = 7;
 		contentPane.add(btnNewButton, gbc_btnNewButton);
 		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 14));
-		
+
 		JButton button = new JButton("\u63D0 \u4EA4");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -184,5 +195,53 @@ public class AddTemplate extends JFrame {
 		gbc_button.gridy = 7;
 		contentPane.add(button, gbc_button);
 		button.setFont(new Font("宋体", Font.PLAIN, 14));
+	}
+
+	private boolean editableFlag = false;
+
+	public void resetTemplate(Template t) {
+
+		if (t != null) {
+			textField.setText(t.getName());
+			textField_1.setText(new Date(t.getCreateTime()).toString());
+			// 对于这段代码我只能呵呵了。
+			table.setModel(new DefaultTableModel(
+					createObjectsFromDB(), new String[] { " ", "\u6A21\u677F\u9879\u7F16\u53F7",
+							"\u8BBE\u5907\u540D\u79F0" }) {
+
+				private static final long serialVersionUID = 7729558323854981802L;
+
+				@Override public boolean isCellEditable(int row,
+						int column) {
+					return false;
+				}
+			});
+			
+			textField.setEditable(false);
+			textField_1.setEditable(false);
+			editableFlag = false;
+		}
+	}
+
+	private Object[][] createObjectsFromDB() {
+
+		List<TemplateItem> list = findTemplateItems();
+		if (list == null || list.isEmpty()) {
+			return new Object[0][0];
+		}
+		Object[][] objs = new Object[list.size()][6];// 界面上显示User的六个属性
+		int i = 0;
+		for (TemplateItem user : list) {
+			objs[i][0] = null;
+			objs[i][1] = user.getId();
+			objs[i][2] = user.getName();
+		}
+		return objs;
+	}
+
+	@SuppressWarnings("unchecked") private List<TemplateItem> findTemplateItems() {
+
+		UserDAO userDAO = new UserDAO();
+		return userDAO.findByType(DB.TYPE_USER);
 	}
 }
