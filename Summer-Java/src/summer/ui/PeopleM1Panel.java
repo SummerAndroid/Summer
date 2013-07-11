@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 import summer.SysConfig.DB;
 import summer.dao.UserDAO;
 import summer.pojo.User;
+import summer.ui.AddUpdateP.Done;
 
 public class PeopleM1Panel extends JPanel {
 	private static final long serialVersionUID = 7236850909210491604L;
@@ -67,7 +68,22 @@ public class PeopleM1Panel extends JPanel {
 		JButton button = new JButton("添加管理员");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AddUpdateP p = new AddUpdateP();
+				AddUpdateP p = new AddUpdateP(new Done() {
+
+					@Override public void done() {
+						// 对于这段代码我只能呵呵了。
+						table.setModel(new DefaultTableModel(
+								createObjectsFromDB(), new String[] { " ",
+										"管理员编号", "姓名", "密码", "联系方式", "住址" }) {
+							private static final long serialVersionUID = -497771659651433794L;
+
+							@Override public boolean isCellEditable(int row,
+									int column) {
+								return false;
+							}
+						});
+					}
+				}, null, DB.TYPE_ADMINISTRATOR);
 				p.setVisible(true);
 			}
 		});
@@ -81,6 +97,18 @@ public class PeopleM1Panel extends JPanel {
 		JButton button_1 = new JButton("删除管理员");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				UserDAO userDAO = new UserDAO();
+				User user = userDAO.findById(10005L);// create a simulation user
+				userDAO.delete(user);
+				// 对于这段代码我只能呵呵了。
+				table.setModel(new DefaultTableModel(createObjectsFromDB(),
+						new String[] { " ", "管理员编号", "姓名", "密码", "联系方式", "住址" }) {
+					private static final long serialVersionUID = -497771659651433794L;
+
+					@Override public boolean isCellEditable(int row, int column) {
+						return false;
+					}
+				});
 			}
 		});
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
@@ -93,6 +121,33 @@ public class PeopleM1Panel extends JPanel {
 		JButton button_2 = new JButton("修改信息");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// create a simulation user
+				User user = new User();
+				user.setId(10000L);
+				user.setName("sduxzz");
+				user.setPassword(String.valueOf(System.currentTimeMillis()));
+				user.setPermission(DB.PERMISSION_MAX);
+				user.setType(DB.TYPE_ADMINISTRATOR);
+				user.setTellphone("18769783279");
+				user.setAddress("天国");
+
+				AddUpdateP p = new AddUpdateP(new Done() {
+
+					@Override public void done() {
+						// 对于这段代码我只能呵呵了。
+						table.setModel(new DefaultTableModel(
+								createObjectsFromDB(), new String[] { " ",
+										"管理员编号", "姓名", "密码", "联系方式", "住址" }) {
+							private static final long serialVersionUID = -497771659651433794L;
+
+							@Override public boolean isCellEditable(int row,
+									int column) {
+								return false;
+							}
+						});
+					}
+				}, user, DB.TYPE_ADMINISTRATOR);
+				p.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_button_2 = new GridBagConstraints();
@@ -117,7 +172,7 @@ public class PeopleM1Panel extends JPanel {
 			objs[i][2] = user.getName();
 			objs[i][3] = user.getPassword();
 			objs[i][4] = user.getTellphone();
-			objs[i][5] = user.getAddress();
+			objs[i++][5] = user.getAddress();
 		}
 		return objs;
 	}

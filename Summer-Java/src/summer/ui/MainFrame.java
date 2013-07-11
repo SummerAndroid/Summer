@@ -16,6 +16,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import summer.pojo.Template;
+
 //主框架
 public class MainFrame extends JFrame {
 
@@ -32,6 +34,11 @@ public class MainFrame extends JFrame {
 	private ScanFaultPanel fault;
 	private EquipmentTypePanel equipment1;
 	private EquipmentDetailPanel equipment2;
+
+	// zhenzxie add some code here
+	private AddType addType;
+	private AddTemplate addTemplate;
+	private AddTask addTask;
 
 	/**
 	 * Launch the application.
@@ -107,17 +114,19 @@ public class MainFrame extends JFrame {
 
 		people1 = new PeopleM1Panel();
 		people2 = new PeopleM2Panel();
-		template = new TemplatePanel();
+		template = new TemplatePanel(this);
 		task1 = new TaskPanel();
-		equipment1 = new EquipmentTypePanel();
+		equipment1 = new EquipmentTypePanel(this);
 		equipment2 = new EquipmentDetailPanel();
 		fault = new ScanFaultPanel();
+
 		final GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.gridheight = 2;
 		gbc_panel.insets = new Insets(0, 0, 5, 0);
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 1;
 		gbc_panel.gridy = 0;
+
 		contentPane.add(people1, gbc_panel);
 		contentPane.add(people2, gbc_panel);
 		contentPane.add(template, gbc_panel);
@@ -126,59 +135,102 @@ public class MainFrame extends JFrame {
 		contentPane.add(equipment2, gbc_panel);
 		contentPane.add(fault, gbc_panel);
 
+		changeVisiable(true, false, false, false, false, false, false);
+
 		scantree.addTreeSelectionListener(new TreeSelectionListener() {
 
 			@Override public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) scantree
 						.getLastSelectedPathComponent();
+				// ////////////////////////////////////////////////
+				// //////////////////////呵呵///////////////////////
+				// ///////////////////////////////////////////////
 				if (node == null)// Nothing is selected
 					return;
 				Object nodeInfo = node.getUserObject();
 				if (nodeInfo instanceof String) {
 					if (nodeInfo.equals("管理员管理")) {
-						contentPane.remove(people2);// 移除
-						contentPane.remove(template);
-						contentPane.remove(task1);
-						contentPane.remove(equipment1);
-						contentPane.remove(equipment2);
-						contentPane.remove(fault);
-						contentPane.add(people1, gbc_panel);
+						changeVisiable(true, false, false, false, false, false,
+								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("巡视员管理")) {
-						contentPane.remove(people1);
-						contentPane.remove(template);
-						contentPane.remove(task1);
-						contentPane.remove(equipment1);
-						contentPane.remove(equipment2);
-						contentPane.remove(fault);
-						contentPane.add(people2, gbc_panel);
+						changeVisiable(false, true, false, false, false, false,
+								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("浏览类型")) {
-						contentPane.remove(people1);
-						contentPane.remove(people2);
-						contentPane.remove(template);
-						contentPane.remove(task1);
-						contentPane.remove(equipment2);
-						contentPane.remove(fault);
-						contentPane.add(equipment1, gbc_panel);
+						changeVisiable(false, false, true, false, false, false,
+								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("添加类型")) {
-						AddType addType = new AddType();
-						addType.setVisible(true);
-						// TODO:other operator
+						showAddType();
 					} else if (nodeInfo.equals("浏览模板")) {
-
+						changeVisiable(false, false, false, false, true, false,
+								false);
+						contentPane.repaint();
 					} else if (nodeInfo.equals("添加模板")) {
-
+						showTemplate(null);
 					} else if (nodeInfo.equals("浏览任务")) {
-
+						changeVisiable(false, false, false, false, false, true,
+								false);
+						contentPane.repaint();
 					} else if (nodeInfo.equals("添加任务")) {
-
+						if (addTask == null) {
+							addTask = new AddTask();
+							addTask.setVisible(true);
+						} else if (addTask.isVisible()) {
+							addTask.requestFocus();
+						} else {
+							addTask.setVisible(true);
+						}
 					} else if (nodeInfo.equals("缺陷管理")) {
-
+						changeVisiable(false, false, false, false, false,
+								false, true);
+						contentPane.repaint();
 					}
 				}
 			}
 		});
+	}
+
+	public void showAddType() {
+		if (addType == null) {
+			addType = new AddType();
+			addType.setVisible(true);
+			// TODO:other operator
+		} else if (addType.isVisible()) {
+			addType.requestFocus();
+		} else {
+			addType.setVisible(true);
+		}
+	}
+
+	public void showEquipmentDetail() {
+		changeVisiable(false, false, false, true, false, false, false);
+	}
+
+	private void changeVisiable(boolean arg1, boolean arg2, boolean arg3,
+			boolean arg4, boolean arg5, boolean arg6, boolean arg7) {
+		people1.setVisible(arg1);
+		people2.setVisible(arg2);
+		equipment1.setVisible(arg3);
+		equipment2.setVisible(arg4);
+		template.setVisible(arg5);
+		task1.setVisible(arg6);
+		fault.setVisible(arg7);
+	}
+
+	public void showTemplate(Template template) {
+		if (addTemplate == null) {
+			addTemplate = new AddTemplate();
+			addTemplate.resetTemplate(template);
+			addTemplate.setVisible(true);
+			// TODO:other operator
+		} else if (addTemplate.isVisible()) {
+			addTemplate.resetTemplate(template);
+			addTemplate.requestFocus();
+		} else {
+			addTemplate.resetTemplate(template);
+			addTemplate.setVisible(true);
+		}
 	}
 }

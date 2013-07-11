@@ -14,5 +14,7 @@ public final class SysConfig {
 	public final static class DB {
 		public final static int TYPE_ADMINISTRATOR = 1;
 		public final static int TYPE_USER = 0;
+		public final static int PERMISSION_MAX = 7;
+		public final static int PERMISSION_MIN = 0;
 	}
 }

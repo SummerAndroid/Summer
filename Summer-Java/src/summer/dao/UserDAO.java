@@ -47,6 +47,7 @@ public class UserDAO extends BaseHibernateDAO {
 		log.debug("deleting User instance");
 		try {
 			getSession().delete(persistentInstance);
+			getSession().flush();
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -147,6 +148,7 @@ public class UserDAO extends BaseHibernateDAO {
 		log.debug("attaching dirty User instance");
 		try {
 			getSession().saveOrUpdate(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);
