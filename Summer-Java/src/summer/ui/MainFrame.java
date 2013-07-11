@@ -21,9 +21,6 @@ import summer.pojo.Template;
 //主框架
 public class MainFrame extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 9194533281017417772L;
 	private JPanel contentPane;
 	private JTree scantree;
@@ -115,7 +112,7 @@ public class MainFrame extends JFrame {
 		people1 = new PeopleM1Panel();
 		people2 = new PeopleM2Panel();
 		template = new TemplatePanel(this);
-		task1 = new TaskPanel();
+		task1 = new TaskPanel(this);
 		equipment1 = new EquipmentTypePanel(this);
 		equipment2 = new EquipmentDetailPanel();
 		fault = new ScanFaultPanel();
@@ -142,9 +139,9 @@ public class MainFrame extends JFrame {
 			@Override public void valueChanged(TreeSelectionEvent e) {
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) scantree
 						.getLastSelectedPathComponent();
+				// /////////////////////////////////////////////////
+				// ///////////////////////呵呵///////////////////////
 				// ////////////////////////////////////////////////
-				// //////////////////////呵呵///////////////////////
-				// ///////////////////////////////////////////////
 				if (node == null)// Nothing is selected
 					return;
 				Object nodeInfo = node.getUserObject();
@@ -174,14 +171,7 @@ public class MainFrame extends JFrame {
 								false);
 						contentPane.repaint();
 					} else if (nodeInfo.equals("添加任务")) {
-						if (addTask == null) {
-							addTask = new AddTask();
-							addTask.setVisible(true);
-						} else if (addTask.isVisible()) {
-							addTask.requestFocus();
-						} else {
-							addTask.setVisible(true);
-						}
+						showAddTask();
 					} else if (nodeInfo.equals("缺陷管理")) {
 						changeVisiable(false, false, false, false, false,
 								false, true);
@@ -231,6 +221,17 @@ public class MainFrame extends JFrame {
 		} else {
 			addTemplate.resetTemplate(template);
 			addTemplate.setVisible(true);
+		}
+	}
+
+	public void showAddTask() {
+		if (addTask == null) {
+			addTask = new AddTask();
+			addTask.setVisible(true);
+		} else if (addTask.isVisible()) {
+			addTask.requestFocus();
+		} else {
+			addTask.setVisible(true);
 		}
 	}
 }
