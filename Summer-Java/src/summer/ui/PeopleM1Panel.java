@@ -50,11 +50,14 @@ public class PeopleM1Panel extends JPanel {
 
 		table = new JTable();
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setCellSelectionEnabled(true);
-		table.setColumnSelectionAllowed(true);
 		table.setModel(new DefaultTableModel(createObjectsFromDB(),
 				new String[] { " ", "管理员编号", "姓名", "密码", "联系方式", "住址" }) {
 			private static final long serialVersionUID = -497771659651433794L;
+
+			@Override public Class<?> getColumnClass(int columnIndex) {
+				return getValueAt(1, columnIndex).getClass();
+			}
+
 			@Override public boolean isCellEditable(int row, int column) {
 				return false;
 			}
@@ -167,7 +170,10 @@ public class PeopleM1Panel extends JPanel {
 		Object[][] objs = new Object[list.size()][6];// 界面上显示User的六个属性
 		int i = 0;
 		for (User user : list) {
-			objs[i][0] = null;
+			if (i % 2 == 0)
+			objs[i][0] = Boolean.TRUE;
+			else
+				objs[i][0] = Boolean.FALSE;
 			objs[i][1] = user.getId();
 			objs[i][2] = user.getName();
 			objs[i][3] = user.getPassword();
