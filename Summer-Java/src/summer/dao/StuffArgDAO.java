@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,22 @@ public class StuffArgDAO extends BaseHibernateDAO {
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
+			throw re;
+		}
+	}
+
+	public void delete(long id) {
+		log.debug("deleting stuff_arg instance");
+		try {
+			SQLQuery sqlQuery = getSession().createSQLQuery(
+					"delete from stuff_arg where id = ?");
+			sqlQuery.setLong(0, id);
+			sqlQuery.addEntity(StuffArg.class);
+			sqlQuery.executeUpdate();
+			getSession().flush();
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
 			throw re;
 		}
 	}

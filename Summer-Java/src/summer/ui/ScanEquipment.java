@@ -1,30 +1,33 @@
 package summer.ui;
 
-import java.awt.Cursor;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import summer.dao.StuffArgDAO;
+import summer.dao.StuffDAO;
 import summer.pojo.Stuff;
 import summer.pojo.StuffArg;
+import summer.pojo.StuffCategory;
+import summer.ui.AddUpdateP.Done;
+import summer.ui.PeopleM1Panel.STableModel;
 
 public class ScanEquipment extends JFrame {
 
@@ -44,31 +47,22 @@ public class ScanEquipment extends JFrame {
 	private JButton button_1;
 	private Icon icon;
 
+	// zhenzxie add some code here
+	private Done done;
 	private Stuff stuff;
+	private StuffCategory category;
 	private AddAttribute addAttribute;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ScanEquipment frame = new ScanEquipment(null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private String[] columnNames = new String[] { " ", "\u5C5E\u6027\u540D",
+			"\u53C2\u8003\u503C", "\u5907\u6CE8" };
+	private STableModel st;
 
 	/**
 	 * Create the frame.
 	 */
-	public ScanEquipment(Stuff s) {
+	public ScanEquipment(Done d) {
 
-		stuff = s;
+		done = d;
+
 		setBounds(100, 100, 604, 570);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,7 +73,6 @@ public class ScanEquipment extends JFrame {
 		gbl_contentPane.columnWeights = new double[] {};
 		gbl_contentPane.rowWeights = new double[] {};
 		contentPane.setLayout(gbl_contentPane);
-		Cursor cs = new Cursor(Cursor.HAND_CURSOR);
 
 		JLabel lblNewLabel = new JLabel("   使用地：");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
@@ -228,26 +221,18 @@ public class ScanEquipment extends JFrame {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 5;
 		contentPane.add(scrollPane, gbc_scrollPane);
-		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[0][0],
-				new String[] { " ", "\u5C5E\u6027\u540D", "\u53C2\u8003\u503C",
-						"\u5907\u6CE8" }) {
-			private static final long serialVersionUID = -4167658823922538097L;
 
-			@Override public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setCellSelectionEnabled(true);
-		table.setColumnSelectionAllowed(true);
-		table.getColumnModel().getColumn(2).setPreferredWidth(86);
+		table = new JTable();
+		st = new STableModel(table, new Object[0][0], columnNames);
+		table.setModel(st);
 		scrollPane.setViewportView(table);
 
 		btnNewButton = new JButton("\u6DFB\u52A0\u5C5E\u6027");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				showAttribute();
+
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -261,7 +246,24 @@ public class ScanEquipment extends JFrame {
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO:do delete logical here
+				List<Integer> rows = st.getSelectedRow();
+				if (rows.isEmpty()) {
+					JOptionPane.showConfirmDialog(ScanEquipment.this, "未选中属性");
+					return;
+				}
+
+				int ok = JOptionPane.showConfirmDialog(ScanEquipment.this,
+						"真的要删除所选属性吗？");
+				System.out.println(ok);
+				if (ok != JOptionPane.OK_OPTION)
+					return;
+
+				StuffArgDAO dao = new StuffArgDAO();
+				for (Integer integer : rows) {
+					dao.delete((Long) st.getValueAt(integer, 1));// 1代表id的那一列
+				}
+				// 对于这段代码我只能呵呵了。
+				reflush();
 
 			}
 		});
@@ -276,7 +278,56 @@ public class ScanEquipment extends JFrame {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO:do confirm logical here
+				// i ++ 。
+
+				long categoryid = category.getId();
+				String code = textField_1.getText();
+				String zxing = null;//TODO:二维码路径
+				String str = textField_2.getText();
+				int life = Integer.parseInt(str.substring(0, str.length() - 1));
+				String address = textField_3.getText();
+				String categoryName = textField_4.getText();
+				double price = Double.parseDouble(textField_5.getText());
+				String factory = textField_6.getText();
+				long startTime = System.currentTimeMillis();// TODO:这个开始时间是错的 。
+
+				List<StuffArg> list = new ArrayList<StuffArg>();
+				Vector objs = st.getDataVector();
+				if (objs.isEmpty()) {} else {
+					for (Object object : objs) {
+						Vector vector = (Vector) object;
+						StuffArg arg = new StuffArg();
+						arg.setName((String) vector.get(1));
+						arg.setValue((String) vector.get(2));
+						arg.setComment((String) vector.get(3));
+						list.add(arg);
+					}
+				}
+
+				StuffDAO dao = new StuffDAO();
+				if (stuff == null) {// 添加设备的情况
+					Stuff s = new Stuff(categoryid, code, price, life, address,
+							factory, zxing, startTime);
+					s = dao.save(s);
+					StuffArgDAO stuffArgDAO = new StuffArgDAO();
+					for (StuffArg arg : list) {
+						arg.setStuffId(s.getId());
+						stuffArgDAO.save(arg);
+					}
+				} else {
+					stuff.setCode(code);
+					stuff.setZxing(zxing);
+					stuff.setLife(life);
+					stuff.setAddress(address);
+					stuff.setCategoryName(categoryName);
+					stuff.setPrice(price);
+					stuff.setFactory(factory);
+					stuff.setStartTime(startTime);
+					dao.merge(stuff);
+				}
+
+				done.done();
+				ScanEquipment.this.setVisible(false);
 
 			}
 		});
@@ -285,33 +336,28 @@ public class ScanEquipment extends JFrame {
 		gbc_button_1.gridy = 6;
 		contentPane.add(button_1, gbc_button_1);
 
+	}
+
+	public void reset(Stuff s, StuffCategory sc) {
+
+		category = sc;
+
 		if (stuff != null) {
-			textField.setEditable(false);
-			textField_1.setEditable(false);
-			textField_2.setEditable(false);
-			textField_3.setEditable(false);
-			textField_4.setEditable(false);
-			textField_5.setEditable(false);
-			textField_6.setEditable(false);
-			textField_7.setEditable(false);
+
+			stuff = s;
+
+			textField.setEditable(false);// 不允许修改id
 
 			textField.setText(String.valueOf(stuff.getId()));
 			textField_1.setText(stuff.getCode());
-			textField_2.setText(String.valueOf(stuff.getLife() / 31536000)
-					+ "年");
+			textField_2.setText(String.valueOf(stuff.getLife()) + "年");
 			textField_3.setText(stuff.getAddress());
-			textField_4.setText(stuff.getCategoryName());
+			textField_4.setText(category.getName());
 			textField_5.setText(String.valueOf(stuff.getPrice()));
 			textField_6.setText(stuff.getFactory());
 			textField_7.setText(new Date(stuff.getStartTime()).toString());
-			table.setModel(new DefaultTableModel(createObjectsFromDB(stuff),
-					new String[] { " ", "\u5C5E\u6027\u540D",
-							"\u53C2\u8003\u503C", "\u5907\u6CE8" }) {
-				private static final long serialVersionUID = -4167658823922538097L;
-				@Override public boolean isCellEditable(int row, int column) {
-					return false;
-				}
-			});
+
+			reflush();
 		}
 	}
 
@@ -325,7 +371,19 @@ public class ScanEquipment extends JFrame {
 
 	public void showAttribute() {
 		if (addAttribute == null) {
-			addAttribute = new AddAttribute();
+			addAttribute = new AddAttribute(new Done() {
+
+				@Override public void done() {
+					StuffArg arg = addAttribute.getStuffArg();
+					if (arg == null) {
+						reflush();
+						return;
+					} else {// 当前的stuff还没加到数据库中
+						st.addRow(new Object[] { Boolean.FALSE, arg.getName(),
+								arg.getValue(), arg.getComment() });
+					}
+				}
+			});
 			addAttribute.setVisible(true);
 		} else if (addAttribute.isVisible()) {
 			addAttribute.requestFocus();
@@ -334,7 +392,15 @@ public class ScanEquipment extends JFrame {
 		}
 	}
 
+	public void reflush() {
+		st.setDataVector(createObjectsFromDB(stuff), columnNames);
+		table.repaint();
+	}
+
 	private Object[][] createObjectsFromDB(Stuff stuff) {
+
+		if (stuff == null)
+			return new Object[0][0];
 
 		List<StuffArg> list = findStuffArgs(stuff);
 		if (list == null || list.isEmpty()) {
@@ -343,11 +409,12 @@ public class ScanEquipment extends JFrame {
 		Object[][] objs = new Object[list.size()][4];// 界面上显示StuffArg四个属性
 		int i = 0;
 		for (StuffArg arg : list) {
-			objs[i][0] = null;
+			objs[i][0] = Boolean.FALSE;
 			objs[i][1] = arg.getName();
 			objs[i][2] = arg.getValue();
 			objs[i++][3] = arg.getComment();
 		}
+
 		return objs;
 	}
 

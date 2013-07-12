@@ -117,7 +117,7 @@ public class PeopleM2Panel extends JPanel {
 					return;
 				}
 
-				if (list.size() == 1) {
+				if (list.size() != 1) {
 					JOptionPane.showConfirmDialog(PeopleM2Panel.this,
 							"同时只能修改一个巡视员信息！");
 					return;

@@ -16,7 +16,9 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import summer.pojo.StuffCategory;
 import summer.pojo.Template;
+import summer.ui.AddUpdateP.Done;
 
 //Ö÷¿ò¼Ü
 public class MainFrame extends JFrame {
@@ -114,7 +116,7 @@ public class MainFrame extends JFrame {
 		template = new TemplatePanel(this);
 		task1 = new TaskPanel(this);
 		equipment1 = new EquipmentTypePanel(this);
-		equipment2 = new EquipmentDetailPanel();
+		equipment2 = new EquipmentDetailPanel(null);
 		fault = new ScanFaultPanel();
 
 		final GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -184,9 +186,13 @@ public class MainFrame extends JFrame {
 
 	public void showAddType() {
 		if (addType == null) {
-			addType = new AddType();
+			addType = new AddType(new Done() {
+
+				@Override public void done() {
+					equipment1.reflush();
+				}
+			});
 			addType.setVisible(true);
-			// TODO:other operator
 		} else if (addType.isVisible()) {
 			addType.requestFocus();
 		} else {
@@ -194,7 +200,8 @@ public class MainFrame extends JFrame {
 		}
 	}
 
-	public void showEquipmentDetail() {
+	public void showEquipmentDetail(StuffCategory category) {
+		equipment2.reflush(category);
 		changeVisiable(false, false, false, true, false, false, false);
 	}
 
@@ -214,7 +221,6 @@ public class MainFrame extends JFrame {
 			addTemplate = new AddTemplate();
 			addTemplate.resetTemplate(template);
 			addTemplate.setVisible(true);
-			// TODO:other operator
 		} else if (addTemplate.isVisible()) {
 			addTemplate.resetTemplate(template);
 			addTemplate.requestFocus();

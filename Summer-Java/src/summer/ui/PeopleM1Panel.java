@@ -172,7 +172,7 @@ public class PeopleM1Panel extends JPanel {
 					return;
 				}
 
-				if (list.size() == 1) {
+				if (list.size() != 1) {
 					JOptionPane.showConfirmDialog(PeopleM1Panel.this,
 							"同时只能修改一个管理员信息！");
 					return;
