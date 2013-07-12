@@ -68,8 +68,8 @@ public class ScanEquipment extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 94, 57, 73, 89, 148 };
-		gbl_contentPane.rowHeights = new int[] { 33, 35, 37, 34, 50, 197, 56 };
+		gbl_contentPane.columnWidths = new int[] { 85, 57, 73, 89, 148 };
+		gbl_contentPane.rowHeights = new int[] { 33, 55, 46, 47, 50, 197, 56 };
 		gbl_contentPane.columnWeights = new double[] {};
 		gbl_contentPane.rowWeights = new double[] {};
 		contentPane.setLayout(gbl_contentPane);
