@@ -7,13 +7,16 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import summer.SysConfig.DB;
@@ -24,9 +27,63 @@ import summer.ui.AddUpdateP.Done;
 public class PeopleM1Panel extends JPanel {
 	private static final long serialVersionUID = 7236850909210491604L;
 	private JTable table;
-	/**
-	 * Create the panel.
-	 */
+
+	private String[] columnNames = new String[] { " ", "管理员编号", "姓名", "密码",
+			"联系方式", "住址" };
+
+	private STableModel st;
+
+	public static class STableModel extends DefaultTableModel {
+
+		private static final long serialVersionUID = 6855751005052552647L;
+
+		private JTable mJTable;
+		private Object[][] mData;
+
+		public STableModel(JTable jtable, Object[][] data, Object[] columnNames) {
+			super(data, columnNames);
+			mJTable = jtable;
+			mData = data;
+			mJTable.addMouseListener(new MouseAdapter() {
+				@Override public void mouseClicked(MouseEvent e) {
+					int rowIndex = mJTable.getSelectedRow();
+					int columnIndex = mJTable.getSelectedColumn();
+					if (rowIndex >= 0 && columnIndex == 0) {
+						mData[rowIndex][0] = mData[rowIndex][0] == Boolean.FALSE ? Boolean.TRUE
+								: Boolean.FALSE;
+					}
+				}
+			});
+		}
+
+		@Override public Class<?> getColumnClass(int columnIndex) {
+			return getValueAt(0, columnIndex).getClass();
+		}
+
+		@Override public void setDataVector(Object[][] dataVector,
+				Object[] columnIdentifiers) {
+			mData = dataVector;
+			super.setDataVector(dataVector, columnIdentifiers);
+		}
+
+		@Override public boolean isCellEditable(int row, int column) {
+			if (column == 0)
+				return true;
+			return false;
+		}
+
+		public List<Integer> getSelectedRow() {
+			int rowLength = mData.length;
+			ArrayList<Integer> list = new ArrayList<Integer>();
+			for (int i = 0; i < rowLength; i++) {
+				if (mData[i][0] == Boolean.TRUE) {
+					list.add(i);
+				}
+			}
+			return list;
+		}
+	}
+
 	public PeopleM1Panel() {
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -49,42 +106,18 @@ public class PeopleM1Panel extends JPanel {
 		add(scrollPane, gbc_scrollPane);
 
 		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setModel(new DefaultTableModel(createObjectsFromDB(),
-				new String[] { " ", "管理员编号", "姓名", "密码", "联系方式", "住址" }) {
-			private static final long serialVersionUID = -497771659651433794L;
-
-			@Override public Class<?> getColumnClass(int columnIndex) {
-				return getValueAt(1, columnIndex).getClass();
-			}
-
-			@Override public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
-		table.getColumnModel().getColumn(1).setPreferredWidth(86);
-		table.getColumnModel().getColumn(3).setPreferredWidth(91);
-		table.getColumnModel().getColumn(4).setPreferredWidth(113);
-		table.getColumnModel().getColumn(5).setPreferredWidth(189);
+		st = new STableModel(table, createObjectsFromDB(), columnNames);
+		table.setModel(st);
 		scrollPane.setViewportView(table);
 
 		JButton button = new JButton("添加管理员");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddUpdateP p = new AddUpdateP(new Done() {
-
 					@Override public void done() {
 						// 对于这段代码我只能呵呵了。
-						table.setModel(new DefaultTableModel(
-								createObjectsFromDB(), new String[] { " ",
-										"管理员编号", "姓名", "密码", "联系方式", "住址" }) {
-							private static final long serialVersionUID = -497771659651433794L;
-
-							@Override public boolean isCellEditable(int row,
-									int column) {
-								return false;
-							}
-						});
+						st.setDataVector(createObjectsFromDB(), columnNames);
+						table.repaint();
 					}
 				}, null, DB.TYPE_ADMINISTRATOR);
 				p.setVisible(true);
@@ -100,18 +133,26 @@ public class PeopleM1Panel extends JPanel {
 		JButton button_1 = new JButton("删除管理员");
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UserDAO userDAO = new UserDAO();
-				User user = userDAO.findById(10005L);// create a simulation user
-				userDAO.delete(user);
+				
+				List<Integer> rows = st.getSelectedRow();
+				if(rows.isEmpty()){
+					JOptionPane.showConfirmDialog(PeopleM1Panel.this, "未选中管理员");
+					return;
+				}
+				
+				int ok = JOptionPane.showConfirmDialog(PeopleM1Panel.this,
+						"真的要删除所选管理员吗？");
+				System.out.println(ok);
+				if (ok != JOptionPane.OK_OPTION)
+					return;
+				
+				UserDAO dao = new UserDAO();
+				for (Integer integer : rows) {
+					dao.delete((Long) st.getValueAt(integer, 1));// 1代表id的那一列
+				}
 				// 对于这段代码我只能呵呵了。
-				table.setModel(new DefaultTableModel(createObjectsFromDB(),
-						new String[] { " ", "管理员编号", "姓名", "密码", "联系方式", "住址" }) {
-					private static final long serialVersionUID = -497771659651433794L;
-
-					@Override public boolean isCellEditable(int row, int column) {
-						return false;
-					}
-				});
+				st.setDataVector(createObjectsFromDB(), columnNames);
+				table.repaint();
 			}
 		});
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
@@ -124,30 +165,35 @@ public class PeopleM1Panel extends JPanel {
 		JButton button_2 = new JButton("修改信息");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// create a simulation user
-				User user = new User();
-				user.setId(10000L);
-				user.setName("sduxzz");
-				user.setPassword(String.valueOf(System.currentTimeMillis()));
-				user.setPermission(DB.PERMISSION_MAX);
-				user.setType(DB.TYPE_ADMINISTRATOR);
-				user.setTellphone("18769783279");
-				user.setAddress("天国");
+				List<Integer> list = st.getSelectedRow();
+				if (list.isEmpty()) {
+					JOptionPane
+							.showConfirmDialog(PeopleM1Panel.this, "未选中管理员！");
+					return;
+				}
 
+				if (list.size() == 1) {
+					JOptionPane.showConfirmDialog(PeopleM1Panel.this,
+							"同时只能修改一个管理员信息！");
+					return;
+				}
+				
+				Integer row = list.get(0);
+				User user = new User();
+				user.setId((Long) st.getValueAt(row, 1));
+				user.setName((String) st.getValueAt(row, 2));
+				user.setPassword((String) st.getValueAt(row, 3));
+				user.setTellphone((String) st.getValueAt(row, 4));
+				user.setAddress((String) st.getValueAt(row, 5));
+				user.setType(DB.TYPE_ADMINISTRATOR);
+				user.setPermission(DB.PERMISSION_MAX);
+				
 				AddUpdateP p = new AddUpdateP(new Done() {
 
 					@Override public void done() {
 						// 对于这段代码我只能呵呵了。
-						table.setModel(new DefaultTableModel(
-								createObjectsFromDB(), new String[] { " ",
-										"管理员编号", "姓名", "密码", "联系方式", "住址" }) {
-							private static final long serialVersionUID = -497771659651433794L;
-
-							@Override public boolean isCellEditable(int row,
-									int column) {
-								return false;
-							}
-						});
+						st.setDataVector(createObjectsFromDB(), columnNames);
+						table.repaint();
 					}
 				}, user, DB.TYPE_ADMINISTRATOR);
 				p.setVisible(true);
@@ -170,10 +216,7 @@ public class PeopleM1Panel extends JPanel {
 		Object[][] objs = new Object[list.size()][6];// 界面上显示User的六个属性
 		int i = 0;
 		for (User user : list) {
-			if (i % 2 == 0)
-			objs[i][0] = Boolean.TRUE;
-			else
-				objs[i][0] = Boolean.FALSE;
+			objs[i][0] = Boolean.FALSE;
 			objs[i][1] = user.getId();
 			objs[i][2] = user.getName();
 			objs[i][3] = user.getPassword();
