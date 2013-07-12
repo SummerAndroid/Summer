@@ -46,6 +46,10 @@ public class PeopleM1Panel extends JPanel {
 			mData = data;
 			mJTable.addMouseListener(new MouseAdapter() {
 				@Override public void mouseClicked(MouseEvent e) {
+
+					if (e.getButton() != MouseEvent.BUTTON1)
+						return;
+
 					int rowIndex = mJTable.getSelectedRow();
 					int columnIndex = mJTable.getSelectedColumn();
 					if (rowIndex >= 0 && columnIndex == 0) {
@@ -54,6 +58,7 @@ public class PeopleM1Panel extends JPanel {
 					}
 				}
 			});
+
 		}
 
 		@Override public Class<?> getColumnClass(int columnIndex) {
