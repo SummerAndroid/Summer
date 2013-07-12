@@ -341,10 +341,9 @@ public class ScanEquipment extends JFrame {
 	public void reset(Stuff s, StuffCategory sc) {
 
 		category = sc;
+		stuff = s;
 
 		if (stuff != null) {
-
-			stuff = s;
 
 			textField.setEditable(false);// ²»ÔÊÐíÐÞ¸Äid
 

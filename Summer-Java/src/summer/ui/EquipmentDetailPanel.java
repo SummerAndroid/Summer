@@ -129,9 +129,10 @@ public class EquipmentDetailPanel extends JPanel {
 				}
 
 				Integer row = list.get(0);
+
 				StuffDAO dao = new StuffDAO();
 				Stuff stuff = dao.findById((Long) st.getValueAt(row, 1));
-
+				System.out.println(stuff);
 				showStuff(stuff);
 			}
 		});
