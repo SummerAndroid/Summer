@@ -260,7 +260,7 @@ public class ScanEquipment extends JFrame {
 
 				StuffArgDAO dao = new StuffArgDAO();
 				for (Integer integer : rows) {
-					dao.delete((Long) st.getValueAt(integer, 1));// 1代表id的那一列
+					dao.delete((Long) argList.get(integer).getId());
 				}
 				// 对于这段代码我只能呵呵了。
 				reflush();
@@ -396,12 +396,15 @@ public class ScanEquipment extends JFrame {
 		table.repaint();
 	}
 
+	private List<StuffArg> argList;
+
 	private Object[][] createObjectsFromDB(Stuff stuff) {
 
 		if (stuff == null)
 			return new Object[0][0];
 
-		List<StuffArg> list = findStuffArgs(stuff);
+		argList = findStuffArgs(stuff);
+		List<StuffArg> list = argList;
 		if (list == null || list.isEmpty()) {
 			return new Object[0][0];
 		}

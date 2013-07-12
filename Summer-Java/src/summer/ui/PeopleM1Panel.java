@@ -56,6 +56,10 @@ public class PeopleM1Panel extends JPanel {
 						mData[rowIndex][0] = mData[rowIndex][0] == Boolean.FALSE ? Boolean.TRUE
 								: Boolean.FALSE;
 					}
+					for (Object[] objs : mData) {
+						System.out.println(objs[0]);
+					}
+					System.out.println("-----------------");
 				}
 			});
 
