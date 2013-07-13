@@ -17,4 +17,9 @@ public final class SysConfig {
 		public final static int PERMISSION_MAX = 7;
 		public final static int PERMISSION_MIN = 0;
 	}
+
+	public final static class Server {
+		public final static String DIR = "d:";
+		public final static String ZXING = "/zxing";
+	}
 }

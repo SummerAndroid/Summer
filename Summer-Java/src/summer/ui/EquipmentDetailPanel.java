@@ -10,25 +10,35 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 import summer.dao.StuffDAO;
 import summer.pojo.Stuff;
+import summer.pojo.StuffCategory;
+import summer.ui.AddUpdateP.Done;
+import summer.ui.PeopleM1Panel.STableModel;
 
 public class EquipmentDetailPanel extends JPanel {
 	private static final long serialVersionUID = 4747794806684877973L;
 	private JTable table;
 
+	// zhenzxie add some code here
 	private ScanEquipment equipment;
+	private String[] columnNames = new String[] { " ", "设备编号", "设备名称", "设备使用地" };
+
+	private STableModel st;
+	private StuffCategory category;
 
 	/**
 	 * Create the panel.
 	 */
-	public EquipmentDetailPanel() {
+	public EquipmentDetailPanel(StuffCategory sc) {
+
+		category = sc;
+
 		setBackground(Color.WHITE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 159, 176, 210, 0 };
@@ -48,20 +58,10 @@ public class EquipmentDetailPanel extends JPanel {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
-		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setCellSelectionEnabled(true);
-		table.setColumnSelectionAllowed(true);
-		table.setModel(new DefaultTableModel(createObjectsFromDB(),
-				new String[] { " ", "设备编号", "设备名称", "设备使用地" }) {
-			private static final long serialVersionUID = -5649900589575163173L;
 
-			@Override public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
-		table.getColumnModel().getColumn(1).setPreferredWidth(86);
-		table.getColumnModel().getColumn(3).setPreferredWidth(91);
+		table = new JTable();
+		st = new STableModel(table, createObjectsFromDB(sc), columnNames);
+		table.setModel(st);
 		scrollPane.setViewportView(table);
 
 		JButton button = new JButton("添加设备");
@@ -83,8 +83,25 @@ public class EquipmentDetailPanel extends JPanel {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO:do delete stuff logical
+				List<Integer> rows = st.getSelectedRow();
+				if (rows.isEmpty()) {
+					JOptionPane.showConfirmDialog(EquipmentDetailPanel.this,
+							"未选中设备");
+					return;
+				}
 
+				int ok = JOptionPane.showConfirmDialog(
+						EquipmentDetailPanel.this, "真的要删除所选设备吗？");
+				System.out.println(ok);
+				if (ok != JOptionPane.OK_OPTION)
+					return;
+
+				StuffDAO dao = new StuffDAO();
+				for (Integer integer : rows) {
+					dao.delete((Long) st.getValueAt(integer, 1));// 1代表id的那一列
+				}
+				// 对于这段代码我只能呵呵了。
+				reflush(category);
 			}
 		});
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
@@ -98,11 +115,25 @@ public class EquipmentDetailPanel extends JPanel {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				StuffDAO dao = new StuffDAO();
-				Stuff suff = dao.findById(1L);// TODO:now just create a simulate
-												// stuff
-				showStuff(suff);
+				List<Integer> list = st.getSelectedRow();
+				if (list.isEmpty()) {
+					JOptionPane.showConfirmDialog(EquipmentDetailPanel.this,
+							"未选中设备！");
+					return;
+				}
 
+				if (list.size() != 1) {
+					JOptionPane.showConfirmDialog(EquipmentDetailPanel.this,
+							"同时只能查看一个设备信息！");
+					return;
+				}
+
+				Integer row = list.get(0);
+
+				StuffDAO dao = new StuffDAO();
+				Stuff stuff = dao.findById((Long) st.getValueAt(row, 1));
+				System.out.println(stuff);
+				showStuff(stuff);
 			}
 		});
 		GridBagConstraints gbc_button_2 = new GridBagConstraints();
@@ -114,27 +145,47 @@ public class EquipmentDetailPanel extends JPanel {
 
 	}
 
+	public void reflush(StuffCategory sc) {
+
+		category = sc;
+
+		// 对于这段代码我只能呵呵了。
+		st.setDataVector(createObjectsFromDB(category), columnNames);
+		table.repaint();
+	}
+
 	public void showStuff(Stuff stuff) {
 		if (equipment == null) {
-			equipment = new ScanEquipment(stuff);
+			equipment = new ScanEquipment(new Done() {
+
+				@Override public void done() {
+					reflush(category);
+				}
+			});
+			equipment.reset(stuff, category);
 			equipment.setVisible(true);
 		} else if (equipment.isVisible()) {
+			equipment.reset(stuff, category);
 			equipment.requestFocus();
 		} else {
+			equipment.reset(stuff, category);
 			equipment.setVisible(true);
 		}
 	}
 
-	private Object[][] createObjectsFromDB() {
+	private Object[][] createObjectsFromDB(StuffCategory sc) {
 
-		List<Stuff> list = findStuffCategory();
+		if (sc == null)
+			return new Object[0][0];
+
+		List<Stuff> list = findStuffCategory(sc);
 		if (list == null || list.isEmpty()) {
 			return new Object[0][0];
 		}
 		Object[][] objs = new Object[list.size()][4];// 界面上显示Stuff的四个属性
 		int i = 0;
 		for (Stuff stuff : list) {
-			objs[i][0] = null;
+			objs[i][0] = Boolean.FALSE;
 			objs[i][1] = stuff.getId();
 			objs[i][2] = stuff.getCode();
 			objs[i++][3] = stuff.getAddress();
@@ -142,9 +193,10 @@ public class EquipmentDetailPanel extends JPanel {
 		return objs;
 	}
 
-	@SuppressWarnings("unchecked") private List<Stuff> findStuffCategory() {
+	@SuppressWarnings("unchecked") private List<Stuff> findStuffCategory(
+			StuffCategory sc) {
 
 		StuffDAO stuffDAO = new StuffDAO();
-		return stuffDAO.findAll();
+		return stuffDAO.findByStuffCategoryId(sc.getId());
 	}
 }

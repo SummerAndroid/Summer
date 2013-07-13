@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,13 +33,31 @@ public class StuffDAO extends BaseHibernateDAO {
 	public static final String FACTORY = "factory";
 	public static final String ZXING = "zxing";
 
-	public void save(Stuff transientInstance) {
+	public Stuff save(Stuff transientInstance) {
 		log.debug("saving Stuff instance");
+		Stuff user;
 		try {
-			getSession().save(transientInstance);
+			user = (Stuff) getSession().save(transientInstance);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
+			return null;
+		}
+		return user;
+	}
+
+	public void delete(long id) {
+		log.debug("deleting stuff instance");
+		try {
+			SQLQuery sqlQuery = getSession().createSQLQuery(
+					"delete from stuff where id = ?");
+			sqlQuery.setLong(0, id);
+			sqlQuery.addEntity(Stuff.class);
+			sqlQuery.executeUpdate();
+			getSession().flush();
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
 			throw re;
 		}
 	}

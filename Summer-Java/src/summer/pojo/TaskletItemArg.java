@@ -17,6 +17,7 @@ public class TaskletItemArg implements java.io.Serializable {
 	private String name;
 	private String value;
 	private String comment;
+	private Integer error;
 
 	// Constructors
 
@@ -82,9 +83,18 @@ public class TaskletItemArg implements java.io.Serializable {
 		this.comment = comment;
 	}
 
+
+	public Integer getError() {
+		return error;
+	}
+
+	public void setError(Integer error) {
+		this.error = error;
+	}
+
 	@Override public String toString() {
 		return "TaskletItemArg [id=" + id + ", taskletItemId=" + taskletItemId
 				+ ", name=" + name + ", value=" + value + ", comment="
-				+ comment + "]";
+				+ comment + ", error=" + error + "]";
 	}
 }

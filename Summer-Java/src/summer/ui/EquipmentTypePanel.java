@@ -10,19 +10,23 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 import summer.dao.StuffCategoryDAO;
 import summer.pojo.StuffCategory;
+import summer.ui.PeopleM1Panel.STableModel;
 
 public class EquipmentTypePanel extends JPanel {
 	private static final long serialVersionUID = -1660331840875855549L;
 	private JTable table;
+	private String[] columnNames = new String[] { " ",
+			"\u8BBE\u5907\u7C7B\u578B\u7F16\u53F7", "\u8BBE\u5907\u540D\u79F0",
+			"\u6A21\u677F\u9879\u7F16\u53F7" };
 
+	private STableModel st;
 	private MainFrame mainFrame;
 
 	/**
@@ -52,19 +56,8 @@ public class EquipmentTypePanel extends JPanel {
 		gbc_scrollPane.gridy = 0;
 		add(scrollPane, gbc_scrollPane);
 		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setCellSelectionEnabled(true);
-		table.setColumnSelectionAllowed(true);
-		table.setModel(new DefaultTableModel(createObjectsFromDB(), new String[] {
-				" ", "\u8BBE\u5907\u7C7B\u578B\u7F16\u53F7",
-				"\u8BBE\u5907\u540D\u79F0", "\u6A21\u677F\u9879\u7F16\u53F7" }){
-			private static final long serialVersionUID = 4625202331303849157L;
-			@Override public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
-		table.getColumnModel().getColumn(1).setPreferredWidth(86);
-		table.getColumnModel().getColumn(3).setPreferredWidth(91);
+		st = new STableModel(table, createObjectsFromDB(), columnNames);
+		table.setModel(st);
 		scrollPane.setViewportView(table);
 
 		JButton button = new JButton("添加类型");
@@ -84,10 +77,26 @@ public class EquipmentTypePanel extends JPanel {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO:change this operator
+				List<Integer> rows = st.getSelectedRow();
+				if (rows.isEmpty()) {
+					JOptionPane.showConfirmDialog(EquipmentTypePanel.this,
+							"未选中设备类型");
+					return;
+				}
+
+				int ok = JOptionPane.showConfirmDialog(EquipmentTypePanel.this,
+						"真的要删除所选设备类型吗？");
+				System.out.println(ok);
+				if (ok != JOptionPane.OK_OPTION)
+					return;
+
 				StuffCategoryDAO dao = new StuffCategoryDAO();
-				StuffCategory category = dao.findById(1L);
-				dao.delete(category);
+				for (Integer integer : rows) {
+					dao.delete((Long) st.getValueAt(integer, 1));// 1代表id的那一列
+				}
+
+				// 对于这段代码我只能呵呵了。
+				reflush();
 			}
 		});
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
@@ -100,7 +109,26 @@ public class EquipmentTypePanel extends JPanel {
 		JButton button_2 = new JButton("浏览设备");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mainFrame.showEquipmentDetail();
+
+				List<Integer> list = st.getSelectedRow();
+				if (list.isEmpty()) {
+					JOptionPane.showConfirmDialog(EquipmentTypePanel.this,
+							"未选中设备类型！");
+					return;
+				}
+
+				if (list.size() != 1) {
+					JOptionPane.showConfirmDialog(EquipmentTypePanel.this,
+							"同时只能查看一个设备类型！");
+					return;
+				}
+
+				Integer row = list.get(0);
+				StuffCategoryDAO dao = new StuffCategoryDAO();
+				StuffCategory category = dao.findById((Long) st.getValueAt(row,
+						1));
+
+				mainFrame.showEquipmentDetail(category);
 			}
 		});
 		GridBagConstraints gbc_button_2 = new GridBagConstraints();
@@ -111,6 +139,11 @@ public class EquipmentTypePanel extends JPanel {
 		button_2.setFont(new Font("宋体", Font.PLAIN, 12));
 	}
 
+	public void reflush() {
+		st.setDataVector(createObjectsFromDB(), columnNames);
+		table.repaint();
+	}
+
 	private Object[][] createObjectsFromDB() {
 		List<StuffCategory> list = findStuff();
 		if (list == null || list.isEmpty()) {
@@ -119,7 +152,7 @@ public class EquipmentTypePanel extends JPanel {
 		Object[][] objs = new Object[list.size()][4];// 界面上显示Stuff属性
 		int i = 0;
 		for (StuffCategory stuffCategory : list) {
-			objs[i][0] = null;
+			objs[i][0] = Boolean.FALSE;
 			objs[i][1] = stuffCategory.getId();
 			objs[i][2] = stuffCategory.getName();
 			objs[i++][3] = stuffCategory.getTemplateItemId();

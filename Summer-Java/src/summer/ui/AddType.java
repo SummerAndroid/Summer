@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import summer.dao.StuffCategoryDAO;
 import summer.pojo.StuffCategory;
+import summer.ui.AddUpdateP.Done;
 
 
 public class AddType extends JFrame {
@@ -25,6 +26,9 @@ public class AddType extends JFrame {
 	private JTextField textField_1;
 	private JTextField textField_2;
 
+	// zhenzxie add some code here
+	private Done done;
+
 	/**
 	 * Launch the application.
 	 */
@@ -32,7 +36,11 @@ public class AddType extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddType frame = new AddType();
+					AddType frame = new AddType(new Done() {
+
+						@Override public void done() {
+						}
+					});
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +52,10 @@ public class AddType extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddType() {
+	public AddType(Done d) {
+
+		done = d;
+
 		setTitle("\u6DFB\u52A0\u7C7B\u578B");
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -105,6 +116,13 @@ public class AddType extends JFrame {
 						name);
 				StuffCategoryDAO categoryDAO = new StuffCategoryDAO();
 				categoryDAO.save(stuffCategory);
+
+				done.done();
+
+				AddType.this.textField_1.setText("");
+				AddType.this.textField_2.setText("");
+				AddType.this.setVisible(false);
+
 			}
 		});
 		GridBagConstraints gbc_button = new GridBagConstraints();
