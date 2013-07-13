@@ -1,16 +1,24 @@
 package summer.ui;
 
+import java.awt.BorderLayout;
+import java.awt.Canvas;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,6 +29,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import summer.SysConfig.Server;
 import summer.dao.StuffArgDAO;
 import summer.dao.StuffDAO;
 import summer.pojo.Stuff;
@@ -28,6 +37,13 @@ import summer.pojo.StuffArg;
 import summer.pojo.StuffCategory;
 import summer.ui.AddUpdateP.Done;
 import summer.ui.PeopleM1Panel.STableModel;
+import summer.util.MatrixToImageWriter;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 
 public class ScanEquipment extends JFrame {
 
@@ -55,6 +71,7 @@ public class ScanEquipment extends JFrame {
 	private String[] columnNames = new String[] { " ", "\u5C5E\u6027\u540D",
 			"\u53C2\u8003\u503C", "\u5907\u6CE8" };
 	private STableModel st;
+	private JFrame inner;
 
 	/**
 	 * Create the frame.
@@ -63,22 +80,39 @@ public class ScanEquipment extends JFrame {
 
 		done = d;
 
-		setBounds(100, 100, 604, 570);
+		setBounds(100, 100, 604, 641);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 85, 57, 73, 89, 148 };
-		gbl_contentPane.rowHeights = new int[] { 33, 55, 46, 47, 50, 197, 56 };
+		gbl_contentPane.columnWidths = new int[] { 85, 160, 89, 148 };
+		gbl_contentPane.rowHeights = new int[] { 52, 54, 46, 48, 50, 197, 56 };
 		gbl_contentPane.columnWeights = new double[] {};
-		gbl_contentPane.rowWeights = new double[] {};
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0 };
 		contentPane.setLayout(gbl_contentPane);
+
+		JLabel lblNewLabel_7 = new JLabel("设备编号：");
+		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
+		gbc_lblNewLabel_7.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_7.gridx = 0;
+		gbc_lblNewLabel_7.gridy = 0;
+		contentPane.add(lblNewLabel_7, gbc_lblNewLabel_7);
+
+		textField = new JTextField();
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.insets = new Insets(0, 0, 5, 5);
+		gbc_textField.gridx = 1;
+		gbc_textField.gridy = 0;
+		contentPane.add(textField, gbc_textField);
+		textField.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("   使用地：");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 3;
+		gbc_lblNewLabel.gridx = 2;
 		gbc_lblNewLabel.gridy = 0;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 
@@ -86,16 +120,33 @@ public class ScanEquipment extends JFrame {
 		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
 		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.gridx = 4;
+		gbc_textField_3.gridx = 3;
 		gbc_textField_3.gridy = 0;
 		contentPane.add(textField_3, gbc_textField_3);
 		textField_3.setColumns(10);
+
+		JLabel lblNewLabel_6 = new JLabel("    编码：");
+		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
+		gbc_lblNewLabel_6.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_6.gridx = 0;
+		gbc_lblNewLabel_6.gridy = 1;
+		contentPane.add(lblNewLabel_6, gbc_lblNewLabel_6);
+
+		textField_1 = new JTextField();
+		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_1.gridx = 1;
+		gbc_textField_1.gridy = 1;
+		contentPane.add(textField_1, gbc_textField_1);
+		textField_1.setColumns(10);
 
 		JLabel lblNewLabel_1 = new JLabel("设备类型：");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 3;
+		gbc_lblNewLabel_1.gridx = 2;
 		gbc_lblNewLabel_1.gridy = 1;
 		contentPane.add(lblNewLabel_1, gbc_lblNewLabel_1);
 
@@ -103,34 +154,33 @@ public class ScanEquipment extends JFrame {
 		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
 		gbc_textField_4.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_4.gridx = 4;
+		gbc_textField_4.gridx = 3;
 		gbc_textField_4.gridy = 1;
 		contentPane.add(textField_4, gbc_textField_4);
 		textField_4.setColumns(10);
 
-		JLabel lblNewLabel_7 = new JLabel("设备编号：");
-		GridBagConstraints gbc_lblNewLabel_7 = new GridBagConstraints();
-		gbc_lblNewLabel_7.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_7.gridx = 0;
-		gbc_lblNewLabel_7.gridy = 2;
-		contentPane.add(lblNewLabel_7, gbc_lblNewLabel_7);
+		JLabel lblNewLabel_5 = new JLabel("产品寿命：");
+		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
+		gbc_lblNewLabel_5.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_5.gridx = 0;
+		gbc_lblNewLabel_5.gridy = 2;
+		contentPane.add(lblNewLabel_5, gbc_lblNewLabel_5);
 
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridwidth = 2;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 2;
-		contentPane.add(textField, gbc_textField);
-		textField.setColumns(10);
+		textField_2 = new JTextField();
+		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
+		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_2.gridx = 1;
+		gbc_textField_2.gridy = 2;
+		contentPane.add(textField_2, gbc_textField_2);
+		textField_2.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("     价格：");
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 3;
+		gbc_lblNewLabel_2.gridx = 2;
 		gbc_lblNewLabel_2.gridy = 2;
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
@@ -138,34 +188,33 @@ public class ScanEquipment extends JFrame {
 		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
 		gbc_textField_5.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_5.gridx = 4;
+		gbc_textField_5.gridx = 3;
 		gbc_textField_5.gridy = 2;
 		contentPane.add(textField_5, gbc_textField_5);
 		textField_5.setColumns(10);
 
-		JLabel lblNewLabel_6 = new JLabel("    编码：");
-		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
-		gbc_lblNewLabel_6.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_6.gridx = 0;
-		gbc_lblNewLabel_6.gridy = 3;
-		contentPane.add(lblNewLabel_6, gbc_lblNewLabel_6);
+		JLabel lblNewLabel_4 = new JLabel("开始日期：");
+		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
+		gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
+		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_4.gridx = 0;
+		gbc_lblNewLabel_4.gridy = 3;
+		contentPane.add(lblNewLabel_4, gbc_lblNewLabel_4);
 
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridwidth = 2;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 3;
-		contentPane.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		textField_7 = new JTextField();
+		GridBagConstraints gbc_textField_7 = new GridBagConstraints();
+		gbc_textField_7.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_7.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_7.gridx = 1;
+		gbc_textField_7.gridy = 3;
+		contentPane.add(textField_7, gbc_textField_7);
+		textField_7.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("\u751F\u4EA7\u5382\u5BB6\uFF1A");
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 3;
+		gbc_lblNewLabel_3.gridx = 2;
 		gbc_lblNewLabel_3.gridy = 3;
 		contentPane.add(lblNewLabel_3, gbc_lblNewLabel_3);
 
@@ -173,50 +222,88 @@ public class ScanEquipment extends JFrame {
 		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
 		gbc_textField_6.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_6.gridx = 4;
+		gbc_textField_6.gridx = 3;
 		gbc_textField_6.gridy = 3;
 		contentPane.add(textField_6, gbc_textField_6);
 		textField_6.setColumns(10);
 
-		JLabel lblNewLabel_5 = new JLabel("产品寿命：");
-		GridBagConstraints gbc_lblNewLabel_5 = new GridBagConstraints();
-		gbc_lblNewLabel_5.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_5.gridx = 0;
-		gbc_lblNewLabel_5.gridy = 4;
-		contentPane.add(lblNewLabel_5, gbc_lblNewLabel_5);
+		button_2 = new JButton("\u67E5\u770B\u4E8C\u7EF4\u7801\u56FE\u7247");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
-		textField_2 = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridwidth = 2;
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.gridx = 1;
-		gbc_textField_2.gridy = 4;
-		contentPane.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
+				if (inner == null) {
 
-		JLabel lblNewLabel_4 = new JLabel("开始日期：");
-		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
-		gbc_lblNewLabel_4.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_4.gridx = 3;
-		gbc_lblNewLabel_4.gridy = 4;
-		contentPane.add(lblNewLabel_4, gbc_lblNewLabel_4);
+					JFrame outer = ScanEquipment.this;
 
-		textField_7 = new JTextField();
-		GridBagConstraints gbc_textField_7 = new GridBagConstraints();
-		gbc_textField_7.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_7.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_7.gridx = 4;
-		gbc_textField_7.gridy = 4;
-		contentPane.add(textField_7, gbc_textField_7);
-		textField_7.setColumns(10);
+					inner = new JFrame();
+					inner.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+					inner.setBounds(outer.getX() + outer.getWidth(),
+							outer.getY(), 450, 450);
+
+					JPanel contentPane = new JPanel();
+					contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+					contentPane.setLayout(new BorderLayout(0, 0));
+					inner.setContentPane(contentPane);
+
+					JPanel panel = new JPanel();
+					panel.setLayout(new BorderLayout());
+					panel.add(new JLabel(getImageIcon()));
+					JScrollPane sp = new JScrollPane();
+					sp.getViewport().add(panel);
+					contentPane.add(sp);
+					inner.setVisible(true);
+				} else if (inner.isVisible()) {
+					inner.requestFocus();
+				} else {
+					inner.setVisible(true);
+				}
+			}
+
+			private ImageIcon ii;
+
+			private ImageIcon getImageIcon() {
+
+				System.out.println(stuff);
+
+				if (ii != null)
+					return ii;
+				else {
+					MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+					Map<EncodeHintType, String> hints = new HashMap<EncodeHintType, String>();
+					hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+					BitMatrix bitMatrix;
+					try {
+						bitMatrix = multiFormatWriter.encode(
+								String.valueOf(stuff.getId()),
+								BarcodeFormat.QR_CODE, 400, 400, hints);
+						File file1 = new File(Server.DIR + Server.ZXING, stuff
+								.getId() + ".jpg");
+						ii = new ImageIcon(Toolkit.getDefaultToolkit()
+								.getImage(file1.getPath()));
+						stuff.setZxing(file1.getPath());
+						MatrixToImageWriter
+								.writeToFile(bitMatrix, "jpg", file1);
+						return ii;
+					} catch (WriterException e) {
+						e.printStackTrace();
+						return null;
+					} catch (IOException e) {
+						e.printStackTrace();
+						return null;
+					}
+				}
+			}
+		});
+		GridBagConstraints gbc_button_2 = new GridBagConstraints();
+		gbc_button_2.insets = new Insets(0, 0, 5, 0);
+		gbc_button_2.gridx = 3;
+		gbc_button_2.gridy = 4;
+		contentPane.add(button_2, gbc_button_2);
 
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
-		gbc_scrollPane.gridwidth = 5;
+		gbc_scrollPane.gridwidth = 4;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 5;
@@ -270,7 +357,7 @@ public class ScanEquipment extends JFrame {
 		GridBagConstraints gbc_button = new GridBagConstraints();
 		gbc_button.anchor = GridBagConstraints.WEST;
 		gbc_button.insets = new Insets(0, 0, 0, 5);
-		gbc_button.gridx = 3;
+		gbc_button.gridx = 2;
 		gbc_button.gridy = 6;
 		contentPane.add(button, gbc_button);
 
@@ -282,7 +369,7 @@ public class ScanEquipment extends JFrame {
 
 				long categoryid = category.getId();
 				String code = textField_1.getText();
-				String zxing = null;//TODO:二维码路径
+				String zxing = null;// TODO:二维码路径
 				String str = textField_2.getText();
 				int life = Integer.parseInt(str.substring(0, str.length() - 1));
 				String address = textField_3.getText();
@@ -316,7 +403,7 @@ public class ScanEquipment extends JFrame {
 					}
 				} else {
 					stuff.setCode(code);
-					stuff.setZxing(zxing);
+					//stuff.setZxing(zxing); //如果是查看以前存在的设备的二维码图片，则在生成二维码后把路径在stuff中设置好了
 					stuff.setLife(life);
 					stuff.setAddress(address);
 					stuff.setCategoryName(categoryName);
@@ -332,7 +419,7 @@ public class ScanEquipment extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_button_1 = new GridBagConstraints();
-		gbc_button_1.gridx = 4;
+		gbc_button_1.gridx = 3;
 		gbc_button_1.gridy = 6;
 		contentPane.add(button_1, gbc_button_1);
 
@@ -397,6 +484,8 @@ public class ScanEquipment extends JFrame {
 	}
 
 	private List<StuffArg> argList;
+	private Canvas canvas;
+	private JButton button_2;
 
 	private Object[][] createObjectsFromDB(Stuff stuff) {
 
