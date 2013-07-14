@@ -17,7 +17,7 @@ public final class I {
 		/**
 		 * address of server
 		 */
-		public final static String URL = "211.87.230.54";
+		public final static String URL = "211.87.230.40";
 
 		/**
 		 * port that client used to connect to server
