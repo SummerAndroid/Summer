@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import summer.pojo.TemplateHasTemplateItem;
-import summer.pojo.TemplateHasTemplateItemId;
 
 /**
  * A data access object (DAO) providing persistence and search support for
@@ -25,16 +24,15 @@ import summer.pojo.TemplateHasTemplateItemId;
 public class TemplateHasTemplateItemDAO extends BaseHibernateDAO {
 	private static final Logger log = LoggerFactory
 			.getLogger(TemplateHasTemplateItemDAO.class);
-
-	public static final String TEMPLATE_ID = "template_id";
-	public static final String TEMPLATE_ITEM_ID = "template_item_id";
-
 	// property constants
+	public static final String TEMPLATE_ID = "templateId";
+	public static final String TEMPLATE_ITEM_ID = "templateItemId";
 
 	public void save(TemplateHasTemplateItem transientInstance) {
 		log.debug("saving TemplateHasTemplateItem instance");
 		try {
 			getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -53,7 +51,7 @@ public class TemplateHasTemplateItemDAO extends BaseHibernateDAO {
 		}
 	}
 
-	public TemplateHasTemplateItem findById(TemplateHasTemplateItemId id) {
+	public TemplateHasTemplateItem findById(java.lang.Long id) {
 		log.debug("getting TemplateHasTemplateItem instance with id: " + id);
 		try {
 			TemplateHasTemplateItem instance = (TemplateHasTemplateItem) getSession()
@@ -93,6 +91,14 @@ public class TemplateHasTemplateItemDAO extends BaseHibernateDAO {
 			log.error("find by property name failed", re);
 			throw re;
 		}
+	}
+
+	public List findByTemplateId(Object templateId) {
+		return findByProperty(TEMPLATE_ID, templateId);
+	}
+
+	public List findByTemplateItemId(Object templateItemId) {
+		return findByProperty(TEMPLATE_ITEM_ID, templateItemId);
 	}
 
 	public List findAll() {

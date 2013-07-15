@@ -11,6 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -38,12 +39,13 @@ public class PeopleM1Panel extends JPanel {
 		private static final long serialVersionUID = 6855751005052552647L;
 
 		private JTable mJTable;
-		private Object[][] mData;
+		private Vector<Vector> mData;
 
 		public STableModel(JTable jtable, Object[][] data, Object[] columnNames) {
 			super(data, columnNames);
 			mJTable = jtable;
-			mData = data;
+			mData = DefaultTableModel.convertToVector(data);
+			System.out.println(mData);
 			mJTable.addMouseListener(new MouseAdapter() {
 				@Override public void mouseClicked(MouseEvent e) {
 
@@ -53,11 +55,13 @@ public class PeopleM1Panel extends JPanel {
 					int rowIndex = mJTable.getSelectedRow();
 					int columnIndex = mJTable.getSelectedColumn();
 					if (rowIndex >= 0 && columnIndex == 0) {
-						mData[rowIndex][0] = mData[rowIndex][0] == Boolean.FALSE ? Boolean.TRUE
+						Vector v = mData.get(rowIndex);
+						Boolean target = v.get(0) == Boolean.FALSE ? Boolean.TRUE
 								: Boolean.FALSE;
+						v.set(0, target);
 					}
-					for (Object[] objs : mData) {
-						System.out.println(objs[0]);
+					for (Vector objs : mData) {
+						System.out.println(objs.get(0));
 					}
 					System.out.println("-----------------");
 				}
@@ -71,8 +75,8 @@ public class PeopleM1Panel extends JPanel {
 
 		@Override public void setDataVector(Object[][] dataVector,
 				Object[] columnIdentifiers) {
-			mData = dataVector;
 			super.setDataVector(dataVector, columnIdentifiers);
+			mData = DefaultTableModel.convertToVector(dataVector);
 		}
 
 		@Override public boolean isCellEditable(int row, int column) {
@@ -81,11 +85,21 @@ public class PeopleM1Panel extends JPanel {
 			return false;
 		}
 
+		@Override public void removeRow(int row) {
+			super.removeRow(row);
+			mData.remove(row);
+		}
+
+		@Override public void addRow(Object[] data) {
+			super.addRow(data);
+			mData.add(DefaultTableModel.convertToVector(data));
+		}
+
 		public List<Integer> getSelectedRow() {
-			int rowLength = mData.length;
+			int rowLength = mData.size();
 			ArrayList<Integer> list = new ArrayList<Integer>();
 			for (int i = 0; i < rowLength; i++) {
-				if (mData[i][0] == Boolean.TRUE) {
+				if (mData.get(i).get(0) == Boolean.TRUE) {
 					list.add(i);
 				}
 			}

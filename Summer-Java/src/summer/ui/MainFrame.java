@@ -218,7 +218,14 @@ public class MainFrame extends JFrame {
 
 	public void showTemplate(Template template) {
 		if (addTemplate == null) {
-			addTemplate = new AddTemplate();
+			addTemplate = new AddTemplate(new Done() {
+
+				@Override public void done() {
+
+					MainFrame.this.template.reflush();
+
+				}
+			});
 			addTemplate.resetTemplate(template);
 			addTemplate.setVisible(true);
 		} else if (addTemplate.isVisible()) {
