@@ -1,7 +1,6 @@
 package summer.ui;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -20,15 +19,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 
 import summer.dao.TemplateHasTemplateItemDAO;
 import summer.dao.TemplateItemDAO;
 import summer.pojo.Template;
 import summer.pojo.TemplateHasTemplateItem;
 import summer.pojo.TemplateItem;
+import summer.ui.PeopleM1Panel.STableModel;
 
 public class AddTemplate extends JFrame {
 
@@ -38,40 +36,29 @@ public class AddTemplate extends JFrame {
 	private JTextField textField_1;
 	private JTable table;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddTemplate frame = new AddTemplate();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//zhenzxie add some code here
+	private String[] columnNames = new String[] {
+			" ", "\u6A21\u677F\u9879\u7F16\u53F7",
+			"\u8BBE\u5907\u540D\u79F0" };
 
-	/**
-	 * Create the frame.
-	 */
+	private STableModel st;
+	private STableModel st1;
+
 	public AddTemplate() {
 		setBackground(Color.WHITE);
 		setTitle("\u6A21\u677F\u4FE1\u606F");
-		setBounds(100, 100, 612, 513);
+		setBounds(100, 100, 759, 513);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 28, 54, 60, 46, 56, 52, 54,
-				52, 85, 0, 0 };
+		gbl_contentPane.columnWidths = new int[] { 28, 33, 107, 89, 56, 52, 54,
+				52, 85, 0 };
 		gbl_contentPane.rowHeights = new int[] { 0, 28, 20, 100, 109, 80, 28,
 				76, 0 };
-		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 0.0,
-				1.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		gbl_contentPane.rowWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPane.setLayout(gbl_contentPane);
@@ -115,7 +102,7 @@ public class AddTemplate extends JFrame {
 		textField_1.setColumns(10);
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.gridwidth = 2;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.gridx = 7;
 		gbc_textField_1.gridy = 1;
@@ -132,50 +119,23 @@ public class AddTemplate extends JFrame {
 		contentPane.add(scrollPane, gbc_scrollPane);
 
 		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setColumnSelectionAllowed(true);
-		table.setCellSelectionEnabled(true);
-		table.setModel(new DefaultTableModel(new Object[0][0], new String[] {
-				" ", "\u6A21\u677F\u9879\u7F16\u53F7",
-				"\u8BBE\u5907\u540D\u79F0" }) {
-			private static final long serialVersionUID = 916087786536142554L;
-
-			@Override public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(67);
-		table.getColumnModel().getColumn(1).setPreferredWidth(104);
-		table.getColumnModel().getColumn(2).setPreferredWidth(126);
+		st = new STableModel(table, createObjectsFromDB(null), columnNames);
+		table.setModel(st);
 		scrollPane.setViewportView(table);
 
 		JScrollPane scrollPane_1 = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
 		gbc_scrollPane_1.gridheight = 3;
 		gbc_scrollPane_1.gridwidth = 3;
-		gbc_scrollPane_1.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane_1.insets = new Insets(0, 0, 5, 0);
 		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane_1.gridx = 6;
 		gbc_scrollPane_1.gridy = 3;
 		contentPane.add(scrollPane_1, gbc_scrollPane_1);
 
 		table_1 = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setColumnSelectionAllowed(true);
-		table.setCellSelectionEnabled(true);
-		table.setModel(new DefaultTableModel(new Object[0][0], new String[] {
-				" ", "\u6A21\u677F\u9879\u7F16\u53F7",
-				"\u8BBE\u5907\u540D\u79F0" }) {
-
-			private static final long serialVersionUID = 7731707539082316533L;
-
-			@Override public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(67);
-		table.getColumnModel().getColumn(1).setPreferredWidth(104);
-		table.getColumnModel().getColumn(2).setPreferredWidth(126);
+		st1 = new STableModel(table_1, new Object[0][0], columnNames);
+		table.setModel(st1);
 		scrollPane_1.setViewportView(table_1);
 
 		JButton btnNewButton_1 = new JButton("\u6DFB\u52A0");
@@ -254,17 +214,8 @@ public class AddTemplate extends JFrame {
 			textField.setText(t.getName());
 			textField_1.setText(new Date(t.getCreateTime()).toString());
 			// 对于这段代码我只能呵呵了。
-			table.setModel(new DefaultTableModel(createObjectsFromDB(t),
-					new String[] { " ", "\u6A21\u677F\u9879\u7F16\u53F7",
-							"\u8BBE\u5907\u540D\u79F0" }) {
-
-				private static final long serialVersionUID = 7729558323854981802L;
-
-				@Override public boolean isCellEditable(int row, int column) {
-					return false;
-				}
-			});
-
+			st.setDataVector(createObjectsFromDB(t), columnNames);
+			table.repaint();
 			textField.setEditable(false);
 			textField_1.setEditable(false);
 			editableFlag = false;
@@ -272,6 +223,9 @@ public class AddTemplate extends JFrame {
 	}
 
 	private Object[][] createObjectsFromDB(Template template) {
+
+		if (template == null)
+			return new Object[0][0];
 
 		List<TemplateItem> list = findTemplateItems(template);
 		if (list == null || list.isEmpty()) {
