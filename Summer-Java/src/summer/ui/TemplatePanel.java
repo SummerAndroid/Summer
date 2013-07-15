@@ -106,8 +106,7 @@ public class TemplatePanel extends JPanel {
 					dao.delete((Long) st.getValueAt(integer, 1));// 1代表id的那一列
 				}
 				// 对于这段代码我只能呵呵了。
-				st.setDataVector(createObjectsFromDB(), columnNames);
-				table.repaint();
+				reflush();
 			}
 		});
 		button_1.setFont(new Font("宋体", Font.PLAIN, 12));
@@ -140,6 +139,11 @@ public class TemplatePanel extends JPanel {
 		button_2.setFont(new Font("宋体", Font.PLAIN, 12));
 		button_2.setBounds(343, 23, 106, 35);
 		panel.add(button_2);
+	}
+
+	public void reflush() {
+		st.setDataVector(createObjectsFromDB(), columnNames);
+		table.repaint();
 	}
 
 	private Object[][] createObjectsFromDB() {

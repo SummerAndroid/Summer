@@ -55,4 +55,12 @@ public class Template implements java.io.Serializable {
 		this.createTime = createTime;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override public String toString() {
+		return "Template [id=" + id + ", name=" + name + ", createTime="
+				+ createTime + "]";
+	}
+
 }

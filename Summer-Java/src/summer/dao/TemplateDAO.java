@@ -28,11 +28,13 @@ public class TemplateDAO extends BaseHibernateDAO {
 	// property constants
 	public static final String NAME = "name";
 
-	public void save(Template transientInstance) {
+	public Long save(Template transientInstance) {
 		log.debug("saving Template instance");
 		try {
-			getSession().save(transientInstance);
+			Long template = (Long) getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
+			return template;
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;
@@ -140,6 +142,7 @@ public class TemplateDAO extends BaseHibernateDAO {
 		log.debug("attaching dirty Template instance");
 		try {
 			getSession().saveOrUpdate(instance);
+			getSession().flush();
 			log.debug("attach successful");
 		} catch (RuntimeException re) {
 			log.error("attach failed", re);

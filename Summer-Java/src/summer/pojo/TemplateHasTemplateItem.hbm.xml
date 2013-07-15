@@ -6,13 +6,15 @@
 -->
 <hibernate-mapping>
     <class name="summer.pojo.TemplateHasTemplateItem" table="template_has_template_item" catalog="summer">
-        <composite-id name="id" class="summer.pojo.TemplateHasTemplateItemId">
-            <key-property name="templateId" type="java.lang.Long">
-                <column name="template_id" />
-            </key-property>
-            <key-property name="templateItemId" type="java.lang.Long">
-                <column name="template_item_id" />
-            </key-property>
-        </composite-id>
+        <id name="id" type="java.lang.Long">
+            <column name="id" />
+            <generator class="increment" />
+        </id>
+        <property name="templateId" type="java.lang.Long">
+            <column name="template_id" not-null="true" />
+        </property>
+        <property name="templateItemId" type="java.lang.Long">
+            <column name="template_item_id" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>
