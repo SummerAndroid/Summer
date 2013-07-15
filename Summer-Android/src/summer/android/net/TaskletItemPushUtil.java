@@ -1,5 +1,6 @@
 package summer.android.net;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import summer.android.net.module.HandlerDecorator;
@@ -40,8 +41,14 @@ public class TaskletItemPushUtil {
 	 */
 	public void itemPush(List<TaskletItem> list) {
 		int what = WhatUtil.what();
-		Request request = Request.createRequest(what, Req.TASKLET_ITEM_PUSH,
-				list);
+		Request request = new Request();
+		request.setWhat(what);
+		request.setRequestCode(Req.TASKLET_ITEM_PUSH);
+		ArrayList<Object> objs = new ArrayList<Object>();
+		for (TaskletItem taskletItem : list) {
+			objs.add(taskletItem);
+		}
+		request.setRequestArgs(objs);
 		netUtil.request(what, request, new InnerNetCallback(handler));
 	}
 
@@ -51,7 +58,8 @@ public class TaskletItemPushUtil {
 			super(handler);
 		}
 
-		@Override public void response(int what, Response response) {
+		@Override
+		public void response(int what, Response response) {
 			super.response(what, response);
 			if (response.getResponseCode() != Res.OK) {
 				post(what, HANDLER_ERROR, response.getResponseArgs().get(0));

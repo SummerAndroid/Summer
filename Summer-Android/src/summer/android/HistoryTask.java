@@ -1,7 +1,6 @@
 package summer.android;
 
 import java.util.Calendar;
-import java.util.Calendar;
 
 import summmer.android.R;
 import android.app.Activity;
@@ -16,7 +15,9 @@ import android.view.View.OnClickListener;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-
+/**
+ * @author ZhangJun
+ */
 public class HistoryTask extends Activity implements View.OnTouchListener {
 	private EditText etStartTime;
 	private EditText etEndTime;

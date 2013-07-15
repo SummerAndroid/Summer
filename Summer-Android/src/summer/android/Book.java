@@ -3,43 +3,23 @@ package summer.android;
 import summmer.android.R;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.TabActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.TabHost;
 
-public class Book extends Activity  {
-
-	private TextView myTextView01,myTextView02;
-	private EditText myEditText01;
-	private TableLayout myTableLayout01;
-	private TableRow myTableRow01;
-	private Button myButton01,myButton02;
-	int counter=0;
+public class Book extends TabActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.book);
-		myTextView01 = (TextView) findViewById(R.id.myTextView01);
-		myTextView02 = (TextView) findViewById(R.id.myTextView02);
-		myEditText01 = (EditText) findViewById(R.id.myEditText01);
-		myButton01=(Button)findViewById(R.id.myButton01);
-		myButton01.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+		TabHost th=getTabHost();
+		
+		LayoutInflater.from(this).inflate(R.layout.book
+				,th.getTabContentView(),true);
+		th.addTab(th.newTabSpec("all").setIndicator("避雷器动作记录").setContent(R.id.RelativeLayout01));
+		th.addTab(th.newTabSpec("ok").setIndicator("设备测温记录").setContent(R.id.RelativeLayout02));
 		
 	}
-	
+
 }

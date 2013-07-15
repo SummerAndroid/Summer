@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background" >
+    
+    <!-- 领取任务 -->
+    <!-- 浏览任务 -->
+
+    <!-- 当前任务 -->
+
+    <ImageButton
+        android:id="@+id/lingqurenwu"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/liulanrenwu"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/file_01" />
+
+    <ImageButton
+        android:id="@+id/liulanrenwu"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="62dp"
+        android:background="@drawable/file_02" />
+
+    <ImageButton
+        android:id="@+id/dangqianrenwu"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:layout_alignLeft="@+id/lingqurenwu"
+        android:layout_below="@+id/lingqurenwu"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/file_03" />
+
+    <ImageButton
+        android:id="@+id/xinxiguanli"
+        android:layout_width="150dip"
+        android:layout_height="150dip"
+        android:layout_alignLeft="@+id/liulanrenwu"
+        android:layout_alignTop="@+id/dangqianrenwu"
+        android:background="@drawable/file_04" />
+
+</RelativeLayout>

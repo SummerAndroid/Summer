@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-
+/**
+ * @author ZhangJun
+ */
 public class Tasklist extends ListActivity {
 
 	@Override

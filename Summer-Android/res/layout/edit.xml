@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:paddingLeft="2dip"
+        android:paddingTop="2dip"
+        android:singleLine="true"
+        android:textSize="10pt" />
+
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:paddingRight="2dip"
+        android:paddingTop="2dip"
+        android:singleLine="true"
+        android:textSize="10pt"
+        android:text="默认值" />
+    <EditText 
+        android:id="@+id/editvalue"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:paddingRight="2dip"
+        android:paddingTop="2dip"
+        android:singleLine="true"
+        android:textSize="10pt"
+        />
+
+    <TextView
+        android:id="@+id/comment"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:paddingRight="2dip"
+        android:paddingTop="2dip"
+        android:singleLine="true"
+        android:textSize="10pt"
+        android:text="备注" />
+    <EditText 
+        android:id="@+id/editcomment"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:paddingRight="2dip"
+        android:paddingTop="2dip"
+        android:singleLine="true"
+        android:textSize="10pt"
+        />
+    <Button 
+        android:id="@+id/commit"
+        android:layout_width="180dip"
+        android:layout_height="wrap_content"
+        android:paddingRight="2dip"
+        android:paddingTop="2dip"
+        android:singleLine="true"
+        android:textSize="10pt"
+        android:text="提交"
+        />
+
+</LinearLayout>
