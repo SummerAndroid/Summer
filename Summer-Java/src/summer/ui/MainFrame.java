@@ -239,7 +239,11 @@ public class MainFrame extends JFrame {
 
 	public void showAddTask() {
 		if (addTask == null) {
-			addTask = new AddTask();
+			addTask = new AddTask(new Done() {
+
+				@Override public void done() {
+				}
+			});
 			addTask.setVisible(true);
 		} else if (addTask.isVisible()) {
 			addTask.requestFocus();

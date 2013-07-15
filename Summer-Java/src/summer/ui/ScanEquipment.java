@@ -444,6 +444,8 @@ public class ScanEquipment extends JFrame {
 			textField_7.setText(new Date(stuff.getStartTime()).toString());
 
 			reflush();
+		} else {
+			// TODO:reset this frame
 		}
 	}
 

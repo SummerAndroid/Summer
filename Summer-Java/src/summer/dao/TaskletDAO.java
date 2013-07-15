@@ -33,6 +33,22 @@ public class TaskletDAO extends BaseHibernateDAO {
 	public static final String ACCOUNT = "account";
 	public static final String LAST_TIME = "last_time";
 
+	public void delete(long id) {
+		log.debug("deleting tasklet instance");
+		try {
+			SQLQuery sqlQuery = getSession().createSQLQuery(
+					"delete from tasklet template_id = ?");
+			sqlQuery.setLong(0, id);
+			sqlQuery.addEntity(Tasklet.class);
+			sqlQuery.executeUpdate();
+			getSession().flush();
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
+			throw re;
+		}
+	}
+
 	public List<Tasklet> findBy(long userId, long start, long end,
 			boolean isFinish, String order) {
 		log.debug("find Tasklet instance");
