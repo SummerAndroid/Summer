@@ -8,7 +8,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-
+/**
+ * @author ZhangJun
+ */
 public class Device extends Activity {
 	private Spinner spinner1 = null,spinner2=null;
 

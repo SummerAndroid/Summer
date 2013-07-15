@@ -8,21 +8,12 @@
         android:id="@+id/device"
         android:layout_width="300dip"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/task"
+        android:gravity="center"
         android:paddingLeft="2dip"
         android:paddingTop="6dip"
-        android:background="@drawable/task"
-        android:singleLine="true"
-        android:textSize="10pt"
-        android:layout_gravity="center"
-        android:gravity="center" />
-<!-- 
-    <TextView
-        android:id="@+id/user_ip"
-        android:layout_width="180dip"
-        android:layout_height="wrap_content"
-        android:paddingRight="2dip"
-        android:paddingTop="2dip"
         android:singleLine="true"
         android:textSize="10pt" />
- -->
+
 </LinearLayout>

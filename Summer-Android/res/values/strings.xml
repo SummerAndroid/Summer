@@ -28,6 +28,11 @@
     <string name="device1">设备1</string>
     <string name="voltage">电压正常</string>
     <string name="wire">电线完好无损</string>
+    <string name="opsw">当前密码：</string>
+    <string name="newpsw1">新密码：</string>
+    <string name="newpsw2">确认密码：</string>
+    <string name="normal">√</string>
+    <string name="abnormal">×</string>
 
     <string-array name="label_array">
         <item>√</item>
@@ -35,5 +40,11 @@
     </string-array>
 
     <string name="title_activity_tasklet_pull">TaskletPull</string>
+    <string name="title_activity_tasklet_item_pull">TaskletItemPull</string>
+    <string name="title_activity_change_passwd">Change_passwd</string>
+    <string name="title_activity_item_args">ItemArgs</string>
+    <string name="title_activity_error_handling">ErrorHandling</string>
+    <string name="title_activity_edit">Edit</string>
+    <string name="title_activity_tasklet_push">TaskletPush</string>
 
 </resources>

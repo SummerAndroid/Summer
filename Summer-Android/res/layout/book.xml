@@ -1,0 +1,513 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <FrameLayout
+        android:id="@+id/FrameLayout01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        
+        <TabHost 
+            android:id="@+id/TabHost01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TabHost>
+        
+    <RelativeLayout 
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bkground">
+    <TextView
+        android:id="@+id/myTextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/myTextView01"
+        android:layout_toRightOf="@+id/checkBox1"
+        android:text="避雷器动作记录" />
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/myTextView01"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/myTextView01"
+        android:layout_marginTop="40dp" >
+
+        <TableRow
+            android:id="@+id/tableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/TextView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="单位" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="检查人" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="A相" />
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="底码" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="泄漏电流" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="B相" />
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="底码" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="泄漏电流" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+
+        <TextView
+            android:id="@+id/TextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="C相" />
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="底码" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="泄漏电流" />
+
+            <EditText
+                android:id="@+id/EditText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/editbox_background"
+                android:ems="10" >
+            </EditText>
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/tableLayout1"
+        android:text="提交" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/RelativeLayout02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bkground">   
+        
+            <TextView
+            android:id="@+id/myTextView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="设备测温记录" />
+    <TableLayout
+        android:id="@+id/myTableLayout01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp" >
+
+       <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+                    
+       <TextView
+            android:id="@+id/myTextView03"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="变电所"></TextView>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow>   
+        <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+       <TextView
+            android:id="@+id/myTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="设备"></TextView>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow>        
+        <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+       <TextView
+            android:id="@+id/myTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="测温时间"></TextView>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow> 
+        <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+       <TextView
+            android:id="@+id/myTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="测温状况"/>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow> 
+        <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+       <TextView
+            android:id="@+id/myTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="环境温度"/>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow> 
+        <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+ 
+       <TextView
+            android:id="@+id/myTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="负荷"/>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow> 
+       <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+   
+       <TextView
+            android:id="@+id/myTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="测温人"/>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow> 
+        <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+ 
+       <TextView
+            android:id="@+id/myTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="测温部位"/>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow>  
+       <TableRow
+            android:id="@+id/myTableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+            
+    
+       <TextView
+            android:id="@+id/myTextView02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/myTextView01"
+            android:layout_toRightOf="@+id/checkBox1"
+            android:text="测试温度"/>
+
+       <EditText
+            android:id="@+id/myEditText01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:layout_alignBottom="@+id/myTextView02"
+            android:layout_marginLeft="18dp"
+            android:layout_toRightOf="@+id/myTextView01"
+            android:ems="10" />
+                  
+        </TableRow>                
+    </TableLayout>
+
+    <Button
+        android:id="@+id/myButton01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="提交" />
+        </RelativeLayout>"
+    </FrameLayout>
+
+</RelativeLayout>

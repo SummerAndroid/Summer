@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bkground"
+    android:orientation="vertical"
+    android:padding="20dp" >
+
+    <LinearLayout
+        android:id="@+id/listLinearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@id/android:list"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawSelectorOnTop="false"
+            android:scrollbars="vertical" />
+        <!-- 设置ListView控件条目被按下时背景颜色在文字背后，设置成True时背景色会覆盖文字 -->
+        <!-- 设置ListView控件滚动条的方向为纵向 -->
+
+    </LinearLayout>
+
+</LinearLayout>

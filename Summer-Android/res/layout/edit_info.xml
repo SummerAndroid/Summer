@@ -38,7 +38,6 @@
         android:layout_height="40px"
         android:layout_alignBottom="@+id/ID"
         android:layout_toRightOf="@+id/ID"
-        android:text="2010003012"
         android:gravity="left|center"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -66,8 +65,8 @@
         android:id="@+id/address"
         android:layout_width="100px"
         android:layout_height="40px"
-        android:layout_marginTop="40dp"
         android:layout_below="@+id/name"
+        android:layout_marginTop="40dp"
         android:gravity="center"
         android:text="地址"
         android:textSize="18sp"
@@ -85,12 +84,12 @@
         android:id="@+id/telephone"
         android:layout_width="100px"
         android:layout_height="40px"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:layout_below="@+id/address"
         android:layout_marginTop="40dp"
-        android:text="电话" />
+        android:gravity="center"
+        android:text="电话"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTele"

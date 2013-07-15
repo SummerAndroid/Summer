@@ -48,7 +48,7 @@ public class Scan extends Activity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			Intent intent=new Intent();
-			intent.setClass(Scan.this,Book1.class);
+			intent.setClass(Scan.this,Book.class);
 			startActivity(intent);
 		}
 	   
