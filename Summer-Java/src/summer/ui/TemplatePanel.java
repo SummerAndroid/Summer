@@ -11,14 +11,14 @@ import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.table.DefaultTableModel;
 
 import summer.dao.TemplateDAO;
 import summer.pojo.Template;
+import summer.ui.PeopleM1Panel.STableModel;
 
 public class TemplatePanel extends JPanel {
 	private static final long serialVersionUID = -6823580641869668795L;
@@ -26,6 +26,8 @@ public class TemplatePanel extends JPanel {
 
 	// zhenzxie add some code here
 	private MainFrame mainFrame;
+	private String[] columnNames = new String[] { " ", "模板编号", "模板名称", "创建时间" };
+	private STableModel st;
 
 	/**
 	 * Create the panel.
@@ -55,20 +57,8 @@ public class TemplatePanel extends JPanel {
 		add(scrollPane, gbc_scrollPane);
 
 		table = new JTable();
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setColumnSelectionAllowed(true);
-		table.setCellSelectionEnabled(true);
-		table.setModel(new DefaultTableModel(createObjectsFromDB(),
-				new String[] { " ", "模板编号", "模板名称", "创建时间" }) {
-			private static final long serialVersionUID = -154069599985593156L;
-
-			@Override public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
-		table.getColumnModel().getColumn(1).setPreferredWidth(86);
-		table.getColumnModel().getColumn(2).setPreferredWidth(91);
-		table.getColumnModel().getColumn(3).setPreferredWidth(113);
+		st = new STableModel(table, createObjectsFromDB(), columnNames);
+		table.setModel(st);
 		scrollPane.setViewportView(table);
 
 		JPanel panel = new JPanel();
@@ -99,8 +89,25 @@ public class TemplatePanel extends JPanel {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO:add delete template logical here
+				List<Integer> rows = st.getSelectedRow();
+				if (rows.isEmpty()) {
+					JOptionPane.showConfirmDialog(TemplatePanel.this, "未选中模板");
+					return;
+				}
 
+				int ok = JOptionPane.showConfirmDialog(TemplatePanel.this,
+						"真的要删除所选模板吗？");
+				System.out.println(ok);
+				if (ok != JOptionPane.OK_OPTION)
+					return;
+
+				TemplateDAO dao = new TemplateDAO();
+				for (Integer integer : rows) {
+					dao.delete((Long) st.getValueAt(integer, 1));// 1代表id的那一列
+				}
+				// 对于这段代码我只能呵呵了。
+				st.setDataVector(createObjectsFromDB(), columnNames);
+				table.repaint();
 			}
 		});
 		button_1.setFont(new Font("宋体", Font.PLAIN, 12));
@@ -111,8 +118,21 @@ public class TemplatePanel extends JPanel {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				List<Integer> list = st.getSelectedRow();
+				if (list.isEmpty()) {
+					JOptionPane.showConfirmDialog(TemplatePanel.this, "未选中模板！");
+					return;
+				}
+
+				if (list.size() != 1) {
+					JOptionPane.showConfirmDialog(TemplatePanel.this,
+							"同时只能参看一个模板信息！");
+					return;
+				}
+
+				Integer row = list.get(0);
 				TemplateDAO dao = new TemplateDAO();
-				Template template = dao.findById(1L);
+				Template template = dao.findById((Long) st.getValueAt(row, 1));
 				mainFrame.showTemplate(template);
 
 			}
@@ -130,7 +150,7 @@ public class TemplatePanel extends JPanel {
 		Object[][] objs = new Object[list.size()][6];// 界面上显示template的四个属性
 		int i = 0;
 		for (Template template : list) {
-			objs[i][0] = null;
+			objs[i][0] = Boolean.FALSE;
 			objs[i][1] = template.getId();
 			objs[i][2] = template.getName();
 			objs[i++][3] = new Date(template.getCreateTime()).toString();
