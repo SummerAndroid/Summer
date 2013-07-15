@@ -6,11 +6,11 @@
     android:background="@drawable/bkground" >
 
     <TextView
-        android:layout_width="100px"
-        android:layout_height="40px"
+        android:layout_width="100dip"
+        android:layout_height="30dip"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="50dp"
         android:text="@string/start_time"
@@ -18,25 +18,25 @@
 
     <EditText
         android:id="@+id/et_start_time"
-        android:layout_width="150px"
+        android:layout_width="150dip"
         android:background="@android:drawable/editbox_background"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         />
      
     <TextView
-         android:layout_width="100px"
-        android:layout_height="40px"
+         android:layout_width="100dip"
+        android:layout_height="30dip"
         android:layout_centerVertical="true"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
         android:text="@string/end_time"
       />
    <EditText
         android:id="@+id/et_end_time"
-        android:layout_width="150px"
+        android:layout_width="150dip"
         android:background="@android:drawable/editbox_background"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -45,9 +45,9 @@
        android:id="@+id/OK"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:layout_marginLeft="60dp"
+       android:layout_marginLeft="70dp"
        android:background="@drawable/search"
-       android:layout_marginTop="20dp"
+       android:layout_marginTop="30dp"
        />"
 
 </LinearLayout>

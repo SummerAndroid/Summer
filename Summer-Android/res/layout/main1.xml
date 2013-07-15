@@ -15,7 +15,7 @@
         android:layout_height="150dip"
         android:layout_alignParentLeft="true"
         android:layout_alignTop="@+id/liulanrenwu"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="30dp"
         android:background="@drawable/file_01" />
 
     <ImageButton
@@ -24,7 +24,7 @@
         android:layout_height="150dip"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="30dp"
         android:layout_marginTop="62dp"
         android:background="@drawable/file_02" />
 
@@ -34,7 +34,7 @@
         android:layout_height="150dip"
         android:layout_alignLeft="@+id/lingqurenwu"
         android:layout_below="@+id/lingqurenwu"
-        android:layout_marginTop="98dp"
+        android:layout_marginTop="75dp"
         android:background="@drawable/file_03" />
 
     <ImageButton
