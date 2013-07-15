@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Example;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,22 @@ public class TemplateHasTemplateItemDAO extends BaseHibernateDAO {
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
+			throw re;
+		}
+	}
+
+	public void deleteByTemplateId(Long id) {
+		log.debug("deleting templatehastemplateitem instance");
+		try {
+			SQLQuery sqlQuery = getSession().createSQLQuery(
+							"delete from template_has_template_item where template_id = ?");
+			sqlQuery.setLong(0, id);
+			sqlQuery.addEntity(TemplateHasTemplateItem.class);
+			sqlQuery.executeUpdate();
+			getSession().flush();
+			log.debug("delete successful");
+		} catch (RuntimeException re) {
+			log.error("delete failed", re);
 			throw re;
 		}
 	}

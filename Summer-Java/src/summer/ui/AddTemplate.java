@@ -253,12 +253,15 @@ public class AddTemplate extends JFrame {
 
 				} else {
 
+					// 如果是删除，则先删除，再添加。
+					long id = AddTemplate.this.template.getId();
 					templateDAO.attachDirty(template);
+					itemDAO.deleteByTemplateId(id);
 					for (Vector v : data) {
 						TemplateHasTemplateItem item = new TemplateHasTemplateItem();
-						item.setTemplateId(AddTemplate.this.template.getId());
+						item.setTemplateId(id);
 						item.setTemplateItemId((Long) v.get(1));
-						itemDAO.attachDirty(item);// TODO:如果是删除，好像是行不通的。
+						itemDAO.save(item);
 					}
 				}
 			}
