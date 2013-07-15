@@ -33,6 +33,7 @@
     <string name="newpsw2">确认密码：</string>
     <string name="normal">√</string>
     <string name="abnormal">×</string>
+    <string name="hello">Hello World, CaptureActivity!</string>
 
     <string-array name="label_array">
         <item>√</item>

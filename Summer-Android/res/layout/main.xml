@@ -1,48 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@drawable/background" >
-    
-    <!-- 领取任务 -->
-    <!-- 浏览任务 -->
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Copyright (C) 2008 ZXing authors
 
-    <!-- 当前任务 -->
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-    <ImageButton
-        android:id="@+id/lingqurenwu"
-        android:layout_width="150dip"
-        android:layout_height="150dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/liulanrenwu"
-        android:layout_marginLeft="50dp"
-        android:background="@drawable/file_01" />
+      http://www.apache.org/licenses/LICENSE-2.0
 
-    <ImageButton
-        android:id="@+id/liulanrenwu"
-        android:layout_width="150dip"
-        android:layout_height="150dip"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="62dp"
-        android:background="@drawable/file_02" />
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="fill_parent">
 
-    <ImageButton
-        android:id="@+id/dangqianrenwu"
-        android:layout_width="150dip"
-        android:layout_height="150dip"
-        android:layout_alignLeft="@+id/lingqurenwu"
-        android:layout_below="@+id/lingqurenwu"
-        android:layout_marginTop="98dp"
-        android:background="@drawable/file_03" />
+  <SurfaceView android:id="@+id/preview_view"
+               android:layout_width="fill_parent"
+               android:layout_gravity="center"
+               android:layout_height="fill_parent"
+               android:layout_centerInParent="true"/>
 
-    <ImageButton
-        android:id="@+id/xinxiguanli"
-        android:layout_width="150dip"
-        android:layout_height="150dip"
-        android:layout_alignLeft="@+id/liulanrenwu"
-        android:layout_alignTop="@+id/dangqianrenwu"
-        android:background="@drawable/file_04" />
+  <summer.android.view.ViewfinderView
+      android:id="@+id/viewfinder_view"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      
+      android:background="@color/transparent"/>
 
-</RelativeLayout>
+
+
+  <TextView android:id="@+id/txtResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"          
+            android:textSize="14sp"/>
+
+</FrameLayout>

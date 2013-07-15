@@ -21,7 +21,7 @@ public class Main extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.main1);
 		lingqu = (ImageButton) findViewById(R.id.lingqurenwu);
 		liulan = (ImageButton) findViewById(R.id.liulanrenwu);
 		dangqian = (ImageButton) findViewById(R.id.dangqianrenwu);
