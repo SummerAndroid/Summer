@@ -43,6 +43,12 @@ public class StuffInfoPullUtil {
 		netUtil.request(what, request, new InnerNetCallback(handler));
 	}
 
+	public void infoPull(long id) {
+		Stuff stuff = new Stuff();
+		stuff.setId(id);
+		infoPull(stuff);
+	}
+
 	private class InnerNetCallback extends HandlerDecorator {
 
 		public InnerNetCallback(Handler handler) {
