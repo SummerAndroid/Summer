@@ -158,7 +158,7 @@ public class TaskPanel extends JPanel {
 			objs[i][2] = tasklet.getName();
 			objs[i][3] = tasklet.getUserId();
 			objs[i][4] = tasklet.getCycle() / 86400000;
-			objs[i++][5] = tasklet.getAccount() == 0 ? "已完成" : "未完成";// TODO:还有有循环周期的情况
+			objs[i++][5] = tasklet.getAccount() == 0 ? "已完成" : "未完成";// TODO:还有有循环周期的情况,这个到底应该是怎么样规定的，我们也不太清楚
 		}
 		return objs;
 	}

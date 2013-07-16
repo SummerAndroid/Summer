@@ -29,7 +29,7 @@ public class TaskletItemPushHandler extends Handler {
 		List<Object> list = request.getRequestArgs();
 		for (Object object : list) {
 			TaskletItem item = (TaskletItem) object;
-			// TODO:先用循环一个一个修改TaskletItemArg,然后再优化。
+			// TODO:先用循环一个一个修改TaskletItemArg,然后再优化。可以使用事务。等第二版本吧
 			List<TaskletItemArg> itemArgs = item.getArgList();
 			for (TaskletItemArg taskletItemArg : itemArgs) {
 				argDAO.merge(taskletItemArg);

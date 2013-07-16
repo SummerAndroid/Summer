@@ -219,7 +219,7 @@ public final class I {
 		 * 应答：responseCode = OK | BAD_*;responseArgs = {String}
 		 * <p>
 		 * 解释：退出需要用户的id或者name。退出成功返回{@link Res#OK}，退出失败，返回{@link Res}
-		 * 中BAD_*，具体含义参加注释，且链表中的对象String TODO:确定exit的值，使得这些请求号是连续的。
+		 * 中BAD_*，具体含义参加注释，且链表中的对象String
 		 * <p>
 		 * 如：
 		 * 
@@ -229,7 +229,7 @@ public final class I {
 		 * session.write(Request.createRequest(what, Req.EXIT, user));
 		 * </pre>
 		 */
-		public final static int EXIT = 50;
+		public final static int EXIT = 16;
 
 		// --------一些默认的特殊值，从-1开始--------
 		/**

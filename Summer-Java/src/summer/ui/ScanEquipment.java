@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -231,32 +233,26 @@ public class ScanEquipment extends JFrame {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				if (inner == null) {
+				JFrame outer = ScanEquipment.this;
 
-					JFrame outer = ScanEquipment.this;
+				inner = new JFrame();
+				inner.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+				inner.setBounds(outer.getX() + outer.getWidth(), outer.getY(),
+						450, 450);
 
-					inner = new JFrame();
-					inner.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-					inner.setBounds(outer.getX() + outer.getWidth(),
-							outer.getY(), 450, 450);
+				JPanel contentPane = new JPanel();
+				contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+				contentPane.setLayout(new BorderLayout(0, 0));
+				inner.setContentPane(contentPane);
 
-					JPanel contentPane = new JPanel();
-					contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-					contentPane.setLayout(new BorderLayout(0, 0));
-					inner.setContentPane(contentPane);
+				JPanel panel = new JPanel();
+				panel.setLayout(new BorderLayout());
+				panel.add(new JLabel(getImageIcon()));
+				JScrollPane sp = new JScrollPane();
+				sp.getViewport().add(panel);
+				contentPane.add(sp);
+				inner.setVisible(true);
 
-					JPanel panel = new JPanel();
-					panel.setLayout(new BorderLayout());
-					panel.add(new JLabel(getImageIcon()));
-					JScrollPane sp = new JScrollPane();
-					sp.getViewport().add(panel);
-					contentPane.add(sp);
-					inner.setVisible(true);
-				} else if (inner.isVisible()) {
-					inner.requestFocus();
-				} else {
-					inner.setVisible(true);
-				}
 			}
 
 			private ImageIcon ii;
@@ -278,11 +274,11 @@ public class ScanEquipment extends JFrame {
 								BarcodeFormat.QR_CODE, 400, 400, hints);
 						File file1 = new File(Server.DIR + Server.ZXING, stuff
 								.getId() + ".jpg");
+						MatrixToImageWriter
+								.writeToFile(bitMatrix, "jpg", file1);
 						ii = new ImageIcon(Toolkit.getDefaultToolkit()
 								.getImage(file1.getPath()));
 						stuff.setZxing(file1.getPath());
-						MatrixToImageWriter
-								.writeToFile(bitMatrix, "jpg", file1);
 						return ii;
 					} catch (WriterException e) {
 						e.printStackTrace();
@@ -369,14 +365,23 @@ public class ScanEquipment extends JFrame {
 
 				long categoryid = category.getId();
 				String code = textField_1.getText();
-				String zxing = null;// TODO:二维码路径
+				String zxing = null;
 				String str = textField_2.getText();
 				int life = Integer.parseInt(str.substring(0, str.length() - 1));
 				String address = textField_3.getText();
 				String categoryName = textField_4.getText();
 				double price = Double.parseDouble(textField_5.getText());
 				String factory = textField_6.getText();
-				long startTime = System.currentTimeMillis();// TODO:这个开始时间是错的 。
+				long startTime = 0;
+				try {
+					startTime = new SimpleDateFormat("YYYY-MM-dd hh:mm:ss")
+							.parse(textField_7.getText()).getTime();
+				} catch (ParseException e1) {
+					e1.printStackTrace();
+					JOptionPane.showConfirmDialog(ScanEquipment.this,
+							"请使用正确的日期格式：YYYY-MM-dd hh:mm:ss");
+					return;
+				}
 
 				List<StuffArg> list = new ArrayList<StuffArg>();
 				Vector objs = st.getDataVector();
@@ -430,10 +435,9 @@ public class ScanEquipment extends JFrame {
 		category = sc;
 		stuff = s;
 
+		textField.setEditable(false);// 不允许修改id
+
 		if (stuff != null) {
-
-			textField.setEditable(false);// 不允许修改id
-
 			textField.setText(String.valueOf(stuff.getId()));
 			textField_1.setText(stuff.getCode());
 			textField_2.setText(String.valueOf(stuff.getLife()) + "年");
@@ -441,12 +445,19 @@ public class ScanEquipment extends JFrame {
 			textField_4.setText(category.getName());
 			textField_5.setText(String.valueOf(stuff.getPrice()));
 			textField_6.setText(stuff.getFactory());
-			textField_7.setText(new Date(stuff.getStartTime()).toString());
-
-			reflush();
+			textField_7.setText(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss")
+					.format(new Date()));
 		} else {
-			// TODO:reset this frame
+			textField.setText("");
+			textField_1.setText("");
+			textField_2.setText("");
+			textField_3.setText("");
+			textField_4.setText("");
+			textField_5.setText("");
+			textField_6.setText("");
+			textField_7.setText("");
 		}
+		reflush();
 	}
 
 	public Icon getIcon() {

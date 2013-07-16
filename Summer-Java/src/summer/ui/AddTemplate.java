@@ -292,6 +292,7 @@ public class AddTemplate extends JFrame {
 			table.repaint();
 			textField.setEditable(false);
 		} else {
+			textField.setText("");
 			st.setDataVector(createObjectsFromDB(t), columnNames);
 			table.repaint();
 		}

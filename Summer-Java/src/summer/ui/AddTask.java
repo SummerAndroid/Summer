@@ -217,7 +217,7 @@ public class AddTask extends JFrame {
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO:使用事务管理
+				// TODO:使用事务管理，不然很难弄。。。但现在时间不够 了。。目前能够运行。。:(
 				String taskletName = textField.getText();// 任务名称
 				long userId = Long.parseLong(textField_1.getText());
 				long cycle = Integer.parseInt(textField_2.getText()) * 86400000;

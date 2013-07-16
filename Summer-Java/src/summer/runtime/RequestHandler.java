@@ -196,7 +196,7 @@ public class RequestHandler extends IoHandlerAdapter {
 					handler = new StuffInfoPullHandler();
 					break;
 				default:
-					throw new RuntimeException("code不对，请参考Res.java");// TODO:不应该会执行到这里，因为已经verifyCode
+					throw new RuntimeException("code不对，请参考Res.java");// 不应该会执行到这里，因为已经verifyCode
 			}
 			return handler;
 		}
