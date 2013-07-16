@@ -242,6 +242,9 @@ public class MainFrame extends JFrame {
 			addTask = new AddTask(new Done() {
 
 				@Override public void done() {
+
+					task1.reflush();
+
 				}
 			});
 			addTask.setVisible(true);

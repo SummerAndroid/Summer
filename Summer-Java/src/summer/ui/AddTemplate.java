@@ -295,6 +295,8 @@ public class AddTemplate extends JFrame {
 			textField.setText("");
 			st.setDataVector(createObjectsFromDB(t), columnNames);
 			table.repaint();
+			st1.setDataVector(new Object[0][0], columnNames);
+			table_1.repaint();
 		}
 	}
 
