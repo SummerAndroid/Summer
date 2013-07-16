@@ -1,5 +1,6 @@
 package summer.android;
 
+import java.io.ObjectOutputStream.PutField;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,16 +31,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+
 /**
  * @author ZhangJun
  */
 public class TaskletItemPull extends ListActivity {
-	
-	int length,index;
-	
-	 ArrayList<TaskletItem> list1,listPush;
-	//ArrayList<TaskletItemArg> list2;
-    
+
+	int length, index;
+
+	ArrayList<TaskletItem> list1, listPush;
+
+	// ArrayList<TaskletItemArg> list2;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -47,9 +50,34 @@ public class TaskletItemPull extends ListActivity {
 		setContentView(R.layout.tasklet_item_pull);
 		Intent intent = getIntent();
 		Tasklet tasklet = (Tasklet) intent.getSerializableExtra("tasklet");
-		listPush=(ArrayList<TaskletItem>) intent.getSerializableExtra("taskletItem");
-		list1=(ArrayList<TaskletItem>) intent.getSerializableExtra("taskletItemList");
+		listPush = (ArrayList<TaskletItem>) intent
+				.getSerializableExtra("taskletItem");
+		list1 = (ArrayList<TaskletItem>) intent
+				.getSerializableExtra("taskletItemList");
 		Button taskletFinish = (Button) findViewById(R.id.tasklet_commit);
+		//以下跳转到二维码扫描界面
+
+		Button two_dimension_code = (Button) findViewById(R.id.two_dimension_code);
+
+		two_dimension_code.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				intent.putExtra("length",length);
+				intent.putExtra("position", index);
+				intent.putExtra("taskletItemList", list1);
+				intent.putExtra("taskletItem", list1.get(index));
+				intent.putExtra("ItemId", list1.get(index).getId());
+				intent.putExtra("ItemArg", (ArrayList<TaskletItemArg>) list1
+						.get(index).getArgList());
+				intent.setClass(TaskletItemPull.this, CaptureActivity.class);
+				TaskletItemPull.this.startActivity(intent);
+				
+			}
+		});
+
 		Handler handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
@@ -64,7 +92,7 @@ public class TaskletItemPull extends ListActivity {
 					length = list1.size();
 
 					// 同时取出TaskletItemArg的数据
-					//list2 = (ArrayList<TaskletItemArg>) msg.obj;
+					// list2 = (ArrayList<TaskletItemArg>) msg.obj;
 
 					for (int i = 0; i < length; i++) {
 						String taskletItemName = list1.get(i).getName();
@@ -90,23 +118,24 @@ public class TaskletItemPull extends ListActivity {
 				}
 			}
 		};
-		
+
 		TaskletItemPullUtil pullUtil = new TaskletItemPullUtil(handler);
 		pullUtil.itemPull(tasklet);
-	
+
 	}
 
 	// 重写onListItemClick但是ListView条目事件
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		Intent intent = new Intent();
-		//任务回传时使用
-		index=position;
-		intent.putExtra("taskletItemList", list1);
-		intent.putExtra("taskletItem", list1.get(position));
-		intent.putExtra("ItemId",list1.get(position).getId());
-		intent.putExtra("ItemArg",(ArrayList<TaskletItemArg>) list1.get(position).getArgList());
-		intent.setClass(TaskletItemPull.this, ItemArgs.class);
-		TaskletItemPull.this.startActivity(intent);
+		// Intent intent = new Intent();
+		// 任务回传时使用
+		index = position;
+		// intent.putExtra("taskletItemList", list1);
+		// intent.putExtra("taskletItem", list1.get(position));
+		// intent.putExtra("ItemId",list1.get(position).getId());
+		// intent.putExtra("ItemArg",(ArrayList<TaskletItemArg>)
+		// list1.get(position).getArgList());
+		// intent.setClass(TaskletItemPull.this, ItemArgs.class);
+		// TaskletItemPull.this.startActivity(intent);
 	}
 }

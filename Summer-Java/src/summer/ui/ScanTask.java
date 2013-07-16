@@ -46,7 +46,7 @@ public class ScanTask extends JFrame {
 	private JTextField textField_4;
 
 	private List<TaskletItem> itemList;
-	private JComboBox<String> comboBox;
+	private JComboBox comboBox;
 
 	public ScanTask() {
 		setTitle("\u6D4F\u89C8\u4EFB\u52A1");
@@ -139,7 +139,7 @@ public class ScanTask extends JFrame {
 		gbc_lblNewLabel_2.gridy = 2;
 		contentPane.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
-		comboBox = new JComboBox<String>();
+		comboBox = new JComboBox();
 		comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 
@@ -228,7 +228,7 @@ public class ScanTask extends JFrame {
 			for (TaskletItem item : itemList) {
 				names[i++] = stuffDAO.findById(item.getStuffId()).getCode();
 			}
-			comboBox.setModel(new DefaultComboBoxModel<String>(names));
+			comboBox.setModel(new DefaultComboBoxModel(names));
 			comboBox.setSelectedIndex(0);
 
 			reflush(first);
