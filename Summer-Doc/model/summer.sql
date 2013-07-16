@@ -83,7 +83,6 @@ DROP TABLE IF EXISTS `stuff_category`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `stuff_category` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id of this stuff category',
-  `template_item_id` bigint(20) unsigned DEFAULT NULL COMMENT 'id of template_item which can be used when create a tasklet item for specific.',
   `name` varchar(255) DEFAULT NULL COMMENT 'name of stuff categoy',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=gbk COMMENT='category of stuff.';
@@ -95,7 +94,7 @@ CREATE TABLE `stuff_category` (
 
 LOCK TABLES `stuff_category` WRITE;
 /*!40000 ALTER TABLE `stuff_category` DISABLE KEYS */;
-INSERT INTO `stuff_category` VALUES (1,3,'变压器'),(2,2,'电线杆'),(3,1,'输配电');
+INSERT INTO `stuff_category` VALUES (1,'变压器'),(2,'电线杆'),(3,'输配电');
 /*!40000 ALTER TABLE `stuff_category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +122,7 @@ CREATE TABLE `tasklet` (
 
 LOCK TABLES `tasklet` WRITE;
 /*!40000 ALTER TABLE `tasklet` DISABLE KEYS */;
-INSERT INTO `tasklet` VALUES (1,10001,'高新区雅居园',2592000000,10,1373040000000),(2,10001,'高新区软件园',2592000000,20,1373040000000),(3,10001,'高新区贤文庄',2592000000,10,1373040000000),(4,10002,'历城区',2592000000,5,1373040000000),(5,10003,'历下区',2592000000,10,1373040000000);
+INSERT INTO `tasklet` VALUES (1,10001,'高新区雅居园',100000000,10,1373040000000),(2,10001,'高新区软件园',100000000,20,1373040000000),(3,10001,'高新区贤文庄',100000000,10,1373040000000),(4,10002,'历城区',100000000,5,1373040000000),(5,10003,'历下区',2592000000,0,1373040000000);
 /*!40000 ALTER TABLE `tasklet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,6 +165,7 @@ CREATE TABLE `tasklet_item_arg` (
   `name` varchar(255) NOT NULL,
   `value` varchar(255) NOT NULL,
   `comment` varchar(255) DEFAULT NULL,
+  `error` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=gbk COMMENT='A arg contain a name-value pair.';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -176,7 +176,7 @@ CREATE TABLE `tasklet_item_arg` (
 
 LOCK TABLES `tasklet_item_arg` WRITE;
 /*!40000 ALTER TABLE `tasklet_item_arg` DISABLE KEYS */;
-INSERT INTO `tasklet_item_arg` VALUES (1,1,'高度','10','正负2'),(2,1,'直径','0.2','正负0.1'),(3,2,'吸湿器湿度','22','正负2'),(4,2,'散热器温度','25','正负5'),(5,2,'绝缘套管厚度','0.3','正负0.1'),(6,3,'吸湿器湿度','22','正负2'),(7,3,'散热器温度','25','正负5'),(8,3,'绝缘套管厚度','0.3','正负0.1'),(9,4,'高度','0.2','正负2'),(10,4,'直径','5','正负0.1'),(11,5,'电压','5','正负1'),(12,6,'电压','10','正负1'),(13,7,'高度','10','正负2'),(14,7,'直径','0.2','正负0.1'),(15,8,'高度','10','正负2'),(16,8,'直径','0.2','正负0.1'),(17,9,'高度','10','正负2'),(18,9,'直径','0.2','正负0.1'),(19,10,'吸湿器湿度','22','正负2'),(20,10,'散热器温度','25','正负5'),(21,10,'绝缘套管厚度','0.3','正负0.1'),(22,11,'电压','5','正负1'),(23,12,'电压','5','正负1'),(24,13,'高度','10','正负2'),(25,13,'直径·','0.2','正负0.1'),(26,14,'吸湿器湿度','22','正负2'),(27,14,'散热器温度','25','正负5'),(28,14,'绝缘套管厚度','0.3','正负0.1'),(29,15,'电压','5','正负1'),(30,16,'电压','5','正负1'),(31,17,'吸湿器湿度','22','正负2'),(32,17,'散热器温度','25','正负5'),(33,17,'绝缘套管厚度','0.3','正负0.1');
+INSERT INTO `tasklet_item_arg` VALUES (1,1,'高度','10','正负2',0),(2,1,'直径','0.2','正负0.1',0),(3,2,'吸湿器湿度','22','正负2',0),(4,2,'散热器温度','25','正负5',0),(5,2,'绝缘套管厚度','0.3','正负0.1',0),(6,3,'吸湿器湿度','22','正负2',0),(7,3,'散热器温度','25','正负5',0),(8,3,'绝缘套管厚度','0.3','正负0.1',0),(9,4,'高度','0.2','正负2',0),(10,4,'直径','5','正负0.1',0),(11,5,'电压','5','正负1',0),(12,6,'电压','10','正负1',0),(13,7,'高度','10','正负2',0),(14,7,'直径','0.2','正负0.1',0),(15,8,'高度','10','正负2',0),(16,8,'直径','0.2','正负0.1',0),(17,9,'高度','10','正负2',0),(18,9,'直径','0.2','正负0.1',0),(19,10,'吸湿器湿度','22','正负2',0),(20,10,'散热器温度','25','正负5',0),(21,10,'绝缘套管厚度','0.3','正负0.1',0),(22,11,'电压','5','正负1',0),(23,12,'电压','5','正负1',0),(24,13,'高度','10','正负2',0),(25,13,'直径·','0.2','正负0.1',0),(26,14,'吸湿器湿度','22','正负2',0),(27,14,'散热器温度','25','正负5',0),(28,14,'绝缘套管厚度','0.3','正负0.1',0),(29,15,'电压','5','正负1',0),(30,16,'电压','5','正负1',0),(31,17,'吸湿器湿度','22','正负2',0),(32,17,'散热器温度','25','正负5',0),(33,17,'绝缘套管厚度','0.3','正负0.1',0);
 /*!40000 ALTER TABLE `tasklet_item_arg` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -239,6 +239,7 @@ DROP TABLE IF EXISTS `template_item`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `template_item` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'id of template_item',
+  `stuff_category_id` bigint(20) unsigned NOT NULL,
   `name` varchar(255) NOT NULL DEFAULT '""' COMMENT 'name of template_item',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=gbk COMMENT='template item,every item contains a lot of arg and each item /* comment truncated */ /* is template of a specific stuff category.*/';
@@ -250,7 +251,7 @@ CREATE TABLE `template_item` (
 
 LOCK TABLES `template_item` WRITE;
 /*!40000 ALTER TABLE `template_item` DISABLE KEYS */;
-INSERT INTO `template_item` VALUES (1,'输配电'),(2,'电线杆'),(3,'变压器');
+INSERT INTO `template_item` VALUES (1,0,'输配电'),(2,0,'电线杆'),(3,0,'变压器');
 /*!40000 ALTER TABLE `template_item` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -306,7 +307,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (10000,'张三','123456',1,7,'18769783279','历下区1550'),(10001,'李四','123456',0,0,'18769785096','长清区333'),(10002,'王二','123456',1,7,'18769783271','历城区222'),(10003,'小明','123456',1,7,'18769783272','历下区432'),(10004,'小红','123456',1,7,'18769783273','泉城路0009'),(10006,'小虎','123456',1,7,'18769782773','舜华路0403'),(10007,'小涛','123456',0,0,'18769783278','经十路6584'),(10008,'小海','123456',0,0,'18769783333','纬2路');
+INSERT INTO `user` VALUES (10000,'张三','123456',1,7,'18769783279','历下区1550'),(10001,'张君','123456',0,0,'18769785096','长清区333'),(10002,'王二','123456',1,7,'18769783271','历城区222'),(10003,'小明','123456',1,7,'18769783272','历下区432'),(10004,'小红','123456',1,7,'18769783273','泉城路0009'),(10006,'小虎','123456',1,7,'18769782773','舜华路0403'),(10007,'小涛','123456',0,0,'18769783278','经十路6584'),(10008,'小海','123456',0,0,'18769783333','纬2路');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -319,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-07-16 16:32:03
+-- Dump completed on 2013-07-16 18:49:07
