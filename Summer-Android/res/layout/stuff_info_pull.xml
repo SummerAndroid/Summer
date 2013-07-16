@@ -1,16 +1,149 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:id="@+id/RelativeLayout01"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bkground"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".StuffInfoPull" >
+    tools:context=".MainActivity" >
 
     <TextView
+        android:id="@+id/myTextView01"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_below="@+id/myTextView01"
+        android:layout_toRightOf="@+id/checkBox1"
+        android:text="设备详细信息" />
+
+    <TableLayout
+        android:id="@+id/tableLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/myTextView01"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/myTextView01"
+        android:layout_marginTop="40dp" >
+
+        <TableRow
+            android:id="@+id/tableRow01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设备名称" />
+
+            <TextView
+                android:id="@+id/name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10" >
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="价格" />
+
+            <TextView
+                android:id="@+id/price1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10" >
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/life"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="使用寿命" />
+
+            <TextView
+                android:id="@+id/life1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10" >
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设备地址" />
+
+            <TextView
+                android:id="@+id/address1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10" >
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <TextView
+                android:id="@+id/factory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="生产厂家" />
+
+            <TextView
+                android:id="@+id/factory1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10" >
+            </TextView>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <Button
+                android:id="@+id/commit_ok"
+                android:layout_width="180dip"
+                android:layout_height="wrap_content"
+                android:paddingRight="2dip"
+                android:paddingTop="2dip"
+                android:singleLine="true"
+                android:text="确定"
+                android:textSize="10pt" />
+
+            <TextView>
+            </TextView>
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>

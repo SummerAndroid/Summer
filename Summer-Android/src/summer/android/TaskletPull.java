@@ -32,6 +32,7 @@ import summer.inf.I.Req;
  */
 
 public class TaskletPull extends ListActivity {
+	public  static List<Tasklet> list1,list_save;
 	int length;
 	User user;
 	Tasklet[] tasklet;//传递tasklet对象
@@ -52,7 +53,9 @@ public class TaskletPull extends ListActivity {
 					// 成功返回的obj是List<Tasklet>,放入链表中进行处理
 					// 生成一个ArrayList类型的变量list
 					ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-					List<Tasklet> list1 = (List<Tasklet>) msg.obj;
+					list1 = (List<Tasklet>) msg.obj;
+					list_save=list1;
+					Log.i("!!!!!!!!!!!",list_save.toString());
 					length = list1.size();
 					tasklet=new Tasklet[length];
 					for (int i = 0; i < length; i++) {

@@ -12,7 +12,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -78,9 +80,28 @@ public class TaskletPush extends ListActivity {
 						Log.i("!!!!!!!!!!!", message);
 					} else if (msg.arg1 == HandlerDecorator.HANDLER_RESPONSE) {
 						//任务提交
+						AlertDialog.Builder builder = new AlertDialog.Builder(
+								TaskletPush.this);
+						builder.setMessage("任务提交成功").setTitle(
+								"提示");
+						builder.setPositiveButton("确  定",
+								new DialogInterface.OnClickListener() {
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										dialog.cancel();
+										Intent intent=new Intent();
+										intent.setClass(TaskletPush.this, TaskletPull.class);
+										startActivity(intent);
+									}
 
+								});
+						AlertDialog dialog = builder.create();
+						dialog.show();
 					} else {
 						//错误信息
+						String message = (String) msg.obj;
+						Log.i("!!!!!!!!!!!", message);
 					}
 
 				}

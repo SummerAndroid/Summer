@@ -49,5 +49,6 @@
     <string name="title_activity_tasklet_push">TaskletPush</string>
     <string name="title_activity_history_task_look">HistoryTaskLook</string>
     <string name="title_activity_stuff_info_pull">StuffInfoPull</string>
+    <string name="title_activity_tasklet_pull_return">TaskletPull_return</string>
 
 </resources>

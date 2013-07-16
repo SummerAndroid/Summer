@@ -11,23 +11,33 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
-     <LinearLayout
-        android:id="@+id/listLinearLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-        <Button
-            android:id="@+id/tasklet_commit"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/listLinearLayout"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="任务提交" >
-        </Button>
-         <Button
-            android:id="@+id/two_dimension_code"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="二维码扫描" >
-        </Button>
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/tasklet_commit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="任务提交" >
+            </Button>
+
+            <TextView
+                android:id="@+id/blank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="      "
+                 />
+
+            <Button
+                android:id="@+id/two_dimension_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="二维码扫描" >
+            </Button>
         </LinearLayout>
 
         <ListView

@@ -97,8 +97,13 @@
             android:label="@string/title_activity_history_task_look" >
         </activity>
         <activity
-            android:name="summmer.android.StuffInfoPull"
-            android:label="@string/title_activity_stuff_info_pull" >
+            android:name="summer.android.StuffInfoPull"
+            android:label="@string/title_activity_stuff_info_pull"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
+            android:name="summer.android.TaskletPull_return"
+            android:label="@string/title_activity_tasklet_pull_return" >
         </activity>
     </application>
 
