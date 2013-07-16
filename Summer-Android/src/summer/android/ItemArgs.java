@@ -146,6 +146,7 @@ public class ItemArgs extends ListActivity {
                 		intent.putExtra("taskletItem", list1);
                 		intent.setClass(ItemArgs.this,TaskletPush.class);
                 		startActivity(intent);
+                		ItemArgs.this.finish();
                 	}
                 		
 			
@@ -174,5 +175,6 @@ public class ItemArgs extends ListActivity {
 		// list1.get(position).getArgList());
 		intent.setClass(ItemArgs.this, Edit.class);
 		ItemArgs.this.startActivity(intent);
+		ItemArgs.this.finish();
 	}
 }

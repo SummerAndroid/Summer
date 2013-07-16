@@ -185,6 +185,7 @@ public class CaptureActivity extends Activity implements Callback {
 			intent.putExtra("stuffId", stuffCode);
 			intent.setClass(CaptureActivity.this, StuffInfoPull.class);
 			CaptureActivity.this.startActivity(intent);
+			CaptureActivity.this.finish();
 
 			// } else {
 			// Log.i("!!!!!!!!!!", "列表中无此项设备");

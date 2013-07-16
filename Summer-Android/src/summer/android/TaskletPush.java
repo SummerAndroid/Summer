@@ -90,9 +90,9 @@ public class TaskletPush extends ListActivity {
 									public void onClick(DialogInterface dialog,
 											int which) {
 										dialog.cancel();
-										Intent intent=new Intent();
-										intent.setClass(TaskletPush.this, TaskletPull.class);
-										startActivity(intent);
+//										Intent intent=new Intent();
+//										intent.setClass(TaskletPush.this, TaskletPull.class);
+//										startActivity(intent);
 									}
 
 								});

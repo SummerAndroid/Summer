@@ -66,6 +66,7 @@ public class TaskletItemPull extends ListActivity {
 				intent.putExtra("taskletItem", list1);
 				intent.setClass(TaskletItemPull.this, TaskletPush.class);
 				startActivity(intent);
+				TaskletItemPull.this.finish();
 			}
 		});
 		//以下跳转到二维码扫描界面
@@ -86,7 +87,7 @@ public class TaskletItemPull extends ListActivity {
 						.get(index).getArgList());
 				intent.setClass(TaskletItemPull.this, CaptureActivity.class);
 				TaskletItemPull.this.startActivity(intent);
-				
+				TaskletItemPull.this.finish();
 			}
 		});
 
