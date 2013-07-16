@@ -29,11 +29,13 @@ public class TaskletItemDAO extends BaseHibernateDAO {
 	public static final String STUFF_ID = "stuffId";
 	public static final String NAME = "name";
 
-	public void save(TaskletItem transientInstance) {
+	public Long save(TaskletItem transientInstance) {
 		log.debug("saving TaskletItem instance");
 		try {
-			getSession().save(transientInstance);
+			Long id = (Long) getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
+			return id;
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;

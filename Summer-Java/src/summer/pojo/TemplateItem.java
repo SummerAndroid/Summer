@@ -8,11 +8,8 @@ public class TemplateItem implements java.io.Serializable {
 
 	// Fields
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3725524734876338644L;
 	private Long id;
+	private Long stuffCategoryId;
 	private String name;
 
 	// Constructors
@@ -22,7 +19,8 @@ public class TemplateItem implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TemplateItem(String name) {
+	public TemplateItem(Long stuffCategoryId, String name) {
+		this.stuffCategoryId = stuffCategoryId;
 		this.name = name;
 	}
 
@@ -36,6 +34,14 @@ public class TemplateItem implements java.io.Serializable {
 		this.id = id;
 	}
 
+	public Long getStuffCategoryId() {
+		return this.stuffCategoryId;
+	}
+
+	public void setStuffCategoryId(Long stuffCategoryId) {
+		this.stuffCategoryId = stuffCategoryId;
+	}
+
 	public String getName() {
 		return this.name;
 	}
@@ -44,10 +50,4 @@ public class TemplateItem implements java.io.Serializable {
 		this.name = name;
 	}
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override public String toString() {
-		return "TemplateItem [id=" + id + ", name=" + name + "]";
-	}
 }

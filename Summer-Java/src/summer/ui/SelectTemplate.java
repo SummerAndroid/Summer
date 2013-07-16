@@ -22,10 +22,12 @@ import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import summer.dao.StuffCategoryDAO;
 import summer.dao.TemplateDAO;
 import summer.dao.TemplateHasTemplateItemDAO;
 import summer.dao.TemplateItemArgDAO;
 import summer.dao.TemplateItemDAO;
+import summer.pojo.StuffCategory;
 import summer.pojo.Template;
 import summer.pojo.TemplateHasTemplateItem;
 import summer.pojo.TemplateItem;
@@ -42,12 +44,30 @@ public class SelectTemplate extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private List<Template> templateList;
-	private String[] columnsName = new String[] { "\u9879\u76EE\u540D",
+	private String[] columnsName = new String[] { "\u9879\u76EE\u540D", "设备名",
 			"\u5C5E\u6027\u540D", "\u7F3A\u7701\u503C" };
 
-	public SelectTemplate() {
+	interface Callback {
+		void done(Template template, List<UsefulArg> usefulArgs,
+				Object[][] data);
+	}
+
+	private Template template;
+	private List<UsefulArg> usefulArgs = new ArrayList<UsefulArg>();
+	private Object[][] data;
+	private Callback callback;
+
+	public static class UsefulArg {
+		public Long templateItemId;
+		public String templateItemName;
+	}
+
+	public SelectTemplate(AddTask a, Callback cb) {
+
+		callback = cb;
+
 		setTitle("\u9009\u62E9\u6A21\u7248");
-		setBounds(100, 100, 471, 386);
+		setBounds(a.getX() + a.getWidth(), a.getY(), 471, 386);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -81,40 +101,63 @@ public class SelectTemplate extends JFrame {
 				table.repaint();
 			}
 
-			class Arg{
+			class Arg {
 				public String itemName;
+				public String stuffName;
 				public String name;
 				public String value;
 			}
-			
+
 			private Object[][] createFromDB(Template template) {
+
+				SelectTemplate.this.template = template;
 
 				List<TemplateHasTemplateItem> list = findTemplateItemIds(template);
 				if (list == null || list.isEmpty()) {
 					return new Object[0][0];
 				}
+
 				ArrayList<Arg> tempList = new ArrayList<Arg>();
 				TemplateItemDAO itemDao = new TemplateItemDAO();
 				TemplateItemArgDAO argDao = new TemplateItemArgDAO();
+				StuffCategoryDAO categoryDAO = new StuffCategoryDAO();
+
 				for (TemplateHasTemplateItem has : list) {// TODO:非常低效
+
 					long templateItemId = has.getTemplateItemId();
 					TemplateItem item = itemDao.findById(templateItemId);
-					@SuppressWarnings("unchecked") List<TemplateItemArg> argList = argDao.findByTemplateItemId(templateItemId);
+					StuffCategory category = categoryDAO.findById(item
+							.getStuffCategoryId());
+					@SuppressWarnings("unchecked") List<TemplateItemArg> argList = argDao
+							.findByTemplateItemId(templateItemId);
+
 					for (TemplateItemArg templateItemArg : argList) {
+
+						UsefulArg usefulArg = new UsefulArg();
+						usefulArg.templateItemId = templateItemId;
+						usefulArg.templateItemName = item.getName();
+						usefulArgs.add(usefulArg);
+
 						Arg arg = new Arg();
 						arg.itemName = item.getName();
+						arg.stuffName = category.getName();
 						arg.name = templateItemArg.getName();
 						arg.value = templateItemArg.getValue();
 						tempList.add(arg);
+
 					}
+
 				}
-				Object[][] objs = new Object[tempList.size()][3];
+				Object[][] objs = new Object[tempList.size()][4];
 				int i = 0;
 				for (Arg arg : tempList) {
 					objs[i][0] = arg.itemName;
-					objs[i][1] = arg.name;
-					objs[i++][2] = arg.value;
+					objs[i][1] = arg.stuffName;
+					objs[i][2] = arg.name;
+					objs[i++][3] = arg.value;
 				}
+				SelectTemplate.this.data = objs;
+
 				return objs;
 			}
 
@@ -153,12 +196,13 @@ public class SelectTemplate extends JFrame {
 				if (index < 0) {
 					int ok = JOptionPane.showConfirmDialog(SelectTemplate.this,
 							"没有模版，确定不选模版吗？");
-					if (ok == JOptionPane.OK_OPTION)
+					if (ok == JOptionPane.OK_OPTION) {
 						SelectTemplate.this.setVisible(false);
-					else
-						return;
+					}
+					return;
 				}
-
+				callback.done(template, usefulArgs, data);
+				SelectTemplate.this.setVisible(false);
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();

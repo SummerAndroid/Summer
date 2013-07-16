@@ -8,12 +8,7 @@ public class StuffCategory implements java.io.Serializable {
 
 	// Fields
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6464919471661421614L;
 	private Long id;
-	private Long templateItemId;
 	private String name;
 
 	// Constructors
@@ -23,8 +18,7 @@ public class StuffCategory implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public StuffCategory(Long templateItemId, String name) {
-		this.templateItemId = templateItemId;
+	public StuffCategory(String name) {
 		this.name = name;
 	}
 
@@ -36,14 +30,6 @@ public class StuffCategory implements java.io.Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getTemplateItemId() {
-		return this.templateItemId;
-	}
-
-	public void setTemplateItemId(Long templateItemId) {
-		this.templateItemId = templateItemId;
 	}
 
 	public String getName() {

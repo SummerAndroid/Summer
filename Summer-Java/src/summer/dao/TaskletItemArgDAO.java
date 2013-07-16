@@ -34,6 +34,7 @@ public class TaskletItemArgDAO extends BaseHibernateDAO {
 		log.debug("saving TaskletItemArg instance");
 		try {
 			getSession().save(transientInstance);
+			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);

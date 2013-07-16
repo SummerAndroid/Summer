@@ -6,10 +6,13 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,8 +21,19 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import summer.dao.StuffDAO;
+import summer.dao.TaskletDAO;
+import summer.dao.TaskletItemArgDAO;
+import summer.dao.TaskletItemDAO;
+import summer.pojo.Stuff;
+import summer.pojo.Tasklet;
+import summer.pojo.TaskletItem;
+import summer.pojo.TaskletItemArg;
+import summer.pojo.Template;
 import summer.ui.AddUpdateP.Done;
 import summer.ui.PeopleM1Panel.STableModel;
+import summer.ui.SelectTemplate.Callback;
+import summer.ui.SelectTemplate.UsefulArg;
 
 public class AddTask extends JFrame {
 
@@ -36,21 +50,21 @@ public class AddTask extends JFrame {
 
 	private Done done;
 
-	private String[] columnNames = new String[] { "",
-			"\u8BBE\u5907\u7C7B\u578B", "\u8BBE\u5907\u7F16\u53F7",
-			"\u8BBE\u5907\u540D\u79F0" };
-
 	private STableModel st;
 	private JButton btnNewButton;
 	private JLabel lblNewLabel_1;
 	private JTable table;
+	private String[] columnNames = new String[] { "\u4EFB\u52A1\u9879\u540D",
+			"\u8BBE\u5907\u540D", "\u5C5E\u6027\u540D", "\u53C2\u8003\u503C" };
+
+	private List<UsefulArg> usefulArgs;
 
 	public AddTask(Done d) {
 
 		done = d;
 
 		setTitle("\u4EFB\u52A1");
-		setBounds(100, 100, 506, 574);
+		setBounds(100, 100, 506, 595);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -151,6 +165,24 @@ public class AddTask extends JFrame {
 		btnNewButton = new JButton("\u4F7F\u7528\u6A21\u7248");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				SelectTemplate selectTemplate = new SelectTemplate(
+						AddTask.this, new Callback() {
+
+							@Override public void done(Template template,
+									List<UsefulArg> usefulArgs,
+									Object[][] data) {
+
+								AddTask.this.usefulArgs = usefulArgs;
+
+								table.setModel(new DefaultTableModel(data,
+										columnNames));
+								table.repaint();
+
+							}
+						});
+				selectTemplate.setVisible(true);
+
 			}
 		});
 
@@ -178,14 +210,66 @@ public class AddTask extends JFrame {
 		contentPane.add(scrollPane, gbc_scrollPane);
 
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null },
-				{ null, null }, { null, null }, }, new String[] {
-				"\u4EFB\u52A1\u9879\u540D", "\u8BBE\u5907\u540D" }));
+		table.setModel(new DefaultTableModel(new Object[0][0], columnNames));
 		scrollPane.setViewportView(table);
 
 		btnNewButton_3 = new JButton("\u63D0\u4EA4");
 		btnNewButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				// TODO:使用事务管理
+				String taskletName = textField.getText();// 任务名称
+				long userId = Long.parseLong(textField_1.getText());
+				long cycle = Integer.parseInt(textField_2.getText()) * 86400000;
+				int account = Integer.parseInt(textField_3.getText());
+
+				// 保存Tasklet
+				Tasklet tasklet = new Tasklet();
+				tasklet.setName(taskletName);
+				tasklet.setUserId(userId);
+				tasklet.setCycle(cycle);
+				tasklet.setAccount(account);
+				TaskletDAO taskletDAO = new TaskletDAO();
+				long taskletId = taskletDAO.save(tasklet);
+
+				Vector<Vector<Object>> data = ((DefaultTableModel) table
+						.getModel()).getDataVector();
+
+				// 保存TaskletItem和TaskletItemArg
+				StuffDAO stuffDAO = new StuffDAO();
+				TaskletItemDAO itemDAO = new TaskletItemDAO();
+				TaskletItemArgDAO argDAO = new TaskletItemArgDAO();
+				int i = 0;
+				long lastTemplateItemId = -1;
+				long itemId = 0;
+				for (Vector v : data) {
+					List<Stuff> stuff = stuffDAO.findByCode(v.get(1));
+					if (stuff == null || stuff.isEmpty()) {
+						JOptionPane.showConfirmDialog(AddTask.this,
+								"有存在不合法的设备名，请确保他们正确");
+						taskletDAO.delete(taskletId);
+						return;
+					}
+					UsefulArg usefulArg = usefulArgs.get(i++);
+					if (lastTemplateItemId != usefulArg.templateItemId) {
+						// 保存TaskletItem
+						lastTemplateItemId = usefulArg.templateItemId;
+						TaskletItem item = new TaskletItem();
+						item.setName((String) v.get(0));
+						item.setTaskletId(taskletId);
+						item.setStuffId(stuff.get(0).getId());
+						itemId = itemDAO.save(item);
+					}
+					// 保存TaskletItemArg
+					TaskletItemArg arg = new TaskletItemArg();
+					arg.setTaskletItemId(itemId);
+					arg.setName((String) v.get(2));
+					arg.setValue((String) v.get(3));
+					arg.setError(0);
+					arg.setComment("");
+					argDAO.save(arg);
+				}
+
 
 				done.done();
 				setVisible(false);

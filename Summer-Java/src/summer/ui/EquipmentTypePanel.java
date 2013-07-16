@@ -23,8 +23,7 @@ public class EquipmentTypePanel extends JPanel {
 	private static final long serialVersionUID = -1660331840875855549L;
 	private JTable table;
 	private String[] columnNames = new String[] { " ",
-			"\u8BBE\u5907\u7C7B\u578B\u7F16\u53F7", "\u8BBE\u5907\u540D\u79F0",
-			"\u6A21\u677F\u9879\u7F16\u53F7" };
+			"\u8BBE\u5907\u7C7B\u578B\u7F16\u53F7", "\u8BBE\u5907\u540D\u79F0", };
 
 	private STableModel st;
 	private MainFrame mainFrame;
@@ -154,8 +153,7 @@ public class EquipmentTypePanel extends JPanel {
 		for (StuffCategory stuffCategory : list) {
 			objs[i][0] = Boolean.FALSE;
 			objs[i][1] = stuffCategory.getId();
-			objs[i][2] = stuffCategory.getName();
-			objs[i++][3] = stuffCategory.getTemplateItemId();
+			objs[i++][2] = stuffCategory.getName();
 		}
 		return objs;
 	}

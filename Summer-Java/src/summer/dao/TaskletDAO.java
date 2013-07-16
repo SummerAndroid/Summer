@@ -132,11 +132,12 @@ public class TaskletDAO extends BaseHibernateDAO {
 		return builder.toString();
 	}
 
-	public void save(Tasklet transientInstance) {
+	public Long save(Tasklet transientInstance) {
 		log.debug("saving Tasklet instance");
 		try {
-			getSession().save(transientInstance);
+			Long id = (Long) getSession().save(transientInstance);
 			log.debug("save successful");
+			return id;
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
 			throw re;

@@ -8,13 +8,8 @@
     <class name="summer.pojo.StuffCategory" table="stuff_category" catalog="summer">
         <id name="id" type="java.lang.Long">
             <column name="id" />
-            <generator class="increment" />
+            <generator class="identity" />
         </id>
-        <property name="templateItemId" type="java.lang.Long">
-            <column name="template_item_id">
-                <comment>id of template_item which can be used when create a tasklet item for specific.</comment>
-            </column>
-        </property>
         <property name="name" type="java.lang.String">
             <column name="name">
                 <comment>name of stuff categoy</comment>

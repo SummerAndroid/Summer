@@ -105,7 +105,7 @@ public class MainFrame extends JFrame {
 				node_1 = new DefaultMutableTreeNode("任务管理");
 				node_1.add(new DefaultMutableTreeNode("浏览任务"));
 				node_1.add(new DefaultMutableTreeNode("添加任务"));
-				node_1.add(new DefaultMutableTreeNode("缺陷管理"));
+				// node_1.add(new DefaultMutableTreeNode("缺陷管理"));
 				add(node_1);
 			}
 		}));
