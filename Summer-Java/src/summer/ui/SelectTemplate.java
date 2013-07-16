@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
@@ -14,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,8 +24,12 @@ import javax.swing.table.DefaultTableModel;
 
 import summer.dao.TemplateDAO;
 import summer.dao.TemplateHasTemplateItemDAO;
+import summer.dao.TemplateItemArgDAO;
+import summer.dao.TemplateItemDAO;
 import summer.pojo.Template;
 import summer.pojo.TemplateHasTemplateItem;
+import summer.pojo.TemplateItem;
+import summer.pojo.TemplateItemArg;
 
 /**
  * 
@@ -75,16 +81,39 @@ public class SelectTemplate extends JFrame {
 				table.repaint();
 			}
 
+			class Arg{
+				public String itemName;
+				public String name;
+				public String value;
+			}
+			
 			private Object[][] createFromDB(Template template) {
 
 				List<TemplateHasTemplateItem> list = findTemplateItemIds(template);
 				if (list == null || list.isEmpty()) {
 					return new Object[0][0];
 				}
-				Object[][] objs = new Object[list.size()][3];
+				ArrayList<Arg> tempList = new ArrayList<Arg>();
+				TemplateItemDAO itemDao = new TemplateItemDAO();
+				TemplateItemArgDAO argDao = new TemplateItemArgDAO();
+				for (TemplateHasTemplateItem has : list) {// TODO:非常低效
+					long templateItemId = has.getTemplateItemId();
+					TemplateItem item = itemDao.findById(templateItemId);
+					@SuppressWarnings("unchecked") List<TemplateItemArg> argList = argDao.findByTemplateItemId(templateItemId);
+					for (TemplateItemArg templateItemArg : argList) {
+						Arg arg = new Arg();
+						arg.itemName = item.getName();
+						arg.name = templateItemArg.getName();
+						arg.value = templateItemArg.getValue();
+						tempList.add(arg);
+					}
+				}
+				Object[][] objs = new Object[tempList.size()][3];
 				int i = 0;
-				for (TemplateHasTemplateItem has : list) {
-					// long templateItemId ;
+				for (Arg arg : tempList) {
+					objs[i][0] = arg.itemName;
+					objs[i][1] = arg.name;
+					objs[i++][2] = arg.value;
 				}
 				return objs;
 			}
@@ -119,6 +148,16 @@ public class SelectTemplate extends JFrame {
 		JButton btnNewButton = new JButton("\u786E\u5B9A");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				int index = comboBox.getSelectedIndex();
+				if (index < 0) {
+					int ok = JOptionPane.showConfirmDialog(SelectTemplate.this,
+							"没有模版，确定不选模版吗？");
+					if (ok == JOptionPane.OK_OPTION)
+						SelectTemplate.this.setVisible(false);
+					else
+						return;
+				}
 
 			}
 		});
