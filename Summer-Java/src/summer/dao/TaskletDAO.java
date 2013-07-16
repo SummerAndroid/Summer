@@ -37,7 +37,7 @@ public class TaskletDAO extends BaseHibernateDAO {
 		log.debug("deleting tasklet instance");
 		try {
 			SQLQuery sqlQuery = getSession().createSQLQuery(
-					"delete from tasklet template_id = ?");
+					"delete from tasklet where template_id = ?");
 			sqlQuery.setLong(0, id);
 			sqlQuery.addEntity(Tasklet.class);
 			sqlQuery.executeUpdate();
