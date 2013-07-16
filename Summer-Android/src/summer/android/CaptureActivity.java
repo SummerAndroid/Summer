@@ -1,6 +1,8 @@
 package summer.android;
 
+import java.awt.font.NumericShaper;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import com.google.zxing.BarcodeFormat;
@@ -10,9 +12,13 @@ import summer.android.camera.CameraManager;
 import summer.android.decoding.CaptureActivityHandler;
 import summer.android.decoding.InactivityTimer;
 import summer.android.view.ViewfinderView;
+import summer.pojo.Tasklet;
+import summer.pojo.TaskletItem;
+import summer.pojo.TaskletItemArg;
 import summmer.android.R;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
@@ -21,11 +27,17 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.widget.TextView;
 
+/**
+ * @author ZhangJun
+ * 
+ * 改写handleDecode方法
+ */
 public class CaptureActivity extends Activity implements Callback {
 
 	private CaptureActivityHandler handler;
@@ -39,12 +51,19 @@ public class CaptureActivity extends Activity implements Callback {
 	private boolean playBeep;
 	private static final float BEEP_VOLUME = 0.10f;
 	private boolean vibrate;
+	int length, index;
+
+	ArrayList<TaskletItem> list1;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		Intent intent = getIntent();
+		length = intent.getIntExtra("length", 0);
+		list1 = (ArrayList<TaskletItem>) intent
+				.getSerializableExtra("taskletItemList");
 		CameraManager.init(getApplication());
 
 		viewfinderView = (ViewfinderView) findViewById(R.id.viewfinder_view);
@@ -142,8 +161,32 @@ public class CaptureActivity extends Activity implements Callback {
 
 	public void handleDecode(Result obj, Bitmap barcode) {
 		inactivityTimer.onActivity();
-		viewfinderView.drawResultBitmap(barcode);
-		 playBeepSoundAndVibrate();
+		// viewfinderView.drawResultBitmap(barcode);
+		playBeepSoundAndVibrate();
+		try {
+			Long stuffCode = Long.parseLong(obj.getText());
+
+			stuffCode = 1L;
+			//for (int i = 0; i < length; i++) {
+				TaskletItem tasklet = list1.get(1);
+				//if (tasklet.getStuffId() == stuffCode) {
+					// 设置参数转移到ItemArgs界面
+					Intent intent = new Intent();
+					intent.putExtra("taskletItemList", list1);
+					intent.putExtra("taskletItem", tasklet);
+					intent.putExtra("ItemId", tasklet.getId());
+					intent.putExtra("ItemArg",
+							(ArrayList<TaskletItemArg>) tasklet.getArgList());
+					intent.setClass(CaptureActivity.this, ItemArgs.class);
+					CaptureActivity.this.startActivity(intent);
+
+				//} else {
+				//	Log.i("!!!!!!!!!!", "列表中无此项设备");
+				//}
+			//}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		}
 		txtResult.setText(obj.getBarcodeFormat().toString() + ":"
 				+ obj.getText());
 	}

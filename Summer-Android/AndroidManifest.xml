@@ -18,13 +18,11 @@
         <activity
             android:name="summer.android.Login"
             android:label="@string/app_name" >
-          
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
         </activity>
         <activity
             android:name="summer.android.Scan"
@@ -87,15 +85,23 @@
             android:name="summer.android.TaskletPush"
             android:label="@string/title_activity_tasklet_push" >
         </activity>
-         <activity
+        <activity
             android:name="summer.android.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:windowSoftInputMode="stateAlwaysHidden" >
-       
+        </activity>
+        <activity
+            android:name="summer.android.HistoryTaskLook"
+            android:label="@string/title_activity_history_task_look" >
+        </activity>
+        <activity
+            android:name="summmer.android.StuffInfoPull"
+            android:label="@string/title_activity_stuff_info_pull" >
         </activity>
     </application>
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 

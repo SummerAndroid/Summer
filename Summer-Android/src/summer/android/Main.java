@@ -54,6 +54,7 @@ public class Main extends Activity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			Intent intent1 = new Intent();
+			intent1.putExtra("user", user);
 			intent1.setClass(Main.this, Scan.class);
 			startActivity(intent1);
 		}

@@ -1,5 +1,6 @@
 package summer.android;
 
+import summer.pojo.User;
 import summmer.android.R;
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,6 +15,7 @@ public class Scan extends Activity {
 	private ImageButton yiwancheng;
 	private ImageButton weiwancheng;
 	private ImageButton book;
+	User user;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,15 +25,18 @@ public class Scan extends Activity {
 		book=(ImageButton)findViewById(R.id.book);
 		yiwancheng.setOnClickListener(new HistoryTaskListener());
 		book.setOnClickListener(new BookListener());
+		Intent intent=getIntent();
+		user=(User) intent.getSerializableExtra("user");
 	}
    class HistoryTaskListener implements OnClickListener{
 
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		Intent intent=new Intent();
-		intent.setClass(Scan.this,HistoryTask.class);
-		startActivity(intent);
+		Intent intent1 = new Intent();
+		intent1.putExtra("user", user);
+		intent1.setClass(Scan.this,HistoryTask.class);
+		startActivity(intent1);
 	}
 	   
    }
