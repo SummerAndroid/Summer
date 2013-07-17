@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 
 /**
- * convenient class for some Util's Inner Class
+ * convenient class for some Util's Inner Class 更应该命名为HandlerAdapter
  * 
  * @author zhenzxie
  * @since 1.0
