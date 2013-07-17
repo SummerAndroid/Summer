@@ -248,9 +248,6 @@ public class AddTemplate extends JFrame {
 						itemDAO.save(item);
 					}
 
-					done.done();
-					setVisible(false);
-
 				} else {
 
 					// 如果是删除，则先删除，再添加。
@@ -264,6 +261,9 @@ public class AddTemplate extends JFrame {
 						itemDAO.save(item);
 					}
 				}
+
+				done.done();
+				setVisible(false);
 			}
 		});
 		GridBagConstraints gbc_button = new GridBagConstraints();
@@ -282,7 +282,8 @@ public class AddTemplate extends JFrame {
 
 		textField_1.setText(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss")
 				.format(new Date()));// 不管都会帮忙把这个时间填上去
-
+		st1.setDataVector(new Object[0][0], columnNames);
+		table_1.repaint();
 		if (t != null) {
 			textField.setText(t.getName());
 			textField_1.setText(new SimpleDateFormat("YYYY-MM-dd hh:mm:ss")
@@ -290,13 +291,10 @@ public class AddTemplate extends JFrame {
 			// 对于这段代码我只能呵呵了。
 			st.setDataVector(createObjectsFromDB(t), columnNames);
 			table.repaint();
-			textField.setEditable(false);
 		} else {
 			textField.setText("");
 			st.setDataVector(createObjectsFromDB(t), columnNames);
 			table.repaint();
-			st1.setDataVector(new Object[0][0], columnNames);
-			table_1.repaint();
 		}
 	}
 
