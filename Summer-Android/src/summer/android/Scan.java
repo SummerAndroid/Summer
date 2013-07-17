@@ -24,6 +24,7 @@ public class Scan extends Activity {
 		weiwancheng=(ImageButton)findViewById(R.id.unfinished);
 		book=(ImageButton)findViewById(R.id.book);
 		yiwancheng.setOnClickListener(new HistoryTaskListener());
+		weiwancheng.setOnClickListener(new UndoneTaskListener());
 		book.setOnClickListener(new BookListener());
 		Intent intent=getIntent();
 		user=(User) intent.getSerializableExtra("user");
@@ -40,13 +41,18 @@ public class Scan extends Activity {
 	}
 	   
    }
-	/*@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.scan, menu);
-		return true;
-	}
-*/
+   class UndoneTaskListener implements OnClickListener{
+
+		@Override
+		public void onClick(View arg0) {
+			// TODO Auto-generated method stub
+			Intent intent1 = new Intent();
+			intent1.putExtra("user", user);
+			intent1.setClass(Scan.this,UndoneTask.class);
+			startActivity(intent1);
+		}
+		   
+	   }
    class BookListener implements OnClickListener{
 
 		@Override

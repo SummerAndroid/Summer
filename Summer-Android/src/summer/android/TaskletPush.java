@@ -7,6 +7,7 @@ import summer.android.net.TaskletItemPushUtil;
 import summer.android.net.module.HandlerDecorator;
 import summer.pojo.Tasklet;
 import summer.pojo.TaskletItem;
+import summer.pojo.TaskletItemArg;
 import summmer.android.R;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,13 +22,15 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 /**
  * @author ZhangJun
  */
 public class TaskletPush extends ListActivity {
 	 ArrayList<TaskletItem> listPush;
-
+     int index,length;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +46,7 @@ public class TaskletPush extends ListActivity {
 		
 		Button taskletFinish = (Button) findViewById(R.id.tasklet_commit);
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
-		int length = listPush.size();
+		length = listPush.size();
 
 		// 同时取出TaskletItemArg的数据
 		//list2 = (ArrayList<TaskletItemArg>) msg.obj;
@@ -112,5 +115,32 @@ public class TaskletPush extends ListActivity {
 }
 	});
 
+}
+	// 重写onListItemClick但是ListView条目事件
+	@Override
+	protected void onListItemClick(ListView l, View v, int position, long id) {
+		// Intent intent = new Intent();
+		// 任务回传时使用
+		index = position;
+		Toast.makeText(this, "开启摄像头进行二维码扫描", 10).show();
+		// intent.putExtra("taskletItemList", list1);
+		// intent.putExtra("taskletItem", list1.get(position));
+		// intent.putExtra("ItemId",list1.get(position).getId());
+		// intent.putExtra("ItemArg",(ArrayList<TaskletItemArg>)
+		// list1.get(position).getArgList());
+		// intent.setClass(TaskletItemPull.this, ItemArgs.class);
+		// TaskletItemPull.this.startActivity(intent);
+		Intent intent = new Intent();
+		intent.putExtra("length",length);
+		intent.putExtra("position", index);
+		intent.putExtra("taskletItemList", listPush);
+		intent.putExtra("taskletItem", listPush.get(index));
+		intent.putExtra("ItemId", listPush.get(index).getId());
+		intent.putExtra("ItemArg", (ArrayList<TaskletItemArg>) listPush
+				.get(index).getArgList());
+		//Toast.makeText(this, "开启摄像头进行二维码扫描", 10).show();
+		intent.setClass(TaskletPush.this, CaptureActivity.class);
+		TaskletPush.this.startActivity(intent);
+		TaskletPush.this.finish();
 }
 }

@@ -31,6 +31,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 /**
  * @author ZhangJun
@@ -66,30 +67,31 @@ public class TaskletItemPull extends ListActivity {
 				intent.putExtra("taskletItem", list1);
 				intent.setClass(TaskletItemPull.this, TaskletPush.class);
 				startActivity(intent);
+				TaskletPull.now++;
 				TaskletItemPull.this.finish();
 			}
 		});
 		//以下跳转到二维码扫描界面
-		Button two_dimension_code = (Button) findViewById(R.id.two_dimension_code);
-
-		two_dimension_code.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent();
-				intent.putExtra("length",length);
-				intent.putExtra("position", index);
-				intent.putExtra("taskletItemList", list1);
-				intent.putExtra("taskletItem", list1.get(index));
-				intent.putExtra("ItemId", list1.get(index).getId());
-				intent.putExtra("ItemArg", (ArrayList<TaskletItemArg>) list1
-						.get(index).getArgList());
-				intent.setClass(TaskletItemPull.this, CaptureActivity.class);
-				TaskletItemPull.this.startActivity(intent);
-				TaskletItemPull.this.finish();
-			}
-		});
+//		Button two_dimension_code = (Button) findViewById(R.id.two_dimension_code);
+//
+//		two_dimension_code.setOnClickListener(new OnClickListener() {
+//
+//			@Override
+//			public void onClick(View arg0) {
+//				// TODO Auto-generated method stub
+//				Intent intent = new Intent();
+//				intent.putExtra("length",length);
+//				intent.putExtra("position", index);
+//				intent.putExtra("taskletItemList", list1);
+//				intent.putExtra("taskletItem", list1.get(index));
+//				intent.putExtra("ItemId", list1.get(index).getId());
+//				intent.putExtra("ItemArg", (ArrayList<TaskletItemArg>) list1
+//						.get(index).getArgList());
+//				intent.setClass(TaskletItemPull.this, CaptureActivity.class);
+//				TaskletItemPull.this.startActivity(intent);
+//				TaskletItemPull.this.finish();
+//			}
+//		});
 
 		Handler handler = new Handler() {
 			@Override
@@ -143,6 +145,7 @@ public class TaskletItemPull extends ListActivity {
 		// Intent intent = new Intent();
 		// 任务回传时使用
 		index = position;
+		Toast.makeText(this, "开启摄像头进行二维码扫描", 10).show();
 		// intent.putExtra("taskletItemList", list1);
 		// intent.putExtra("taskletItem", list1.get(position));
 		// intent.putExtra("ItemId",list1.get(position).getId());
@@ -150,5 +153,17 @@ public class TaskletItemPull extends ListActivity {
 		// list1.get(position).getArgList());
 		// intent.setClass(TaskletItemPull.this, ItemArgs.class);
 		// TaskletItemPull.this.startActivity(intent);
+		Intent intent = new Intent();
+		intent.putExtra("length",length);
+		intent.putExtra("position", index);
+		intent.putExtra("taskletItemList", list1);
+		intent.putExtra("taskletItem", list1.get(index));
+		intent.putExtra("ItemId", list1.get(index).getId());
+		intent.putExtra("ItemArg", (ArrayList<TaskletItemArg>) list1
+				.get(index).getArgList());
+		//Toast.makeText(this, "开启摄像头进行二维码扫描", 10).show();
+		intent.setClass(TaskletItemPull.this, CaptureActivity.class);
+		TaskletItemPull.this.startActivity(intent);
+		TaskletItemPull.this.finish();
 	}
 }

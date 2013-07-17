@@ -57,7 +57,6 @@ public class Main extends Activity {
 			intent1.putExtra("user", user);
 			intent1.setClass(Main.this, Scan.class);
 			startActivity(intent1);
-			Main.this.finish();
 		}
 
 	}
@@ -70,7 +69,6 @@ public class Main extends Activity {
 			Intent intent = new Intent();
 			intent.setClass(Main.this, Tasklist.class);
 			startActivity(intent);
-			Main.this.finish();
 		}
 
 	}
@@ -84,7 +82,6 @@ public class Main extends Activity {
 			intent.putExtra("user", user);
 			intent.setClass(Main.this, EditInfo.class);
 			startActivity(intent);
-			Main.this.finish();
 		}
 
 	}

@@ -38,7 +38,7 @@ public class ItemArgs extends ListActivity {
 	ArrayList<TaskletItemArg> argList;
 	ArrayList<TaskletItem> list1;
 	int count = 0,index,length;
-	boolean[] isFinished;
+	//boolean[] isFinished;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -109,7 +109,7 @@ public class ItemArgs extends ListActivity {
 		map1.put("comment", "备注");
 		listShow.add(map1);
 		length = list.size();
-		isFinished=new boolean[length];
+		//isFinished=new boolean[length];
 		for (int i = 0; i < length; i++) {
 
 			TaskletItemArg itemArg = list.get(i);
@@ -135,19 +135,19 @@ public class ItemArgs extends ListActivity {
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				//提交任务，设置tasklet的argList
-				list1.get(index).setArgList(argList);
-               isFinished[index]=true;
-                for(int i=0;i<length;i++)
-                	if(isFinished[i]==false)
-                		break;
-                	else
-                	{
+			   list1.get(index).setArgList(argList);
+               //isFinished[index]=true;
+               // for(int i=0;i<length;i++)
+                	//if(isFinished[i]==false)
+                		//break;
+                	//else
+                	//{
                 		Intent intent=new Intent();
                 		intent.putExtra("taskletItem", list1);
                 		intent.setClass(ItemArgs.this,TaskletPush.class);
                 		startActivity(intent);
                 		ItemArgs.this.finish();
-                	}
+                	//}
                 		
 			
 	}

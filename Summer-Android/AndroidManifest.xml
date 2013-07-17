@@ -105,6 +105,14 @@
             android:name="summer.android.TaskletPull_return"
             android:label="@string/title_activity_tasklet_pull_return" >
         </activity>
+        <activity
+            android:name="summer.android.UndoneTask"
+            android:label="@string/title_activity_undone_task" >
+        </activity>
+        <activity
+            android:name="summer.android.TaskNow"
+            android:label="@string/title_activity_task_now" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.CAMERA" />
