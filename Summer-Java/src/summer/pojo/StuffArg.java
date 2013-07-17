@@ -9,6 +9,14 @@ public class StuffArg implements java.io.Serializable {
 	// Fields
 
 	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override public String toString() {
+		return "StuffArg [id=" + id + ", stuffId=" + stuffId + ", name=" + name
+				+ ", value=" + value + ", comment=" + comment + "]";
+	}
+
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4153617802877054791L;

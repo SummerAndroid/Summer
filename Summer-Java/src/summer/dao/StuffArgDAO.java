@@ -38,6 +38,7 @@ public class StuffArgDAO extends BaseHibernateDAO {
 			getSession().flush();
 			log.debug("save successful");
 		} catch (RuntimeException re) {
+			re.printStackTrace();
 			log.error("save failed", re);
 			throw re;
 		}

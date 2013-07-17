@@ -74,7 +74,7 @@ public class ScanEquipment extends JFrame {
 			"\u53C2\u8003\u503C", "\u5907\u6CE8" };
 	private STableModel st;
 	private JFrame inner;
-
+	private ImageIcon ii;
 	/**
 	 * Create the frame.
 	 */
@@ -233,6 +233,12 @@ public class ScanEquipment extends JFrame {
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
+				if (stuff == null) {
+					JOptionPane.showConfirmDialog(ScanEquipment.this,
+							"设备还未保存，没有获取ID，还无法生成二维码图片");
+					return;
+				}
+
 				JFrame outer = ScanEquipment.this;
 
 				inner = new JFrame();
@@ -249,13 +255,11 @@ public class ScanEquipment extends JFrame {
 				panel.setLayout(new BorderLayout());
 				panel.add(new JLabel(getImageIcon()));
 				JScrollPane sp = new JScrollPane();
-				sp.getViewport().add(panel);
+				sp.setViewportView(panel);
 				contentPane.add(sp);
 				inner.setVisible(true);
 
 			}
-
-			private ImageIcon ii;
 
 			private ImageIcon getImageIcon() {
 
@@ -319,7 +323,6 @@ public class ScanEquipment extends JFrame {
 			}
 		});
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.anchor = GridBagConstraints.WEST;
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 1;
 		gbc_btnNewButton.gridy = 6;
@@ -341,13 +344,22 @@ public class ScanEquipment extends JFrame {
 				if (ok != JOptionPane.OK_OPTION)
 					return;
 
-				StuffArgDAO dao = new StuffArgDAO();
-				for (Integer integer : rows) {
-					dao.delete((Long) argList.get(integer).getId());
-				}
-				// 对于这段代码我只能呵呵了。
-				reflush();
+				if (stuff == null) {
 
+					for (Integer integer : rows) {
+						System.out.println(integer);
+						st.removeRow(integer);
+					}
+
+				} else {
+					StuffArgDAO dao = new StuffArgDAO();
+					for (Integer integer : rows) {
+						System.out.println(integer);
+						dao.delete((Long) argList.get(integer).getId());
+					}
+					// 对于这段代码我只能呵呵了。
+					reflush();
+				}
 			}
 		});
 		GridBagConstraints gbc_button = new GridBagConstraints();
@@ -365,7 +377,7 @@ public class ScanEquipment extends JFrame {
 
 				long categoryid = category.getId();
 				String code = textField_1.getText();
-				String zxing = null;
+				String zxing = "";
 				String str = textField_2.getText();
 				int life = Integer.parseInt(str.substring(0, str.length() - 1));
 				String address = textField_3.getText();
@@ -395,16 +407,19 @@ public class ScanEquipment extends JFrame {
 						list.add(arg);
 					}
 				}
-
+				System.out.println(list);
 				StuffDAO dao = new StuffDAO();
 				if (stuff == null) {// 添加设备的情况
 					Stuff s = new Stuff(categoryid, code, price, life, address,
 							factory, zxing, startTime);
-					s = dao.save(s);
-					StuffArgDAO stuffArgDAO = new StuffArgDAO();
-					for (StuffArg arg : list) {
-						arg.setStuffId(s.getId());
-						stuffArgDAO.save(arg);
+					System.out.println(s);
+					Long id = dao.save(s);
+					if (!list.isEmpty()) {
+						StuffArgDAO stuffArgDAO = new StuffArgDAO();
+						for (StuffArg arg : list) {
+							arg.setStuffId(id);
+							stuffArgDAO.save(arg);
+						}
 					}
 				} else {
 					stuff.setCode(code);
@@ -434,7 +449,8 @@ public class ScanEquipment extends JFrame {
 
 		category = sc;
 		stuff = s;
-
+		ii = null;
+		
 		textField.setEditable(false);// 不允许修改id
 
 		if (stuff != null) {

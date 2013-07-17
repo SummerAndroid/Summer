@@ -33,17 +33,18 @@ public class StuffDAO extends BaseHibernateDAO {
 	public static final String FACTORY = "factory";
 	public static final String ZXING = "zxing";
 
-	public Stuff save(Stuff transientInstance) {
+	public Long save(Stuff transientInstance) {
 		log.debug("saving Stuff instance");
-		Stuff user;
+		Long user;
 		try {
-			user = (Stuff) getSession().save(transientInstance);
+			user = (Long) getSession().save(transientInstance);
 			log.debug("save successful");
+			return user;
 		} catch (RuntimeException re) {
+			re.printStackTrace();
 			log.error("save failed", re);
 			return null;
 		}
-		return user;
 	}
 
 	public void delete(long id) {
