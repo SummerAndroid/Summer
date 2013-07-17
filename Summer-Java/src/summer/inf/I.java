@@ -254,7 +254,6 @@ public final class I {
 	 */
 	public final static class Res {
 		public final static int OK = 100;
-
 		// --------客户端提交参数错误101开始--------
 		/**
 		 * 传递的对象不是Request类型错误
@@ -288,7 +287,6 @@ public final class I {
 		 * requestArgs中的参数不符合协议错误
 		 */
 		public final static int BAD_REQUESTARGS_ARG = 108;
-
 		// --------客户端登录失败111开始--------
 		/**
 		 * id错误
@@ -302,8 +300,10 @@ public final class I {
 		 * password错误
 		 */
 		public final static int BAD_LOGIN_PASSWORD = 113;
-
 		// --------服务器内部错误201开始--------
+		/**
+		 * system错误
+		 */
 		public final static int BAD_SYS = 201;
 
 		/**
