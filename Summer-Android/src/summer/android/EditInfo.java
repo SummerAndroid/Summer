@@ -5,6 +5,8 @@ import summer.android.net.module.HandlerDecorator;
 import summer.pojo.User;
 import summmer.android.R;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -60,6 +62,22 @@ public class EditInfo extends Activity {
 				editAddress.setText(user.getAddress());
 				editTele.setText(user.getTellphone());
 			    Log.i("!!!!!!!!!",user.toString());
+			    AlertDialog.Builder builder = new AlertDialog.Builder(
+						EditInfo.this);
+				builder.setMessage("保存信息成功").setTitle(
+						"信息提示");
+				builder.setPositiveButton("确  定",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								dialog.cancel();
+							}
+
+						});
+				AlertDialog dialog = builder.create();
+				dialog.show();
+			    
 			} else {
 				String message = (String) msg.obj;
 				Log.i("!!!!!!!!!!!", message);

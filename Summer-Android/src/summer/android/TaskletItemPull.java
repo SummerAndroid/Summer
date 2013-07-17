@@ -55,8 +55,21 @@ public class TaskletItemPull extends ListActivity {
 		list1 = (ArrayList<TaskletItem>) intent
 				.getSerializableExtra("taskletItemList");
 		Button taskletFinish = (Button) findViewById(R.id.tasklet_commit);
+        //任务提交处理
+		taskletFinish.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent=new Intent();
+				//传参数，类型 ArrayList<TaskletItem>
+				intent.putExtra("taskletItem", list1);
+				intent.setClass(TaskletItemPull.this, TaskletPush.class);
+				startActivity(intent);
+				TaskletItemPull.this.finish();
+			}
+		});
 		//以下跳转到二维码扫描界面
-
 		Button two_dimension_code = (Button) findViewById(R.id.two_dimension_code);
 
 		two_dimension_code.setOnClickListener(new OnClickListener() {
@@ -74,7 +87,7 @@ public class TaskletItemPull extends ListActivity {
 						.get(index).getArgList());
 				intent.setClass(TaskletItemPull.this, CaptureActivity.class);
 				TaskletItemPull.this.startActivity(intent);
-				
+				TaskletItemPull.this.finish();
 			}
 		});
 

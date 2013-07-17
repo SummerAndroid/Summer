@@ -37,12 +37,12 @@ public class HandlerDecorator implements NetCallback{
 
 	@Override public void error(Throwable throwable) {
 		log.error("error£º "+throwable);
-		post(HANDLER_ERROR, throwable);
+		post(HANDLER_ERROR, throwable.getMessage()+"");
 	}
 
 	@Override public void error(int what, Throwable throwable) {
 		log.error("error£º¡¡"+what +"   "+throwable);
-		post(what, HANDLER_ERROR, throwable);
+		post(what, HANDLER_ERROR, throwable.getMessage()+"");
 	}
 
 	public void post(int sign, Object object) {

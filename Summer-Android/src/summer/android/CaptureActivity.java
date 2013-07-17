@@ -36,7 +36,7 @@ import android.widget.TextView;
 /**
  * @author ZhangJun
  * 
- * 改写handleDecode方法
+ *         改写handleDecode方法
  */
 public class CaptureActivity extends Activity implements Callback {
 
@@ -165,25 +165,32 @@ public class CaptureActivity extends Activity implements Callback {
 		playBeepSoundAndVibrate();
 		try {
 			Long stuffCode = Long.parseLong(obj.getText());
+			Log.i("设备编号！！！！！！！！！！！", stuffCode + "");
+			// stuffCode = 1L;
+			// for (int i = 0; i < length; i++) {
+			TaskletItem tasklet = list1.get(1);
+			// if (tasklet.getStuffId() == stuffCode) {
+			// 设置参数转移到ItemArgs界面
 
-			stuffCode = 1L;
-			//for (int i = 0; i < length; i++) {
-				TaskletItem tasklet = list1.get(1);
-				//if (tasklet.getStuffId() == stuffCode) {
-					// 设置参数转移到ItemArgs界面
-					Intent intent = new Intent();
-					intent.putExtra("taskletItemList", list1);
-					intent.putExtra("taskletItem", tasklet);
-					intent.putExtra("ItemId", tasklet.getId());
-					intent.putExtra("ItemArg",
-							(ArrayList<TaskletItemArg>) tasklet.getArgList());
-					intent.setClass(CaptureActivity.this, ItemArgs.class);
-					CaptureActivity.this.startActivity(intent);
+			Intent intent = new Intent();
+			intent.putExtra("taskletItemList", list1);
+			intent.putExtra("length", length);
+			//intent.putExtra("taskletItem", tasklet);
+			//intent.putExtra("ItemId", tasklet.getId());
+			//intent.putExtra("ItemArg",
+					//(ArrayList<TaskletItemArg>) tasklet.getArgList());
+			//intent.setClass(CaptureActivity.this, ItemArgs.class);
+			//CaptureActivity.this.startActivity(intent);
 
-				//} else {
-				//	Log.i("!!!!!!!!!!", "列表中无此项设备");
-				//}
-			//}
+			intent.putExtra("stuffId", stuffCode);
+			intent.setClass(CaptureActivity.this, StuffInfoPull.class);
+			CaptureActivity.this.startActivity(intent);
+			CaptureActivity.this.finish();
+
+			// } else {
+			// Log.i("!!!!!!!!!!", "列表中无此项设备");
+			// }
+			// }
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
